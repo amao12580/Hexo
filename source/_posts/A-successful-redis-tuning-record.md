@@ -139,7 +139,7 @@ public List<ProductFull> findProductByPage(int pageSize,int pageNo){
 ```
 
 ### 缓存登录后的用户信息
-在这个产品面向消费者以及商家，都推出了不同的APP。互联网APP为了提高用户体验，以及降低用户登录登出频次(用户的登录/登出操作，对服务器是比较大的开销)，都会对一次登陆成功的用户，默认在一段时间不需要再次登录。即服务器分配Token给APP本地保存，同时服务器保存Token，设置该Token在一段时间不活动后自动失效，APP后续与服务器的通信中，都需要提交该Token鉴权。这是很常规的做法，短时间有效，而且是非关键性小数据，一次写入多次读取，对于服务器来说，没有比memcached或redis更合适的选择了，那为什么没有选择memcached？我个人的猜测是memcached更适合做Object Store Server，而且很重要的redis的[扩容与容灾机制](http://www.cnblogs.com/EE-NovRain/p/3268476.html)较好。
+在这个产品面向消费者以及商家，都推出了不同的APP。互联网APP为了提高用户体验，以及降低用户登录登出频次(用户的登录/登出操作，对服务器是比较大的开销)，都会对一次登陆成功的用户，默认在一段时间不需要再次登录。即服务器分配Token给APP本地保存，同时服务器保存Token，设置该Token在一段时间不活动后自动失效，APP后续与服务器的通信中，都需要提交该Token鉴权。这是很常规的做法，短时间有效，而且是非关键性小数据，一次写入多次读取，对于服务器来说，没有比memcached或redis更合适的选择了，那为什么没有选择memcached？我个人的猜测是memcached更适合做Object Store Server，而且很重要的redis具有丰富数据结构与[扩容与容灾机制](http://www.cnblogs.com/EE-NovRain/p/3268476.html)。
 
 用户的第一次登录，服务端进行参数解析，鉴权后，就需要写入2次redis。
 用户的登出接口中，直接是删除当前会话的redis记录。
@@ -151,13 +151,21 @@ String userLoginSuccessInfo="{"uid":12321,"name":"张三","sex":0,"avatar_id":34
 
 cacheDao的实现
 private final static String SESSION_CACHE_KEY="session:";
+//登录成功
 public void setOneLoginSuccessToRedis(String token,String userLoginSuccessInfo){
     this.jedis.setex(SESSION_CACHE_KEY+token, 30*24*60*60, userLoginSuccessInfo);//1.使用String数据结构。2.设置key有效期30天。
 }
 
+//鉴权
 public String getOneLoginSuccessInRedis(String token){
     return this.jedis.get(SESSION_CACHE_KEY+token);
 }
+
+//登出
+public void logoutSuccessInRedis(String token){
+    this.jedis.del(SESSION_CACHE_KEY+token);
+}
+
 
 这个以"session:"开头的key里，并没有实现从uid如何获取token值？
 这会引发的问题：一个用户的多次登录，会生成多个以"session:"开头的key，没有覆盖之前登录的token。造成内存空间的浪费，以及不安全。正确的做法在下文会提到。
@@ -186,7 +194,7 @@ public boolean checkOneUserWithActivityToRedis(int uid){
 ```
 这部分的业务属于典型案例，浪费内存空间。
 第一个问题，不应该使用长前缀，每个key都需要set进内存，长前缀意味着空间占用，以及效率低下。
-第二个问题，这不是明显可以使用[sorted set数据结构](https://redis.readthedocs.org/en/2.4/sorted_set.html)?，还可以省掉一次exists检查。
+第二个问题，这不是明显可以使用[Sorted Set数据结构](https://redis.readthedocs.org/en/2.4/sorted_set.html)?，还可以省掉一次exists检查。
 
 虽然redis的TPS很高，但是我们依旧要避免滥用。
 
@@ -224,7 +232,7 @@ redis   3.0.5
 * 产品初始化时全量塞入redis/产品停止运行是全量卸掉
 * 产品初始化时塞入redis时，没有做批量操作
 * 对批量获取图片信息不支持，在接口层面就已经没有定义，对于可预见的需求没有进行考虑，这是架构设计的缺陷。
-* 引申：大量的数据，放在一个key里，会出现问题，需要进行水平切分。
+* 引申：大量的数据，放在一个key里，会出现问题，需要进行水平切分(Sharding)。
 
 #### 方案
 1.图片的Id数据在File表采用了*自增长*的方式生成，不会出现重复，并且有顺序。我们可以利用这一点，在产品初始化时，在Mysql数据库File表只查找2个字段：id/url。程序处理时，先写入reids一个key，使用Hash数据结构，isInitIng:photos-true，标明到正在初始化，其他产品节点不需要重复初始化。使用hmset的方式，一次性将多个键值对存入到redis。完成后，修改isInitIng:photos-false。当有了新图片时，先在Mysql数据库File表进行保存，得到这个图片的Id以及url，使用hset加入该图片到redis。如果需要修改某一张图片的url，也可以用hset。这样在产品停止运行时，是不需要删除redis关于图片的数据的。
@@ -253,7 +261,7 @@ private static String[] coverArrayToString(int[] ids){
 3.对于单个key承载大量的数据的情况，方案是对key下的values hash key进行分割，使用一定的算法将块状的数据均匀分布在多个key里。给一个[参考链接](http://blog.nosqlfan.com/html/3379.html)。
 
 ### 对缓存用户登录的处理存在的问题
-* session的存储不合理，每次登陆都会生成一个key值
+* session的存储不合理，每次登陆都会生成一个新的key值
 * 对USER_ACTIVITY_CACHE_KEY在value部分的数据结构不合理，应采用Sorted Set
 * 对USER_ACTIVITY_CACHE_KEY的命名不合适，过长导致空间浪费和效率低下
 * 因采用错误数据结构，USER_ACTIVITY_CACHE_KEY需要进行多一次的exists判断。
@@ -266,17 +274,106 @@ uid:158742-token001
 在写入SESSION_CACHE_KEY时，同时写入到redis，为保证2次写入的原子性，需要使用[redis的事务](https://redis.readthedocs.org/en/2.4/transaction.html)。如果支持用户的多设备在线，只需要将key(uid:token)更改为Sorted Set结构。因为不存在资源的争夺，这个事务几乎不会失败。在用户登出时，删除掉当前会话信息以及用户关联的会话信息(同样是使用redis事务)。
 ```
 cacheDao的实现
-private final static String SESSION_CACHE_KEY="session:";
-private final static String USER_TOKEN_CACHE_KEY="uid:";
-public void setOneLoginSuccessToRedis(int uid,String token,String userLoginSuccessInfo){
-    long expireTime=30*24*60*60;
+private final static String SESSION_CACHE_KEY="se:";//全称："session:"，改善key命名，按业务进行简略，提升网络传输和存储效率。
+private final static String USER_TOKEN_CACHE_KEY="u:t:";//uid:token:
+//登录成功，保存用户登录Token。接收建议的token参数值，返回实际保存的token值。
+public String setOneLoginSuccessToRedis(int uid,String token,String userLoginSuccessInfo){//重构
+    if(checkOneUserTokenExists(uid)){
+        token=getOneUserToken(uid);
+    }
+    long expireTime=30*24*60*60;//设置key有效期30天。
+    String ret=this.jedis.watch(SESSION_CACHE_KEY+token,USER_TOKEN_CACHE_KEY+uid);//乐观锁，重试，在这里几乎不存在
+    if(ret==null||!ret.equals("OK")){
+        log.error("redis watch 操作失败.ret:{}",ret);
+        this.jedis.unwatch();
+    }
     Transaction tx = this.jedis.multi();
-    tx.setex(SESSION_CACHE_KEY+token, expireTime, userLoginSuccessInfo);//1.使用String数据结构。2.设置key有效期30天。
-    tx.setex(USER_TOKEN_CACHE_KEY+uid, expireTime, token);//1.使用String数据结构。2.设置key有效期30天。
+    tx.setex(SESSION_CACHE_KEY+token, expireTime, userLoginSuccessInfo);
+    tx.setex(USER_TOKEN_CACHE_KEY+uid, expireTime, token);
+    List<Object> results = tx.exec();
+    return token;
+}
+
+//检查用户登录Token是否已经存在
+public boolean checkOneUserTokenExists(int uid){//新方法
+    return this.jedis.exists(USER_TOKEN_CACHE_KEY+uid);
+}
+
+//获取用户登录Token信息
+public String getOneUserToken(int uid){//新方法
+    return this.jedis.get(USER_TOKEN_CACHE_KEY+uid);
+}
+
+//鉴权
+public String getOneLoginSuccessInRedis(String token){//不改动
+    return this.jedis.get(SESSION_CACHE_KEY+token);
+}
+
+//登出
+public void logoutSuccessInRedis(String token){
+    String ret=this.jedis.watch(SESSION_CACHE_KEY+token,USER_TOKEN_CACHE_KEY+uid);//乐观锁，重试，在这里几乎不存在
+    if(ret==null||!ret.equals("OK")){
+        log.error("redis watch 操作失败.ret:{}",ret);
+        this.jedis.unwatch();
+    }
+    Transaction tx = this.jedis.multi();
+    tx.del(SESSION_CACHE_KEY+token);
+    tx.del(USER_TOKEN_CACHE_KEY+uid);
     List<Object> results = tx.exec();
 }
 ```
-public
+#### 隐患和思考
+
+redis事务带来的问题，redis的事务设计比较暴力，这给应用层带来了麻烦。
+
+* Redis的基本事务（basic transaction）需要用到MULTI命令和EXEC命令，这种事务可以让一个客户端在不被其他客户端打断的情况下执行多个命令。和关系数据库那种可以在执行的过程中进行回滚（rollback）的事务不同，在Redis里面，被MULTI命令和EXEC命令包围的所有命令会一个接一个地执行，直到所有命令都执行完毕为止。当一个事务执行完毕之后，Redis才会处理其他客户端的命令。
+* [Redis 在事务失败时不进行回滚，而是继续执行余下的命令](http://redisdoc.com/topic/transaction.html)
+
+基于此，redis事务会在客户端高并发时，其他客户端命令产生阻塞，而且事务回滚需要应用层自己解决。关于事务无法自动回滚，这在NoSQL领域是常见问题了。
+
+#### redis时间线设计
+接下来对用户在24小时内的积分信息的处理进行改进，以及redis不支持对Set内的单个Element进行有效期设置，我们采用Sorted Set结构，结合Score特性和Quartz来达到元素过期被删除的目的。
+```
+cacheDao的实现
+private final static String USER_ACTIVITY_CACHE_KEY="a:d";//全称："activity:daily:"，改善key命名，按业务进行简略，提升网络传输和存储效率。
+public void setOneUserWithActivityToRedis(int uid){
+    this.jedis.zadd(USER_ACTIVITY_CACHE_KEY,System.currentTimeMillis(),uid+"");
+}
+
+public boolean checkOneUserWithActivityToRedis(int uid){
+    this.jedis.sismember(USER_ACTIVITY_CACHE_KEY,uid+"");
+    long score=this.jedis.zscore(USER_ACTIVITY_CACHE_KEY,uid+"");
+    if(score>0){
+        return true;
+    }
+    return false;
+}
+
+另外加入一个计划任务，借助Quartz即可。
+String corn=*/1 * * * * ?  //每1秒钟执行1次
+public void cleanExpireUserWithActivity(){
+    long now=System.currentTimeMillis();
+    long 1MAgo=now-60*1000;//1分钟前的时间
+    long remCount=this.jedis.zremrangeByScore(USER_ACTIVITY_CACHE_KEY,1MAgo,now);
+    log.info("成功删除的元素数量是：{}，执行时间是：{}",remCount,now);
+}
+```
+#### 隐患和思考
+在上文给出的代码中，我们做了一定的容错性，每次删除过去1分钟的所有Element，这样Quartz出现故障时，如果在1分钟内得到fixed，影响的数据只限于1分钟内的Element。每1秒钟触发一次Quartz与删除过去1分钟的所有Element，这2个维度的频率需要权衡。
+
+* 过高频率的访问redis是否会有稳定性问题？
+* 删除Element的时间区间过大，是否会影响redis执行效率(时间复杂度:[O(log(N)+M)](http://redisdoc.com/sorted_set/zrevrangebyscore.html))，导致阻塞？
+* 高频率删除Element，是否会影响redis的RDB与AOF备份，因此造成额外的问题？
+
+借助Quartz还有misfire的隐患，如何保障Quartz在每一秒钟都顺畅执行一次(Once and only once)，这涉及到操作系统、内存的可靠性，这是一个大的命题，我们不过多讨论。
+
+记录一下对这类问题的思考
+
+* 可以对这个计划任务进行多机并行运行。例如：A计划与B计划都处于运行状态，A在奇数秒触发，B在偶数秒触发。进一步降低2秒内misfire的概率。
+* 在Quartz启动Job时，检测到是业务高峰期，另开启一个异步线程，调用cleanExpireUserWithActivity方法，而cleanExpireUserWithActivity需要承受并发，即redis需要对zremrangeByScore命令支持并发，但redis是[单进程单线程模型](http://www.blogjava.net/caojianhua/archive/2013/01/28/394847.html)。
+* 异步线程受制于redis，还可以进行改进，使用队列，如ActiveMQ。调用cleanExpireUserWithActivity逻辑进行调整，将命令序列化后写入到点对点队列，另外使用程序监听队列(即消费者端)，有新命令时取出，这里实际调用cleanExpireUserWithActivity，仅在调用成功后释放命令。
+* 现在问题在于如何保障ActiveMQ的稳定运行了，应该还有改进方案。
+
 按照以上的方案进行重构后，性能得到显著提升，按理论来说稳定性会有提高，因为不具备稳定性测试的条件，没法比较。
 ## 遇到了一些问题
 1.redis一次批量hmset过多时报错

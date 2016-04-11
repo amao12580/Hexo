@@ -2,7 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/03/JOOQ-from-entry-to-improve/</loc>
+    <loc>http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/</loc>
+    
+    <lastmod>2016-04-08T10:18:13.630Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/post/2016/03/A-successful-redis-tuning-record/</loc>
+    
+    <lastmod>2016-04-02T10:51:14.650Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
     
     <lastmod>2016-04-01T09:10:57.402Z</lastmod>
     
@@ -30,14 +44,7 @@
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/03/A-successful-redis-tuning-record/</loc>
-    
-    <lastmod>2016-03-30T07:22:27.720Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/03/a-new-start/</loc>
+    <loc>http://amao12580.github.io/post/2016/04/a-new-start/</loc>
     
     <lastmod>2016-03-28T06:35:32.547Z</lastmod>
     

@@ -1,0 +1,655 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Nginx与Tomcat 8在Docker环境的反向代理配置过程 | Cat&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Steven Cheng">
+    
+
+    
+    <meta name="description" content="全程记录在Docker环境下，Nginx与Tomcat的反向代理与负载均衡配置。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx与Tomcat 8在Docker环境的反向代理配置过程">
+<meta property="og:url" content="http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/index.html">
+<meta property="og:site_name" content="Cat's Blog">
+<meta property="og:description" content="全程记录在Docker环境下，Nginx与Tomcat的反向代理与负载均衡配置。">
+<meta property="og:updated_time" content="2016-04-08T10:18:13.630Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx与Tomcat 8在Docker环境的反向代理配置过程">
+<meta name="twitter:description" content="全程记录在Docker环境下，Nginx与Tomcat的反向代理与负载均衡配置。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Cat&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Cat&#39;s Blog" title="Cat&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Cat&#39;s Blog">Cat&#39;s Blog</a></h1>
+				<h2 class="blog-motto">一饮一啄，莫非前定.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页 | Home</a></li>
+					
+						<li><a href="/index">索引 | Index</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">简介 | About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="https://www.google.com.hk/search" method="get" accept-charset="utf-8" target="_blank">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:amao12580.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/" title="Nginx与Tomcat 8在Docker环境的反向代理配置过程" itemprop="url">Nginx与Tomcat 8在Docker环境的反向代理配置过程</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Steven Cheng" target="_blank" itemprop="author">Steven Cheng</a>
+		
+  <p class="article-time">
+  <time datetime="2016-04-08T06:49:32.000Z" itemprop="datePublished"> 发表于 2016-04-08 14:49:32.000</time>
+  <time postupdated="2016-04-08T10:18:13.630Z" itemprop="dateModified"> 更新于 2016-04-08 18:18:13.630</time>
+</p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#需要做什么？"><span class="toc-number">1.</span> <span class="toc-text">需要做什么？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-with-Tomcat"><span class="toc-number">2.</span> <span class="toc-text">Docker with Tomcat</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx-VS-Tengine"><span class="toc-number">3.</span> <span class="toc-text">Nginx VS Tengine</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装与配置"><span class="toc-number">4.</span> <span class="toc-text">安装与配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#踩到的一些坑"><span class="toc-number">5.</span> <span class="toc-text">踩到的一些坑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#400-x16-x03"><span class="toc-number">5.1.</span> <span class="toc-text">400 \x16\x03</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试Https"><span class="toc-number">5.2.</span> <span class="toc-text">调试Https</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssl-protocols"><span class="toc-number">5.3.</span> <span class="toc-text">ssl_protocols</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="需要做什么？"><a href="#需要做什么？" class="headerlink" title="需要做什么？"></a>需要做什么？</h1><p>最近接到的任务是:在Docker环境下，Nginx与Tomcat的反向代理与负载均衡配置。先拿出可行性方案，以便在业务量突发时，在线上环境实施。典型的技术预研，打有准备仗。同时还提出了安全需求，在配置上，需要有安全加固。</p>
+<p>在Nginx配置时，针对不同的使用环境，配置的参数有很多不同。迫在眉睫的，我们需要先对线上的API服务系统进行反向代理与负载均衡配置。API服务系统是面向手机APP的接口系统，使用HTTP Restful+json进行数据通讯。</p>
+<p>我们在局域网环境下，有2台机器在软硬件配置方面，与线上的API服务系统类似。这2台机器的局域网IP分别是：192.168.1.158(简称为：158机器)、192.168.1.188(简称为：188机器)。由于188机器正在做压力测试，而且近期需要持续的对所有接口进行压力测试，没有办法空闲出来做实验。所以在实验之初我使用了158机器的普通账号进行，很快就因为权限不足，遭遇了很多莫名其妙的问题，而且158的使用量比较多，主要作为功能测试的机器。</p>
+<p>随后与PM沟通，延后了188机器的压力测试计划，拿到了权限比较高的账号，但还不是root账户。下面会说到如何在普通账户下，使用root账户执行shell命令。</p>
+<h1 id="Docker-with-Tomcat"><a href="#Docker-with-Tomcat" class="headerlink" title="Docker with Tomcat"></a>Docker with Tomcat</h1><p>为了模拟线上真实环境，我们在188机器上搭建了docker环境。docker是借助Linux container(简称LXC)技术的轻量级可移植运行时环境，这意味着在docker中完成的软件运行时环境搭建后，可以移植到任意一台支持docker运行的机器上，功能上不会有任何的丢失。这有点像Java开发中的JVM，都是解决在不同环境下软件运行的问题。docker更多的提供了资源共享和资源隔离的机制，容器之间本身是隔离互不干扰的，但提供配置允许不同容器之间交换数据，开放对外端口；同时可以限制某个容器对宿主机的资源占用，如cpu、内存、io等等。</p>
+<p>为了方便，低成本，我们使用docker hub上的tomcat镜像：tomcat:8-jre8。在后续的实验中，我们需要2个tomcat作为后端应用服务器来处理实际的HTTP请求。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FROM tomcat:8-jre8</span><br><span class="line"></span><br><span class="line">RUN mkdir /root/downloadAppBase</span><br></pre></td></tr></table></figure></p>
+<h1 id="Nginx-VS-Tengine"><a href="#Nginx-VS-Tengine" class="headerlink" title="Nginx VS Tengine"></a>Nginx VS Tengine</h1><p>在技术选项时，我们遇到Nginx以及衍生产品Tengine。Nginx是俄罗斯人编写的一款轻量级的Web 服务器/反向代理服务器，它还具备邮件服务器的功能。我们在<a href="http://nginx.org/en/download.html" target="_blank" rel="external">Nginx官网</a>上查询发布日志，发现更新的比较频繁。仅在2016年前4月，就出现了2个比较大的版本：1.8.*、1.9.14。Tengine是由淘宝在官方nginx基础之上进行改进的版本，做了很多功能增强，最后一次的版本发布是：2015-12-31：Tengine-2.1.2,此版本仅兼容官方Nginx的1.6.2版本，该版本发布于：2014年9月16日。这也太久了，可能会错过很多官方更新。</p>
+<h1 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line">准备工作</span><br><span class="line">cd /home/www/</span><br><span class="line">mkdir nginx</span><br><span class="line">cd nginx/</span><br><span class="line">mkdir nginx</span><br><span class="line">mkdir zlib</span><br><span class="line">mkdir openssl</span><br><span class="line">mkdir pcre</span><br><span class="line"></span><br><span class="line">sudo apt-get update</span><br><span class="line"></span><br><span class="line">如果没有安装gcc/gcc-c++，请执行：sudo apt-get install build-essential</span><br><span class="line">如果没有安装make，请执行：sudo apt-get install make</span><br><span class="line"></span><br><span class="line">Step 1：编译安装Pcre包 (rewrite模块需要 pcre 库)</span><br><span class="line">1.软件位于/software/pcre-8.38.tar.gz</span><br><span class="line">2.拷贝软件到目标机器&quot;/home/www/nginx/pcre/&quot;目录</span><br><span class="line">3.顺序执行以下脚本</span><br><span class="line"></span><br><span class="line">cd /home/www/nginx/pcre/</span><br><span class="line">tar -xzvf pcre-8.38.tar.gz</span><br><span class="line">cd pcre-8.38/</span><br><span class="line">./configure</span><br><span class="line">sudo make</span><br><span class="line">#有可能需要输入密码</span><br><span class="line">sudo make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Step 2：编译安装Zlib (gzip模块需要 zlib 库)</span><br><span class="line">1.软件位于/software/zlib-1.2.8.tar.gz</span><br><span class="line">2.拷贝软件到目标机器&quot;/home/www/nginx/zlib/&quot;目录</span><br><span class="line">3.顺序执行以下脚本</span><br><span class="line"></span><br><span class="line">cd /home/www/nginx/zlib/</span><br><span class="line">tar -xzvf zlib-1.2.8.tar.gz</span><br><span class="line">cd zlib-1.2.8/</span><br><span class="line">./configure</span><br><span class="line">sudo make</span><br><span class="line">#有可能需要输入密码</span><br><span class="line">sudo make install</span><br><span class="line"></span><br><span class="line">Step 2：编译安装OpenSSL (ssl 功能需要openssl库)</span><br><span class="line">1.软件位于/software/openssl-1.1.0-pre4.tar.gz</span><br><span class="line">2.拷贝软件到目标机器&quot;/home/www/nginx/openssl/&quot;目录</span><br><span class="line">3.顺序执行以下脚本</span><br><span class="line"></span><br><span class="line">cd /home/www/nginx/openssl/</span><br><span class="line">tar -xzvf openssl-1.1.0-pre4.tar.gz</span><br><span class="line">cd openssl-1.1.0-pre4/</span><br><span class="line">./config</span><br><span class="line">sudo make</span><br><span class="line">#命令执行时间超过5分钟，耐心等待</span><br><span class="line">sudo make install</span><br><span class="line">#命令执行时间超过5分钟，耐心等待</span><br><span class="line"></span><br><span class="line">Step 3：编译安装Nginx</span><br><span class="line">1.软件位于/software/nginx-1.9.14.tar.gz</span><br><span class="line">2.拷贝软件到目标机器&quot;/home/www/nginx/nginx/&quot;目录</span><br><span class="line">3.顺序执行以下脚本</span><br><span class="line"></span><br><span class="line">cd /home/www/nginx/nginx/</span><br><span class="line">tar -xzvf nginx-1.9.14.tar.gz</span><br><span class="line">cd nginx-1.9.14/</span><br><span class="line"></span><br><span class="line">sed -i -e &apos;s/1.9.14//g&apos; -e &apos;s/nginx\//ERROR/g&apos; -e &apos;s/&quot;NGINX&quot;/&quot;ERROR&quot;/g&apos; src/core/nginx.h</span><br><span class="line"></span><br><span class="line">./configure --prefix=/home/www/nginx/nginx --with-http_realip_module --with-http_sub_module --with-http_flv_module --with-http_dav_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_addition_module --with-pcre=/home/www/nginx/pcre/pcre-8.38 --with-openssl=/home/www/nginx/openssl/openssl-1.1.0-pre4 --with-http_ssl_module --with-zlib=/home/www/nginx/zlib/zlib-1.2.8</span><br><span class="line"></span><br><span class="line">sudo make</span><br><span class="line">#命令执行时间超过5分钟，耐心等待</span><br><span class="line">sudo make install</span><br><span class="line"></span><br><span class="line">Step 4：安装补丁(对应用服务器进行监控)</span><br><span class="line">cd /home/www/nginx/nginx/</span><br><span class="line">mkdir patch</span><br><span class="line">补丁文件位于/software/patch目录，拷贝目录下的所有文件到：/home/www/nginx/nginx/patch/</span><br><span class="line">cd /home/www/nginx/nginx/nginx-1.9.14/src/</span><br><span class="line">patch -p1 &lt; /home/www/nginx/nginx/patch/nginx_upstream_check_module-master/check_1.9.2+.patch</span><br><span class="line">cd ..</span><br><span class="line">./configure --prefix=/home/www/nginx/nginx --with-http_realip_module --with-http_sub_module --with-http_flv_module --with-http_dav_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_addition_module --with-pcre=/home/www/nginx/pcre/pcre-8.38 --with-openssl=/home/www/nginx/openssl/openssl-1.1.0-pre4 --with-http_ssl_module --with-zlib=/home/www/nginx/zlib/zlib-1.2.8 --add-module=/home/www/nginx/nginx/patch/nginx_upstream_check_module-master/</span><br><span class="line">sudo make</span><br><span class="line">#命令执行时间超过5分钟，耐心等待</span><br><span class="line">sudo make install</span><br><span class="line">cd /home/www/nginx/nginx/sbin/</span><br><span class="line">sudo rm -f nginx.old</span><br><span class="line"></span><br><span class="line">Step 5：配置</span><br><span class="line">配置文件位于：conf/nginx.conf</span><br><span class="line">将该文件拷贝到：/home/www/nginx/nginx/conf/目录下，遇到文件已存在时，直接覆盖。</span><br><span class="line"></span><br><span class="line">确保可以访问到后端tomcat开放的端口，telnet</span><br><span class="line">修改配置文件nginx.conf,“upstream  xws”改为实际的tomcat运行环境</span><br><span class="line"></span><br><span class="line">cd /home/www/nginx/nginx/</span><br><span class="line">mkdir ssl</span><br><span class="line">cd ssl</span><br><span class="line">SSL证书文件位于：ssl/www.abcde.com.crt，ssl/www.abcde.com.key</span><br><span class="line">将这2个文件拷贝到/home/www/nginx/nginx/ssl/目录下</span><br><span class="line"></span><br><span class="line">Step 6：运行</span><br><span class="line">确保系统的80、443端口处于空闲状态。netstat</span><br><span class="line">确保/home/www/nginx/nginx/logs/目录具备读写权限。</span><br><span class="line">确保/home/www/nginx/nginx/ssl/www.abcde.com.crt具备读权限。</span><br><span class="line">确保/home/www/nginx/nginx/ssl/www.abcde.com.key具备读权限。</span><br><span class="line">确保/home/www/nginx/nginx/sbin/nginx文件具备可执行权限。</span><br><span class="line"></span><br><span class="line">cd /home/www/nginx/nginx/sbin/</span><br><span class="line">sudo ./nginx</span><br><span class="line"></span><br><span class="line">Step 7：验证</span><br><span class="line">1.pcre包安装的正确性</span><br><span class="line"></span><br><span class="line">cd /home/www/nginx/pcre/</span><br><span class="line">./pcre-config --version</span><br><span class="line">有版本号输出则安装成功。</span><br><span class="line"></span><br><span class="line">2.openssl包安装的正确性</span><br><span class="line">cd /home/www/nginx/openssl/openssl-1.1.0-pre4/</span><br><span class="line">openssl version –a</span><br><span class="line">有版本号输出则安装成功。</span><br><span class="line"></span><br><span class="line">3.nginx包安装的正确性</span><br><span class="line">cd /home/www/nginx/nginx/nginx-1.9.14/objs</span><br><span class="line">./nginx -V</span><br><span class="line">##也可以使用：./nginx -t</span><br><span class="line">有配置详情输出则安装成功。</span><br><span class="line"></span><br><span class="line">卸载</span><br><span class="line">1.停止nginx的运行</span><br><span class="line">cd /home/www/nginx/nginx/sbin/</span><br><span class="line">sudo ./nginx -s stop</span><br><span class="line"></span><br><span class="line">2.删除文件</span><br><span class="line">cd /home/www/</span><br><span class="line">rm -rf nginx</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">监控</span><br><span class="line">进入到与nginx部署机器的局域网络</span><br><span class="line">浏览器访问：http://nginx主机的局域网ip/nginxStatus/</span><br></pre></td></tr></table></figure>
+<p>贴出nginx.cof</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line">#你所看到的这个文件，是nginx的工作配置文件，不要轻易改动。</span><br><span class="line"></span><br><span class="line">worker_processes  4;</span><br><span class="line">error_log  logs/error.log;</span><br><span class="line">pid        logs/nginx.pid;</span><br><span class="line">worker_rlimit_nofile 65535;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    use epoll;</span><br><span class="line">    worker_connections  65535;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    server_tokens off;</span><br><span class="line">    tcp_nopush on;</span><br><span class="line">    tcp_nodelay on;</span><br><span class="line">    client_body_timeout   10;</span><br><span class="line">    client_header_timeout  30;</span><br><span class="line">    keepalive_timeout     30  30;</span><br><span class="line"></span><br><span class="line">    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</span><br><span class="line">                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</span><br><span class="line">                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</span><br><span class="line"></span><br><span class="line">    sendfile on;</span><br><span class="line">    send_timeout 10;</span><br><span class="line">    client_body_buffer_size  64K;</span><br><span class="line">    client_header_buffer_size  128k;</span><br><span class="line">    client_max_body_size  10m;</span><br><span class="line">    large_client_header_buffers  4  128k;</span><br><span class="line"></span><br><span class="line">  # gzip压缩功能设置</span><br><span class="line">    gzip on;</span><br><span class="line">    gzip_min_length 1k;</span><br><span class="line">    gzip_buffers    4 16k;</span><br><span class="line">    gzip_http_version 1.0;</span><br><span class="line">    gzip_comp_level 6;</span><br><span class="line">    gzip_types text/plain text/css text/javascript application/json application/javascript application/x-javascript application/xml;</span><br><span class="line">    gzip_vary on;</span><br><span class="line"></span><br><span class="line">    #设置单个IP在每秒请求数不能超过20次</span><br><span class="line">    limit_req_zone $binary_remote_addr zone=one:20m rate=20r/s;</span><br><span class="line"></span><br><span class="line">    #设置单个IP同时连接数</span><br><span class="line">    limit_conn_zone $binary_remote_addr zone=addr:20m;</span><br><span class="line"></span><br><span class="line">    ssl_session_cache shared:SSL:10m;</span><br><span class="line">    ssl_session_timeout 10m;</span><br><span class="line"></span><br><span class="line">  # 设定负载均衡方式：RR模式</span><br><span class="line">    upstream  xws  &#123;</span><br><span class="line">        server 127.0.0.1:6080 weight=1 max_fails=5 fail_timeout=10s ;</span><br><span class="line">        server 127.0.0.1:7080 weight=1 max_fails=5 fail_timeout=10s ;</span><br><span class="line">        check interval=3000 rise=2 fall=5 timeout=1000 type=http;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  # 虚拟主机配置</span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80 default_server;</span><br><span class="line">        #root   /apps/oaapp;</span><br><span class="line"></span><br><span class="line">        listen 443 ssl default_server;</span><br><span class="line">        server_name www.abcde.com;</span><br><span class="line">        ssl_certificate  /home/www/nginx/nginx/ssl/yourCAcrt.crt;</span><br><span class="line">        ssl_certificate_key  /home/www/nginx/nginx/ssl/yourCAkey.key;</span><br><span class="line">        ssl_session_timeout  10m;</span><br><span class="line">        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line">        ssl_ciphers &quot;ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4&quot;;</span><br><span class="line">        ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">        charset utf-8;</span><br><span class="line">        access_log  logs/xws.access.log  main;</span><br><span class="line"></span><br><span class="line">        if ($request_method !~ ^(GET|HEAD|POST)$) &#123;</span><br><span class="line">            return 404;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #对所有URL做负载均衡+反向代理</span><br><span class="line">        location / &#123;</span><br><span class="line">            #root   /apps/oaapp;</span><br><span class="line">            #index  index.jsp index.html index.htm;</span><br><span class="line">            proxy_pass http://xws;</span><br><span class="line">            proxy_redirect off;</span><br><span class="line">            # 后端的Web服务器可以通过X-Forwarded-For获取用户真实IP</span><br><span class="line">            proxy_set_header  Host  $host;</span><br><span class="line">            proxy_set_header  X-Real-IP  $remote_addr;</span><br><span class="line">            proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;</span><br><span class="line">            proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;</span><br><span class="line"></span><br><span class="line">            limit_conn addr 2;</span><br><span class="line">            limit_req zone=one burst=5 nodelay;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #静态文件，nginx自己处理，不去backend请求tomcat</span><br><span class="line">        #location  ~* /download/ &#123;</span><br><span class="line">        #    root /apps/oa/fs;</span><br><span class="line"></span><br><span class="line">        #&#125;</span><br><span class="line"></span><br><span class="line">        #location ~ .*\.(gif|jpg|jpeg|bmp|png|ico|txt|js|css)$</span><br><span class="line">        #&#123;</span><br><span class="line">        #    root /apps/oaapp;</span><br><span class="line">        #    expires      7d;</span><br><span class="line">        #&#125;</span><br><span class="line"></span><br><span class="line">        # 为内网IP开放nginx状态监控</span><br><span class="line">        location /nginxStatus &#123;</span><br><span class="line">            stub_status on;</span><br><span class="line">            access_log off;</span><br><span class="line">            allow 192.168.1.0/24;</span><br><span class="line">            deny all;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location ~ ^/(WEB-INF)/ &#123;</span><br><span class="line">            deny all;</span><br><span class="line">        &#125;</span><br><span class="line">        #error_page 404              /404.html;</span><br><span class="line">        error_page 500 502 503 504  /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="踩到的一些坑"><a href="#踩到的一些坑" class="headerlink" title="踩到的一些坑"></a>踩到的一些坑</h1><h2 id="400-x16-x03"><a href="#400-x16-x03" class="headerlink" title="400 \x16\x03"></a>400 \x16\x03</h2><p>同一个server节点，配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">listen 80 default_server;</span><br><span class="line">listen 443 ssl default_server;</span><br></pre></td></tr></table></figure></p>
+<h2 id="调试Https"><a href="#调试Https" class="headerlink" title="调试Https"></a>调试Https</h2><p>如果CA证书签发的域名是：www.abcde.com，为了在线下调试，假设将nginx部署在局域网IP：192.168.1.188，我们可以将本机的hosts文件修改一下，文件位于：C:\Windows\System32\drivers\etc\hosts。加上一行记录：“192.168.1.188 www.abcde.com”，保存后退出。再到本机的cmd命令行输入：ipconfig flushdns，退出cmd。等待几分钟后，在浏览器输入：<a href="https://www.abcde.com，即可在局域网调试啦！" target="_blank" rel="external">https://www.abcde.com，即可在局域网调试啦！</a></p>
+<h2 id="ssl-protocols"><a href="#ssl-protocols" class="headerlink" title="ssl_protocols"></a>ssl_protocols</h2><p>如果nginx.conf在定义ssl_protocols时，用了一些比较过时的协议，比如：SSLV3，则会被chrome提示连接不安全。可以参考我的nginx.conf配置，事实上这些过时的协议都有一些可以被利用的漏洞，建议不要使用了。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Record/">Record</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Nginx/">Nginx</a><a href="/tags/Tomcat/">Tomcat</a><a href="/tags/Docker/">Docker</a><a href="/tags/SSL/">SSL</a><a href="/tags/Load-balance/">Load balance</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/" data-title="Nginx与Tomcat 8在Docker环境的反向代理配置过程 | Cat&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/post/2016/04/JOOQ-from-entry-to-improve/"  title="JOOQ 3.6.1 使用总结：从入门到提高">
+ <strong>下一篇：</strong><br/> 
+ <span>JOOQ 3.6.1 使用总结：从入门到提高
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/" data-title="Nginx与Tomcat 8在Docker环境的反向代理配置过程" data-url="http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#需要做什么？"><span class="toc-number">1.</span> <span class="toc-text">需要做什么？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-with-Tomcat"><span class="toc-number">2.</span> <span class="toc-text">Docker with Tomcat</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx-VS-Tengine"><span class="toc-number">3.</span> <span class="toc-text">Nginx VS Tengine</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装与配置"><span class="toc-number">4.</span> <span class="toc-text">安装与配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#踩到的一些坑"><span class="toc-number">5.</span> <span class="toc-text">踩到的一些坑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#400-x16-x03"><span class="toc-number">5.1.</span> <span class="toc-text">400 \x16\x03</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试Https"><span class="toc-number">5.2.</span> <span class="toc-text">调试Https</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssl-protocols"><span class="toc-number">5.3.</span> <span class="toc-text">ssl_protocols</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="amao12580" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Learning/" title="Learning">Learning<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Record/" title="Record">Record<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Tutorial/" title="Tutorial">Tutorial<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/SQL/" title="SQL">SQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ARM/" title="ARM">ARM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Docker/" title="Docker">Docker<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SSL/" title="SSL">SSL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Load-balance/" title="Load balance">Load balance<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Tech/" title="Tech">Tech<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Elegant/" title="Elegant">Elegant<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JOOQ/" title="JOOQ">JOOQ<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Tomcat/" title="Tomcat">Tomcat<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ORM/" title="ORM">ORM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GitHub/" title="GitHub">GitHub<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jacman/" title="Jacman">Jacman<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Markdown/" title="Markdown">Markdown<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Redis/" title="Redis">Redis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hash/" title="Hash">Hash<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Sharding/" title="Sharding">Sharding<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Twemproxy/" title="Twemproxy">Twemproxy<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://segmentfault.com/blogs" target="_blank" title="专注高效地解决技术问题。内容质量的投票机制，合理区分答案与回馈信息，用户参与改进的维基化内容，帮你快捷地找到答案。">SegmentFault</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://blog.jobbole.com/" target="_blank" title="伯乐在线">伯乐在线</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cnpolitics.org/" target="_blank" title="政见">政见</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://dajia.qq.com/" target="_blank" title="大家">大家</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://imququ.com/" target="_blank" title="JerryQu 的小站">JerryQu 的小站</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m steven. This is my blog on GitHub. <br/>
+			Whenever you feel like criticizing any one, just remember that all the people in this world haven’t had the advantages that you’ve had.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/3201133445" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/amao12580" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:chengliangchengliang888@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		© 2016
+		
+		<a href="/about" target="_blank" title="Steven Cheng">Steven Cheng</a>
+		
+
+		<!-- 不蒜子统计 -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+本站总访问量<span id="busuanzi_value_site_pv"></span>,本站访客数<span id="busuanzi_value_site_uv"></span>，本文总阅读量<span id="busuanzi_value_page_pv"></span>
+</span>
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"amao12580"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-75497011-1', 'http://amao12580.github.io');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
