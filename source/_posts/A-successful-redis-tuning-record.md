@@ -272,6 +272,8 @@ session的存储不合理的解决，通过新的key(uid:token)来反向标记ui
 uid:158742-token001
 ```
 在写入SESSION_CACHE_KEY时，同时写入到redis，为保证2次写入的原子性，需要使用[redis的事务](https://redis.readthedocs.org/en/2.4/transaction.html)。如果支持用户的多设备在线，只需要将key(uid:token)更改为Sorted Set结构。因为不存在资源的争夺，这个事务几乎不会失败。在用户登出时，删除掉当前会话信息以及用户关联的会话信息(同样是使用redis事务)。
+
+注意，单机redis环境下，事务命令被完整的支持。扩展到多机redis协同工作时，如果使用了twemproxy，则事务命令不受支持，无法应用该方案。[查看twemproxy对redis命令的支持情况](https://github.com/twitter/twemproxy/blob/master/notes/redis.md)。
 ```
 cacheDao的实现
 private final static String SESSION_CACHE_KEY="se:";//全称："session:"，改善key命名，按业务进行简略，提升网络传输和存储效率。

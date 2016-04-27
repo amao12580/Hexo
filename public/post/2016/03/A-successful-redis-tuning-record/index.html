@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Cat's Blog">
 <meta property="og:description" content="在最后一步提到RDB定期存盘，解决方案存在问题，强行关闭，会导致redis中的数据存在丢失风险，在这里建议有条件的，配置redis为1主1从，Master不进行任何形式的存盘，而Slave配置RDB和AOF方式的存盘，双保险。应用只连接Master即可。">
 <meta property="og:image" content="http://amao12580.github.io/img/photos在redis的数据结构示例.png">
-<meta property="og:updated_time" content="2016-04-02T10:51:14.650Z">
+<meta property="og:updated_time" content="2016-04-20T10:27:57.287Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次redis成功调优的过程">
 <meta name="twitter:description" content="在最后一步提到RDB定期存盘，解决方案存在问题，强行关闭，会导致redis中的数据存在丢失风险，在这里建议有条件的，配置redis为1主1从，Master不进行任何形式的存盘，而Slave配置RDB和AOF方式的存盘，双保险。应用只连接Master即可。">
@@ -92,7 +92,7 @@
 		
   <p class="article-time">
   <time datetime="2016-03-23T08:09:12.000Z" itemprop="datePublished"> 发表于 2016-03-23 16:09:12.000</time>
-  <time postupdated="2016-04-02T10:51:14.650Z" itemprop="dateModified"> 更新于 2016-04-02 18:51:14.650</time>
+  <time postupdated="2016-04-20T10:27:57.287Z" itemprop="dateModified"> 更新于 2016-04-20 18:27:57.287</time>
 </p>
 </header>
 	<div class="article-content">
@@ -151,7 +151,8 @@
 <li>因采用错误数据结构，USER_ACTIVITY_CACHE_KEY需要进行多一次的exists判断。</li>
 </ul>
 <h4 id="方案-1"><a href="#方案-1" class="headerlink" title="方案"></a>方案</h4><p>session的存储不合理的解决，通过新的key(uid:token)来反向标记uid与token的关系，2个key的超时时间保持一致，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uid:158742-token001</span><br></pre></td></tr></table></figure></p>
-<p>在写入SESSION_CACHE_KEY时，同时写入到redis，为保证2次写入的原子性，需要使用<a href="https://redis.readthedocs.org/en/2.4/transaction.html" target="_blank" rel="external">redis的事务</a>。如果支持用户的多设备在线，只需要将key(uid:token)更改为Sorted Set结构。因为不存在资源的争夺，这个事务几乎不会失败。在用户登出时，删除掉当前会话信息以及用户关联的会话信息(同样是使用redis事务)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">cacheDao的实现</span><br><span class="line">private final static String SESSION_CACHE_KEY=&quot;se:&quot;;//全称：&quot;session:&quot;，改善key命名，按业务进行简略，提升网络传输和存储效率。</span><br><span class="line">private final static String USER_TOKEN_CACHE_KEY=&quot;u:t:&quot;;//uid:token:</span><br><span class="line">//登录成功，保存用户登录Token。接收建议的token参数值，返回实际保存的token值。</span><br><span class="line">public String setOneLoginSuccessToRedis(int uid,String token,String userLoginSuccessInfo)&#123;//重构</span><br><span class="line">    if(checkOneUserTokenExists(uid))&#123;</span><br><span class="line">        token=getOneUserToken(uid);</span><br><span class="line">    &#125;</span><br><span class="line">    long expireTime=30*24*60*60;//设置key有效期30天。</span><br><span class="line">    String ret=this.jedis.watch(SESSION_CACHE_KEY+token,USER_TOKEN_CACHE_KEY+uid);//乐观锁，重试，在这里几乎不存在</span><br><span class="line">    if(ret==null||!ret.equals(&quot;OK&quot;))&#123;</span><br><span class="line">        log.error(&quot;redis watch 操作失败.ret:&#123;&#125;&quot;,ret);</span><br><span class="line">        this.jedis.unwatch();</span><br><span class="line">    &#125;</span><br><span class="line">    Transaction tx = this.jedis.multi();</span><br><span class="line">    tx.setex(SESSION_CACHE_KEY+token, expireTime, userLoginSuccessInfo);</span><br><span class="line">    tx.setex(USER_TOKEN_CACHE_KEY+uid, expireTime, token);</span><br><span class="line">    List&lt;Object&gt; results = tx.exec();</span><br><span class="line">    return token;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//检查用户登录Token是否已经存在</span><br><span class="line">public boolean checkOneUserTokenExists(int uid)&#123;//新方法</span><br><span class="line">    return this.jedis.exists(USER_TOKEN_CACHE_KEY+uid);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//获取用户登录Token信息</span><br><span class="line">public String getOneUserToken(int uid)&#123;//新方法</span><br><span class="line">    return this.jedis.get(USER_TOKEN_CACHE_KEY+uid);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//鉴权</span><br><span class="line">public String getOneLoginSuccessInRedis(String token)&#123;//不改动</span><br><span class="line">    return this.jedis.get(SESSION_CACHE_KEY+token);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//登出</span><br><span class="line">public void logoutSuccessInRedis(String token)&#123;</span><br><span class="line">    String ret=this.jedis.watch(SESSION_CACHE_KEY+token,USER_TOKEN_CACHE_KEY+uid);//乐观锁，重试，在这里几乎不存在</span><br><span class="line">    if(ret==null||!ret.equals(&quot;OK&quot;))&#123;</span><br><span class="line">        log.error(&quot;redis watch 操作失败.ret:&#123;&#125;&quot;,ret);</span><br><span class="line">        this.jedis.unwatch();</span><br><span class="line">    &#125;</span><br><span class="line">    Transaction tx = this.jedis.multi();</span><br><span class="line">    tx.del(SESSION_CACHE_KEY+token);</span><br><span class="line">    tx.del(USER_TOKEN_CACHE_KEY+uid);</span><br><span class="line">    List&lt;Object&gt; results = tx.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在写入SESSION_CACHE_KEY时，同时写入到redis，为保证2次写入的原子性，需要使用<a href="https://redis.readthedocs.org/en/2.4/transaction.html" target="_blank" rel="external">redis的事务</a>。如果支持用户的多设备在线，只需要将key(uid:token)更改为Sorted Set结构。因为不存在资源的争夺，这个事务几乎不会失败。在用户登出时，删除掉当前会话信息以及用户关联的会话信息(同样是使用redis事务)。</p>
+<p>注意，单机redis环境下，事务命令被完整的支持。扩展到多机redis协同工作时，如果使用了twemproxy，则事务命令不受支持，无法应用该方案。<a href="https://github.com/twitter/twemproxy/blob/master/notes/redis.md" target="_blank" rel="external">查看twemproxy对redis命令的支持情况</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">cacheDao的实现</span><br><span class="line">private final static String SESSION_CACHE_KEY=&quot;se:&quot;;//全称：&quot;session:&quot;，改善key命名，按业务进行简略，提升网络传输和存储效率。</span><br><span class="line">private final static String USER_TOKEN_CACHE_KEY=&quot;u:t:&quot;;//uid:token:</span><br><span class="line">//登录成功，保存用户登录Token。接收建议的token参数值，返回实际保存的token值。</span><br><span class="line">public String setOneLoginSuccessToRedis(int uid,String token,String userLoginSuccessInfo)&#123;//重构</span><br><span class="line">    if(checkOneUserTokenExists(uid))&#123;</span><br><span class="line">        token=getOneUserToken(uid);</span><br><span class="line">    &#125;</span><br><span class="line">    long expireTime=30*24*60*60;//设置key有效期30天。</span><br><span class="line">    String ret=this.jedis.watch(SESSION_CACHE_KEY+token,USER_TOKEN_CACHE_KEY+uid);//乐观锁，重试，在这里几乎不存在</span><br><span class="line">    if(ret==null||!ret.equals(&quot;OK&quot;))&#123;</span><br><span class="line">        log.error(&quot;redis watch 操作失败.ret:&#123;&#125;&quot;,ret);</span><br><span class="line">        this.jedis.unwatch();</span><br><span class="line">    &#125;</span><br><span class="line">    Transaction tx = this.jedis.multi();</span><br><span class="line">    tx.setex(SESSION_CACHE_KEY+token, expireTime, userLoginSuccessInfo);</span><br><span class="line">    tx.setex(USER_TOKEN_CACHE_KEY+uid, expireTime, token);</span><br><span class="line">    List&lt;Object&gt; results = tx.exec();</span><br><span class="line">    return token;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//检查用户登录Token是否已经存在</span><br><span class="line">public boolean checkOneUserTokenExists(int uid)&#123;//新方法</span><br><span class="line">    return this.jedis.exists(USER_TOKEN_CACHE_KEY+uid);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//获取用户登录Token信息</span><br><span class="line">public String getOneUserToken(int uid)&#123;//新方法</span><br><span class="line">    return this.jedis.get(USER_TOKEN_CACHE_KEY+uid);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//鉴权</span><br><span class="line">public String getOneLoginSuccessInRedis(String token)&#123;//不改动</span><br><span class="line">    return this.jedis.get(SESSION_CACHE_KEY+token);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//登出</span><br><span class="line">public void logoutSuccessInRedis(String token)&#123;</span><br><span class="line">    String ret=this.jedis.watch(SESSION_CACHE_KEY+token,USER_TOKEN_CACHE_KEY+uid);//乐观锁，重试，在这里几乎不存在</span><br><span class="line">    if(ret==null||!ret.equals(&quot;OK&quot;))&#123;</span><br><span class="line">        log.error(&quot;redis watch 操作失败.ret:&#123;&#125;&quot;,ret);</span><br><span class="line">        this.jedis.unwatch();</span><br><span class="line">    &#125;</span><br><span class="line">    Transaction tx = this.jedis.multi();</span><br><span class="line">    tx.del(SESSION_CACHE_KEY+token);</span><br><span class="line">    tx.del(USER_TOKEN_CACHE_KEY+uid);</span><br><span class="line">    List&lt;Object&gt; results = tx.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="隐患和思考"><a href="#隐患和思考" class="headerlink" title="隐患和思考"></a>隐患和思考</h4><p>redis事务带来的问题，redis的事务设计比较暴力，这给应用层带来了麻烦。</p>
 <ul>
 <li>Redis的基本事务（basic transaction）需要用到MULTI命令和EXEC命令，这种事务可以让一个客户端在不被其他客户端打断的情况下执行多个命令。和关系数据库那种可以在执行的过程中进行回滚（rollback）的事务不同，在Redis里面，被MULTI命令和EXEC命令包围的所有命令会一个接一个地执行，直到所有命令都执行完毕为止。当一个事务执行完毕之后，Redis才会处理其他客户端的命令。</li>
@@ -294,7 +295,7 @@
 		  
 		
 		  
-			<li><a href="/categories/Record/" title="Record">Record<sup>2</sup></a></li>
+			<li><a href="/categories/Record/" title="Record">Record<sup>3</sup></a></li>
 		  
 		
 		  
@@ -315,11 +316,11 @@
 			
 		
 			
-				<li><a href="/tags/ARM/" title="ARM">ARM<sup>1</sup></a></li>
+				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Docker/" title="Docker">Docker<sup>1</sup></a></li>
+				<li><a href="/tags/Docker/" title="Docker">Docker<sup>2</sup></a></li>
 			
 		
 			
@@ -327,23 +328,23 @@
 			
 		
 			
-				<li><a href="/tags/Load-balance/" title="Load balance">Load balance<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Tech/" title="Tech">Tech<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Nginx/" title="Nginx">Nginx<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Elegant/" title="Elegant">Elegant<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/JOOQ/" title="JOOQ">JOOQ<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Redis/" title="Redis">Redis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ARM/" title="ARM">ARM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ORM/" title="ORM">ORM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Sharding/" title="Sharding">Sharding<sup>1</sup></a></li>
 			
 		
 			
@@ -351,7 +352,15 @@
 			
 		
 			
-				<li><a href="/tags/ORM/" title="ORM">ORM<sup>1</sup></a></li>
+				<li><a href="/tags/Twemproxy/" title="Twemproxy">Twemproxy<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hash/" title="Hash">Hash<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Load-balance/" title="Load balance">Load balance<sup>1</sup></a></li>
 			
 		
 			
@@ -371,19 +380,15 @@
 			
 		
 			
-				<li><a href="/tags/Redis/" title="Redis">Redis<sup>1</sup></a></li>
+				<li><a href="/tags/Tech/" title="Tech">Tech<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Hash/" title="Hash">Hash<sup>1</sup></a></li>
+				<li><a href="/tags/Elegant/" title="Elegant">Elegant<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Sharding/" title="Sharding">Sharding<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Twemproxy/" title="Twemproxy">Twemproxy<sup>1</sup></a></li>
+				<li><a href="/tags/Alpine/" title="Alpine">Alpine<sup>1</sup></a></li>
 			
 		
 		</ul>
