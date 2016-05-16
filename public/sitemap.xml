@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
+    
+    <lastmod>2016-05-16T05:22:03.239Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/about/index.html</loc>
     
-    <lastmod>2016-05-16T04:04:27.934Z</lastmod>
+    <lastmod>2016-05-16T04:41:35.942Z</lastmod>
     
   </url>
   
@@ -61,13 +68,6 @@
     <loc>http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/</loc>
     
     <lastmod>2016-04-08T10:18:13.630Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
-    
-    <lastmod>2016-04-01T09:10:57.402Z</lastmod>
     
   </url>
   

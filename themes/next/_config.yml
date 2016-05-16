@@ -6,7 +6,7 @@
 favicon: /images/favicon.ico
 
 # Set default keywords (Use a comma to separate)
-keywords: "Hexo, NexT"
+keywords: "amao12580"
 
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
@@ -25,10 +25,11 @@ since: 2016
 
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash (/archives -> archives)
 menu:
-  home: /
+  #home: /
   categories: /categories
   archives: /archives
-  tags: /tags
+  index: /index
+  #tags: /tags
   about: /about
   #commonweal: /404.html
 
@@ -47,6 +48,7 @@ menu_icons:
   tags: tags
   archives: archive
   commonweal: heartbeat
+  index: tags
 
 
 
@@ -245,7 +247,7 @@ auto_excerpt:
 
 # MathJax Support
 mathjax:
-  enable: true
+  enable: false
   cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
 

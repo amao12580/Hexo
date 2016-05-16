@@ -3,6 +3,32 @@
 
 
     
+  <url>
+    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
+    <lastmod>2016-05-16T05:22:03.239Z</lastmod>
+    <data>
+        <display>
+        <title>JOOQ 3.6.1 使用总结：从入门到提高</title>
+        <pubTime>2016-04-01T09:38:14.463Z</pubTime>
+        
+        <tag>JOOQ</tag>
+         
+        <tag>SQL</tag>
+         
+        <tag>ARM</tag>
+         
+        <tag>ORM</tag>
+         
+         
+           
+             
+              <breadCrumb title="Learning" url="http://amao12580.github.io/categories/Learning/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
     
     
@@ -135,32 +161,6 @@
            
              
               <breadCrumb title="Record" url="http://amao12580.github.io/categories/Record/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
-    <lastmod>2016-04-01T09:10:57.402Z</lastmod>
-    <data>
-        <display>
-        <title>JOOQ 3.6.1 使用总结：从入门到提高</title>
-        <pubTime>2016-04-01T09:38:14.463Z</pubTime>
-        
-        <tag>JOOQ</tag>
-         
-        <tag>SQL</tag>
-         
-        <tag>ARM</tag>
-         
-        <tag>ORM</tag>
-         
-         
-           
-             
-              <breadCrumb title="Learning" url="http://amao12580.github.io/categories/Learning/"/>
           
         </display>
     </data>

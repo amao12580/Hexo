@@ -342,9 +342,9 @@
     <link href="http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/"/>
     <id>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</id>
     <published>2016-04-01T09:38:14.463Z</published>
-    <updated>2016-04-01T09:10:57.402Z</updated>
+    <updated>2016-05-16T05:22:03.239Z</updated>
     
-    <content type="html">&lt;p&gt;2016年后换了一家公司干，后台ORM层用的是JOOQ，完全陌生的东西。干这一行越久，越觉得有更多有趣的新事物需要去探索。想起小说&lt;a href=&quot;https://book.douban.com/subject/26586492/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《火星救援》&lt;/a&gt;，主人Mark侥幸在风暴中幸存后，一步步的将自己救出困境，遇到的难题或大或小，皆有优雅解决之法。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;一切看似偶然蹊跷，其实与Mark的长期相关储备分不开。所谓艺多不压身，应该在有限的时间里，得到更多的成长，以期待机会来时接得住。&lt;/p&gt;
+    <content type="html">&lt;p&gt;2016年后换了一家公司干，后台ORM框架用的JOOQ，完全陌生的东西。干这一行越久，越觉得有更多有趣的新事物需要去探索。想起小说&lt;a href=&quot;https://book.douban.com/subject/26586492/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《火星救援》&lt;/a&gt;，主人Mark侥幸在火星风暴中幸存后，一步步将自己救出困境，遇到的难题或大或小，皆有优雅解决之法。&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;一切看似偶然蹊跷，其实与Mark的长期知识储备分不开。所谓艺多不压身，应该在有限的时间里，得到更多成长，以期待机会来时不辜负。&lt;/p&gt;
 &lt;p&gt;下文中的学习示例代码，已经整理完毕：&lt;a href=&quot;https://github.com/amao12580/JOOQ&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/amao12580/JOOQ&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&quot;什么是JOOQ？&quot;&gt;&lt;a href=&quot;#什么是JOOQ？&quot; class=&quot;headerlink&quot; title=&quot;什么是JOOQ？&quot;&gt;&lt;/a&gt;什么是JOOQ？&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://www.jooq.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JOOQ&lt;/a&gt;，全称Java Object Oriented Querying，即面向Java对象查询。它是&lt;a href=&quot;http://www.datageekery.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Data Geekery&lt;/a&gt;公司研发的DA方案(Data Access Layer)，主要解决两个问题：&lt;/p&gt;
 &lt;ol&gt;
@@ -410,7 +410,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;2016年后换了一家公司干，后台ORM层用的是JOOQ，完全陌生的东西。干这一行越久，越觉得有更多有趣的新事物需要去探索。想起小说&lt;a href=&quot;https://book.douban.com/subject/26586492/&quot;&gt;《火星救援》&lt;/a&gt;，主人Mark侥幸在风暴中幸存后，一步步的将自己救出困境，遇到的难题或大或小，皆有优雅解决之法。
+      &lt;p&gt;2016年后换了一家公司干，后台ORM框架用的JOOQ，完全陌生的东西。干这一行越久，越觉得有更多有趣的新事物需要去探索。想起小说&lt;a href=&quot;https://book.douban.com/subject/26586492/&quot;&gt;《火星救援》&lt;/a&gt;，主人Mark侥幸在火星风暴中幸存后，一步步将自己救出困境，遇到的难题或大或小，皆有优雅解决之法。
     
     </summary>
     

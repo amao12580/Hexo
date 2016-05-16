@@ -236,7 +236,7 @@
     <entry>
       <title><![CDATA[JOOQ 3.6.1 使用总结：从入门到提高]]></title>
       <url>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</url>
-      <content type="html"><![CDATA[<p>2016年后换了一家公司干，后台ORM层用的是JOOQ，完全陌生的东西。干这一行越久，越觉得有更多有趣的新事物需要去探索。想起小说<a href="https://book.douban.com/subject/26586492/" target="_blank" rel="external">《火星救援》</a>，主人Mark侥幸在风暴中幸存后，一步步的将自己救出困境，遇到的难题或大或小，皆有优雅解决之法。<a id="more"></a>一切看似偶然蹊跷，其实与Mark的长期相关储备分不开。所谓艺多不压身，应该在有限的时间里，得到更多的成长，以期待机会来时接得住。</p>
+      <content type="html"><![CDATA[<p>2016年后换了一家公司干，后台ORM框架用的JOOQ，完全陌生的东西。干这一行越久，越觉得有更多有趣的新事物需要去探索。想起小说<a href="https://book.douban.com/subject/26586492/" target="_blank" rel="external">《火星救援》</a>，主人Mark侥幸在火星风暴中幸存后，一步步将自己救出困境，遇到的难题或大或小，皆有优雅解决之法。<a id="more"></a>一切看似偶然蹊跷，其实与Mark的长期知识储备分不开。所谓艺多不压身，应该在有限的时间里，得到更多成长，以期待机会来时不辜负。</p>
 <p>下文中的学习示例代码，已经整理完毕：<a href="https://github.com/amao12580/JOOQ" target="_blank" rel="external">https://github.com/amao12580/JOOQ</a></p>
 <h2 id="什么是JOOQ？"><a href="#什么是JOOQ？" class="headerlink" title="什么是JOOQ？"></a>什么是JOOQ？</h2><p><a href="http://www.jooq.org/" target="_blank" rel="external">JOOQ</a>，全称Java Object Oriented Querying，即面向Java对象查询。它是<a href="http://www.datageekery.com/" target="_blank" rel="external">Data Geekery</a>公司研发的DA方案(Data Access Layer)，主要解决两个问题：</p>
 <ol>
