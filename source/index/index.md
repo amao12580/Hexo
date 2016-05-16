@@ -177,9 +177,13 @@ EXPLAIN select order_id,uid,order_time from `order` where uid like "%185";//左%
 
 EXPLAIN select order_id,uid,order_time from `order` where uid like "185";//类型转换，不能使用索引
 
-EXPLAIN select order_id,uid,order_time from `order` where uid/2=100 ;//字段进行算术操作，不能使用索引
+EXPLAIN select order_id,uid,order_time from `order` where uid/2=100 ;//谓词字段进行算术操作，不能使用索引
 
-EXPLAIN select order_id,uid,order_time from `order` where substring(uid,1,3)="abc";//字段进行函数操作，不能使用索引
+EXPLAIN select order_id,uid,order_time from `order` where substring(uid,1,3)="abc";//谓词字段进行函数操作，不能使用索引
+
+EXPLAIN select DISTINCT uid from `order`;
+
+EXPLAIN select max(uid) from `order`;//返回字段进行函数操作，不能使用索引
 
 ```
 

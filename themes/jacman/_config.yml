@@ -58,8 +58,8 @@ creative_commons: none
 #### Author information
 author:
   intro_line1:  "Hello ,I'm steven. This is my blog on GitHub."    ## your introduction on the bottom of the page
-  intro_line2:  "Whenever you feel like criticizing any one, just remember that all the people in this world haven’t had the advantages that you’ve had."  ## the 2nd line
-  intro_line3: "每当你觉得想要批评什么人的时候，你切要记着，这个世界上的人并非都具备你禀有的条件。《了不起的盖茨比》"
+  intro_line2:  "Talk is cheap，show me the code."  ## the 2nd line
+  intro_line3: ""
   weibo: 3201133445     ## e.g. wuchong1014 or 2176287895 for http://weibo.com/2176287895
   weibo_verifier: b3593ceb    ## e.g. b3593ceb Your weibo-show widget verifier ,if you use weibo-show it is needed.
   tsina:      ## e.g. 2176287895  Your weibo ID,It will be used in share button.

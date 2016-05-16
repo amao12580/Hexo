@@ -7,9 +7,10 @@ title: Cat's Blog
 subtitle: 一饮一啄，莫非前定.
 #为了更便于搜索引擎爬到，添加了网站的keywords
 keywords: cat's,chengliang,amao12580,blog,developers
-description: Follw the https://xuanwo.org/2015/03/26/hexo-intor/
+description: http://amao12580.github.io/about
 author: Steven Cheng
-language: zh-CN
+#language: zh-CN
+language: zh-Hans
 timezone:
 
 # URL
@@ -70,7 +71,15 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: jacman
+theme: next
+
+# 头像
+avatar: /images/avatar.png
+
+# 多说
+duoshuo_shortname: amao12580
+
+
 stylus:
   compress: true
 
@@ -107,3 +116,8 @@ sitemap:
 
 baidusitemap:
  - path: baidusitemap.xml
+
+
+search:
+ path: search.xml
+ field: post
