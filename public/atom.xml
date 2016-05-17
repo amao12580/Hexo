@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://amao12580.github.io/"/>
-  <updated>2016-05-13T10:30:07.284Z</updated>
+  <updated>2016-05-17T07:29:31.806Z</updated>
   <id>http://amao12580.github.io/</id>
   
   <author>
@@ -16,11 +16,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>架构规范总结</title>
-    <link href="http://amao12580.github.io/post/2016/05/Code-architecture-specification/"/>
-    <id>http://amao12580.github.io/post/2016/05/Code-architecture-specification/</id>
+    <title>软件重构经验总结</title>
+    <link href="http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/"/>
+    <id>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</id>
+    <published>2016-05-17T07:24:39.000Z</published>
+    <updated>2016-05-17T07:29:31.806Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;先了解&quot;&gt;&lt;a href=&quot;#先了解&quot; class=&quot;headerlink&quot; title=&quot;先了解&quot;&gt;&lt;/a&gt;先了解&lt;/h1&gt;&lt;h2 id=&quot;了解中发现问题症结&quot;&gt;&lt;a href=&quot;#了解中发现问题症结&quot; class=&quot;headerlink&quot; title=&quot;了解中发现问题症结&quot;&gt;&lt;/a&gt;了解中发现问题症结&lt;/h2&gt;&lt;h2 id=&quot;了解中思考解决方案&quot;&gt;&lt;a href=&quot;#了解中思考解决方案&quot; class=&quot;headerlink&quot; title=&quot;了解中思考解决方案&quot;&gt;&lt;/a&gt;了解中思考解决方案&lt;/h2&gt;&lt;h2 id=&quot;选取合适的解决方案&quot;&gt;&lt;a href=&quot;#选取合适的解决方案&quot; class=&quot;headerlink&quot; title=&quot;选取合适的解决方案&quot;&gt;&lt;/a&gt;选取合适的解决方案&lt;/h2&gt;&lt;h2 id=&quot;保留可扩展性&quot;&gt;&lt;a href=&quot;#保留可扩展性&quot; class=&quot;headerlink&quot; title=&quot;保留可扩展性&quot;&gt;&lt;/a&gt;保留可扩展性&lt;/h2&gt;&lt;h2 id=&quot;保留可维护性&quot;&gt;&lt;a href=&quot;#保留可维护性&quot; class=&quot;headerlink&quot; title=&quot;保留可维护性&quot;&gt;&lt;/a&gt;保留可维护性&lt;/h2&gt;&lt;h1 id=&quot;再动手&quot;&gt;&lt;a href=&quot;#再动手&quot; class=&quot;headerlink&quot; title=&quot;再动手&quot;&gt;&lt;/a&gt;再动手&lt;/h1&gt;&lt;h2 id=&quot;重构方案的评审&quot;&gt;&lt;a href=&quot;#重构方案的评审&quot; class=&quot;headerlink&quot; title=&quot;重构方案的评审&quot;&gt;&lt;/a&gt;重构方案的评审&lt;/h2&gt;&lt;h2 id=&quot;理清方案的优势与不足&quot;&gt;&lt;a href=&quot;#理清方案的优势与不足&quot; class=&quot;headerlink&quot; title=&quot;理清方案的优势与不足&quot;&gt;&lt;/a&gt;理清方案的优势与不足&lt;/h2&gt;&lt;h2 id=&quot;资源预先到位&quot;&gt;&lt;a href=&quot;#资源预先到位&quot; class=&quot;headerlink&quot; title=&quot;资源预先到位&quot;&gt;&lt;/a&gt;资源预先到位&lt;/h2&gt;&lt;p&gt;包括重构的时间争取，参与人员配比，对其他软硬件资源的预研。&lt;/p&gt;
+&lt;h2 id=&quot;重构前后的效果量化&quot;&gt;&lt;a href=&quot;#重构前后的效果量化&quot; class=&quot;headerlink&quot; title=&quot;重构前后的效果量化&quot;&gt;&lt;/a&gt;重构前后的效果量化&lt;/h2&gt;&lt;h2 id=&quot;充分的测试&quot;&gt;&lt;a href=&quot;#充分的测试&quot; class=&quot;headerlink&quot; title=&quot;充分的测试&quot;&gt;&lt;/a&gt;充分的测试&lt;/h2&gt;&lt;p&gt;基础方面的重构，需要充分的测试&lt;/p&gt;
+&lt;h1 id=&quot;方案上线&quot;&gt;&lt;a href=&quot;#方案上线&quot; class=&quot;headerlink&quot; title=&quot;方案上线&quot;&gt;&lt;/a&gt;方案上线&lt;/h1&gt;</content>
+    
+    <summary type="html">
+    
+      总结软件系统的持续重构经验和一些教训。
+    
+    </summary>
+    
+      <category term="Summary" scheme="http://amao12580.github.io/categories/Summary/"/>
+    
+    
+      <category term="Experience" scheme="http://amao12580.github.io/tags/Experience/"/>
+    
+      <category term="Refactor" scheme="http://amao12580.github.io/tags/Refactor/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>技术架构规范总结</title>
+    <link href="http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/"/>
+    <id>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</id>
     <published>2016-05-11T10:38:31.000Z</published>
-    <updated>2016-05-13T10:30:07.284Z</updated>
+    <updated>2016-05-17T07:22:34.370Z</updated>
     
     <content type="html">&lt;h1 id=&quot;原则&quot;&gt;&lt;a href=&quot;#原则&quot; class=&quot;headerlink&quot; title=&quot;原则&quot;&gt;&lt;/a&gt;原则&lt;/h1&gt;&lt;h2 id=&quot;命名规范&quot;&gt;&lt;a href=&quot;#命名规范&quot; class=&quot;headerlink&quot; title=&quot;命名规范&quot;&gt;&lt;/a&gt;命名规范&lt;/h2&gt;&lt;h3 id=&quot;重要性&quot;&gt;&lt;a href=&quot;#重要性&quot; class=&quot;headerlink&quot; title=&quot;重要性&quot;&gt;&lt;/a&gt;重要性&lt;/h3&gt;&lt;h3 id=&quot;如何做？&quot;&gt;&lt;a href=&quot;#如何做？&quot; class=&quot;headerlink&quot; title=&quot;如何做？&quot;&gt;&lt;/a&gt;如何做？&lt;/h3&gt;&lt;h3 id=&quot;约定优于配置&quot;&gt;&lt;a href=&quot;#约定优于配置&quot; class=&quot;headerlink&quot; title=&quot;约定优于配置&quot;&gt;&lt;/a&gt;约定优于配置&lt;/h3&gt;&lt;h2 id=&quot;合理的设计&quot;&gt;&lt;a href=&quot;#合理的设计&quot; class=&quot;headerlink&quot; title=&quot;合理的设计&quot;&gt;&lt;/a&gt;合理的设计&lt;/h2&gt;&lt;h3 id=&quot;适时分层&quot;&gt;&lt;a href=&quot;#适时分层&quot; class=&quot;headerlink&quot; title=&quot;适时分层&quot;&gt;&lt;/a&gt;适时分层&lt;/h3&gt;&lt;h3 id=&quot;避免过度设计&quot;&gt;&lt;a href=&quot;#避免过度设计&quot; class=&quot;headerlink&quot; title=&quot;避免过度设计&quot;&gt;&lt;/a&gt;避免过度设计&lt;/h3&gt;&lt;h2 id=&quot;前轻后重&quot;&gt;&lt;a href=&quot;#前轻后重&quot; class=&quot;headerlink&quot; title=&quot;前轻后重&quot;&gt;&lt;/a&gt;前轻后重&lt;/h2&gt;&lt;p&gt;系统之间的调用链，前置系统轻逻辑。&lt;/p&gt;
 &lt;h3 id=&quot;上轻下重，核心逻辑内敛&quot;&gt;&lt;a href=&quot;#上轻下重，核心逻辑内敛&quot; class=&quot;headerlink&quot; title=&quot;上轻下重，核心逻辑内敛&quot;&gt;&lt;/a&gt;上轻下重，核心逻辑内敛&lt;/h3&gt;&lt;p&gt;模块之间的调用链，上层模块轻逻辑&lt;/p&gt;
@@ -34,7 +60,8 @@
 &lt;h2 id=&quot;技术升级&quot;&gt;&lt;a href=&quot;#技术升级&quot; class=&quot;headerlink&quot; title=&quot;技术升级&quot;&gt;&lt;/a&gt;技术升级&lt;/h2&gt;&lt;p&gt;系统容量与性能指标的要求，在业务发展的各个阶段是不固定的，技术需要保留一定前瞻性，不做被动跟随。&lt;/p&gt;
 &lt;h1 id=&quot;团队管理&quot;&gt;&lt;a href=&quot;#团队管理&quot; class=&quot;headerlink&quot; title=&quot;团队管理&quot;&gt;&lt;/a&gt;团队管理&lt;/h1&gt;&lt;h2 id=&quot;keep-watch&quot;&gt;&lt;a href=&quot;#keep-watch&quot; class=&quot;headerlink&quot; title=&quot;keep watch&quot;&gt;&lt;/a&gt;keep watch&lt;/h2&gt;&lt;p&gt;工作与心理的交流分享&lt;/p&gt;
 &lt;h2 id=&quot;保持信任&quot;&gt;&lt;a href=&quot;#保持信任&quot; class=&quot;headerlink&quot; title=&quot;保持信任&quot;&gt;&lt;/a&gt;保持信任&lt;/h2&gt;&lt;h2 id=&quot;保持怀疑&quot;&gt;&lt;a href=&quot;#保持怀疑&quot; class=&quot;headerlink&quot; title=&quot;保持怀疑&quot;&gt;&lt;/a&gt;保持怀疑&lt;/h2&gt;&lt;h2 id=&quot;持续考评&quot;&gt;&lt;a href=&quot;#持续考评&quot; class=&quot;headerlink&quot; title=&quot;持续考评&quot;&gt;&lt;/a&gt;持续考评&lt;/h2&gt;&lt;h2 id=&quot;分享中提高&quot;&gt;&lt;a href=&quot;#分享中提高&quot; class=&quot;headerlink&quot; title=&quot;分享中提高&quot;&gt;&lt;/a&gt;分享中提高&lt;/h2&gt;&lt;h2 id=&quot;互相备份&quot;&gt;&lt;a href=&quot;#互相备份&quot; class=&quot;headerlink&quot; title=&quot;互相备份&quot;&gt;&lt;/a&gt;互相备份&lt;/h2&gt;&lt;h2 id=&quot;互相支撑&quot;&gt;&lt;a href=&quot;#互相支撑&quot; class=&quot;headerlink&quot; title=&quot;互相支撑&quot;&gt;&lt;/a&gt;互相支撑&lt;/h2&gt;&lt;h2 id=&quot;向上管理&quot;&gt;&lt;a href=&quot;#向上管理&quot; class=&quot;headerlink&quot; title=&quot;向上管理&quot;&gt;&lt;/a&gt;向上管理&lt;/h2&gt;&lt;h2 id=&quot;向下管理&quot;&gt;&lt;a href=&quot;#向下管理&quot; class=&quot;headerlink&quot; title=&quot;向下管理&quot;&gt;&lt;/a&gt;向下管理&lt;/h2&gt;&lt;h3 id=&quot;了解队员的擅长与不足&quot;&gt;&lt;a href=&quot;#了解队员的擅长与不足&quot; class=&quot;headerlink&quot; title=&quot;了解队员的擅长与不足&quot;&gt;&lt;/a&gt;了解队员的擅长与不足&lt;/h3&gt;&lt;h3 id=&quot;合理的任务分配&quot;&gt;&lt;a href=&quot;#合理的任务分配&quot; class=&quot;headerlink&quot; title=&quot;合理的任务分配&quot;&gt;&lt;/a&gt;合理的任务分配&lt;/h3&gt;&lt;h3 id=&quot;适度挑战性的任务&quot;&gt;&lt;a href=&quot;#适度挑战性的任务&quot; class=&quot;headerlink&quot; title=&quot;适度挑战性的任务&quot;&gt;&lt;/a&gt;适度挑战性的任务&lt;/h3&gt;&lt;h3 id=&quot;给出完成任务需要的资源&quot;&gt;&lt;a href=&quot;#给出完成任务需要的资源&quot; class=&quot;headerlink&quot; title=&quot;给出完成任务需要的资源&quot;&gt;&lt;/a&gt;给出完成任务需要的资源&lt;/h3&gt;&lt;h3 id=&quot;激励中成长&quot;&gt;&lt;a href=&quot;#激励中成长&quot; class=&quot;headerlink&quot; title=&quot;激励中成长&quot;&gt;&lt;/a&gt;激励中成长&lt;/h3&gt;&lt;p&gt;眼前利益与发展前景&lt;/p&gt;
-&lt;h3 id=&quot;给出职业发展的机会&quot;&gt;&lt;a href=&quot;#给出职业发展的机会&quot; class=&quot;headerlink&quot; title=&quot;给出职业发展的机会&quot;&gt;&lt;/a&gt;给出职业发展的机会&lt;/h3&gt;&lt;h3 id=&quot;公开与公平中考评&quot;&gt;&lt;a href=&quot;#公开与公平中考评&quot; class=&quot;headerlink&quot; title=&quot;公开与公平中考评&quot;&gt;&lt;/a&gt;公开与公平中考评&lt;/h3&gt;&lt;h2 id=&quot;适时剔除不合格&quot;&gt;&lt;a href=&quot;#适时剔除不合格&quot; class=&quot;headerlink&quot; title=&quot;适时剔除不合格&quot;&gt;&lt;/a&gt;适时剔除不合格&lt;/h2&gt;&lt;h1 id=&quot;接口&quot;&gt;&lt;a href=&quot;#接口&quot; class=&quot;headerlink&quot; title=&quot;接口&quot;&gt;&lt;/a&gt;接口&lt;/h1&gt;&lt;h2 id=&quot;版本控制&quot;&gt;&lt;a href=&quot;#版本控制&quot; class=&quot;headerlink&quot; title=&quot;版本控制&quot;&gt;&lt;/a&gt;版本控制&lt;/h2&gt;&lt;h2 id=&quot;访问控制&quot;&gt;&lt;a href=&quot;#访问控制&quot; class=&quot;headerlink&quot; title=&quot;访问控制&quot;&gt;&lt;/a&gt;访问控制&lt;/h2&gt;&lt;p&gt;访问权限的验证&lt;/p&gt;
+&lt;h3 id=&quot;给出职业发展的机会&quot;&gt;&lt;a href=&quot;#给出职业发展的机会&quot; class=&quot;headerlink&quot; title=&quot;给出职业发展的机会&quot;&gt;&lt;/a&gt;给出职业发展的机会&lt;/h3&gt;&lt;h3 id=&quot;公开与公平中考评&quot;&gt;&lt;a href=&quot;#公开与公平中考评&quot; class=&quot;headerlink&quot; title=&quot;公开与公平中考评&quot;&gt;&lt;/a&gt;公开与公平中考评&lt;/h3&gt;&lt;h2 id=&quot;适时剔除不合格&quot;&gt;&lt;a href=&quot;#适时剔除不合格&quot; class=&quot;headerlink&quot; title=&quot;适时剔除不合格&quot;&gt;&lt;/a&gt;适时剔除不合格&lt;/h2&gt;&lt;h2 id=&quot;技术梯队&quot;&gt;&lt;a href=&quot;#技术梯队&quot; class=&quot;headerlink&quot; title=&quot;技术梯队&quot;&gt;&lt;/a&gt;技术梯队&lt;/h2&gt;&lt;p&gt;不同层次的人员配比，完成不同类型的任务。注意人员的上升下降渠道。&lt;/p&gt;
+&lt;h1 id=&quot;接口&quot;&gt;&lt;a href=&quot;#接口&quot; class=&quot;headerlink&quot; title=&quot;接口&quot;&gt;&lt;/a&gt;接口&lt;/h1&gt;&lt;h2 id=&quot;版本控制&quot;&gt;&lt;a href=&quot;#版本控制&quot; class=&quot;headerlink&quot; title=&quot;版本控制&quot;&gt;&lt;/a&gt;版本控制&lt;/h2&gt;&lt;h2 id=&quot;访问控制&quot;&gt;&lt;a href=&quot;#访问控制&quot; class=&quot;headerlink&quot; title=&quot;访问控制&quot;&gt;&lt;/a&gt;访问控制&lt;/h2&gt;&lt;p&gt;访问权限的验证&lt;/p&gt;
 &lt;h2 id=&quot;流量控制&quot;&gt;&lt;a href=&quot;#流量控制&quot; class=&quot;headerlink&quot; title=&quot;流量控制&quot;&gt;&lt;/a&gt;流量控制&lt;/h2&gt;&lt;p&gt;拒绝恶意访问&lt;/p&gt;
 &lt;h2 id=&quot;审查与监控&quot;&gt;&lt;a href=&quot;#审查与监控&quot; class=&quot;headerlink&quot; title=&quot;审查与监控&quot;&gt;&lt;/a&gt;审查与监控&lt;/h2&gt;&lt;h2 id=&quot;灰度发布&quot;&gt;&lt;a href=&quot;#灰度发布&quot; class=&quot;headerlink&quot; title=&quot;灰度发布&quot;&gt;&lt;/a&gt;灰度发布&lt;/h2&gt;&lt;h2 id=&quot;无状态&quot;&gt;&lt;a href=&quot;#无状态&quot; class=&quot;headerlink&quot; title=&quot;无状态&quot;&gt;&lt;/a&gt;无状态&lt;/h2&gt;&lt;h2 id=&quot;原子化&quot;&gt;&lt;a href=&quot;#原子化&quot; class=&quot;headerlink&quot; title=&quot;原子化&quot;&gt;&lt;/a&gt;原子化&lt;/h2&gt;&lt;h2 id=&quot;CQRS&quot;&gt;&lt;a href=&quot;#CQRS&quot; class=&quot;headerlink&quot; title=&quot;CQRS&quot;&gt;&lt;/a&gt;CQRS&lt;/h2&gt;&lt;p&gt;命令查询职责分离模式，读不强依赖写。&lt;/p&gt;
 &lt;h1 id=&quot;APP-Client&quot;&gt;&lt;a href=&quot;#APP-Client&quot; class=&quot;headerlink&quot; title=&quot;APP(Client)&quot;&gt;&lt;/a&gt;APP(Client)&lt;/h1&gt;&lt;h2 id=&quot;远程控制权&quot;&gt;&lt;a href=&quot;#远程控制权&quot; class=&quot;headerlink&quot; title=&quot;远程控制权&quot;&gt;&lt;/a&gt;远程控制权&lt;/h2&gt;&lt;h2 id=&quot;展示为主&quot;&gt;&lt;a href=&quot;#展示为主&quot; class=&quot;headerlink&quot; title=&quot;展示为主&quot;&gt;&lt;/a&gt;展示为主&lt;/h2&gt;&lt;h2 id=&quot;少的逻辑&quot;&gt;&lt;a href=&quot;#少的逻辑&quot; class=&quot;headerlink&quot; title=&quot;少的逻辑&quot;&gt;&lt;/a&gt;少的逻辑&lt;/h2&gt;&lt;h2 id=&quot;适度安全&quot;&gt;&lt;a href=&quot;#适度安全&quot; class=&quot;headerlink&quot; title=&quot;适度安全&quot;&gt;&lt;/a&gt;适度安全&lt;/h2&gt;&lt;h1 id=&quot;部署&quot;&gt;&lt;a href=&quot;#部署&quot; class=&quot;headerlink&quot; title=&quot;部署&quot;&gt;&lt;/a&gt;部署&lt;/h1&gt;&lt;h2 id=&quot;监控&quot;&gt;&lt;a href=&quot;#监控&quot; class=&quot;headerlink&quot; title=&quot;监控&quot;&gt;&lt;/a&gt;监控&lt;/h2&gt;&lt;h2 id=&quot;降低升级时间窗&quot;&gt;&lt;a href=&quot;#降低升级时间窗&quot; class=&quot;headerlink&quot; title=&quot;降低升级时间窗&quot;&gt;&lt;/a&gt;降低升级时间窗&lt;/h2&gt;&lt;h2 id=&quot;没有人需要等待&quot;&gt;&lt;a href=&quot;#没有人需要等待&quot; class=&quot;headerlink&quot; title=&quot;没有人需要等待&quot;&gt;&lt;/a&gt;没有人需要等待&lt;/h2&gt;&lt;p&gt;正式发布后，对于任何用户都是公平使用的。不需要牺牲部分用户利益。&lt;br&gt;常见于缓存autowarm时需要阻塞第一批到达的用户。&lt;/p&gt;
@@ -42,7 +69,7 @@
     
     <summary type="html">
     
-      总结一些架构方面的普适性经验（理出了大纲，但未完成）.
+      总结技术架构方面的普适性经验，还有一些团队管理的准则。
     
     </summary>
     

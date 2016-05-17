@@ -27,9 +27,9 @@ since: 2016
 menu:
   #home: /
   categories: /categories
-  archives: /archives
+  #archives: /archives
   index: /index
-  #tags: /tags
+  tags: /tags
   about: /about
   #commonweal: /404.html
 

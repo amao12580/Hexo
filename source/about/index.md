@@ -1,5 +1,5 @@
 ---
-#title: '成亮_技术经理_简历'
+#title: '关于博主.'
 date: 2016年3月21日16:59:51
 comments: false   #去除多说评论框
 
@@ -7,30 +7,17 @@ comments: false   #去除多说评论框
 
 # 联系方式
 
-- 手机/微信：(+86) 186-7297-8279
-
 - Email：<stevenchengmask@gmail.com>
 
 ---
 
 # 个人信息
 
-
- - <a target="_blank" href="http://amao12580.github.io/file/成亮_技术经理_简历.pdf">下载简历</a>
-
  - 成亮
 
  - 1991 / 5年经验
 
- - 博客：<a target="_blank" href="https://amao12580.github.io/">https://amao12580.github.io/</a>
-
- - GitHub：<a target="_blank" href="https://github.com/amao12580/">https://github.com/amao12580/</a>
-
- - 期望职位：技术经理
-
- - 期望薪资：税前月薪35k
-
- - 期望城市：深圳
+ - 热爱移动互联网，推崇开源技术，提倡在团队分享中提高。
 
 ---
 
@@ -67,6 +54,8 @@ comments: false   #去除多说评论框
 ## 贡献
 
 <a target="_blank" href="https://github.com/dangdangdotcom/elastic-job/blob/master/README.md">Elastic-Job</a>
+
+Description：Elastic-Job是当当网后台基础架构设施中，dd-job的作业模块中分离出来的分布式弹性作业框架。去掉了和dd-job中的监控和ddframe接入规范部分。该项目基于成熟的开源产品Quartz和Zookeeper及其客户端Curator进行二次开发。
 
 - <a target="_blank" href="https://github.com/dangdangdotcom/elastic-job/issues/6">[Improvement] 校对作业服务器与注册中心时间误差</a>：对基础组件进行改良，已被采纳。
 
@@ -105,6 +94,3 @@ comments: false   #去除多说评论框
 - 负载均衡：Keepalived/HAProxy
 
 ---
-
-# 致谢
-感谢您花时间阅读我的简历，期待能有机会和您共事。

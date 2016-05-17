@@ -3,6 +3,53 @@
 
 
     
+    
+    
+    
+  <url>
+    <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
+    <lastmod>2016-05-17T07:29:31.806Z</lastmod>
+    <data>
+        <display>
+        <title>软件重构经验总结</title>
+        <pubTime>2016-05-17T07:24:39.000Z</pubTime>
+        
+        <tag>Experience</tag>
+         
+        <tag>Refactor</tag>
+         
+         
+           
+             
+              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
+    <lastmod>2016-05-17T07:22:34.370Z</lastmod>
+    <data>
+        <display>
+        <title>技术架构规范总结</title>
+        <pubTime>2016-05-11T10:38:31.000Z</pubTime>
+        
+        <tag>Architecture</tag>
+         
+        <tag>Specification</tag>
+         
+         
+           
+             
+              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
   <url>
     <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
     <lastmod>2016-05-16T05:22:03.239Z</lastmod>
@@ -29,30 +76,6 @@
     </url>
 
     
-    
-    
-    
-  <url>
-    <loc>http://amao12580.github.io/post/2016/05/Code-architecture-specification/</loc>
-    <lastmod>2016-05-13T10:30:07.284Z</lastmod>
-    <data>
-        <display>
-        <title>架构规范总结</title>
-        <pubTime>2016-05-11T10:38:31.000Z</pubTime>
-        
-        <tag>Architecture</tag>
-         
-        <tag>Specification</tag>
-         
-         
-           
-             
-              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
-          
-        </display>
-    </data>
-    </url>
-
     
   <url>
     <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</loc>
@@ -83,7 +106,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-one/</loc>
