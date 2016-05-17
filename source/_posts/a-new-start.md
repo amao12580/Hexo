@@ -8,7 +8,7 @@ tags:
     - Markdown
 categories:
     - Tutorial
-description: 记录从零开始的Blogging with Hexo的搭建过程.
+description: 刚开始折腾时，经常出现改了很多配置，一运行就报错了，但是无法定位是哪些配置的改动导致的？幸好我用Sublime Text 3修改的，有历史记录，这点真是太赞了！Hexo配置好后，最好做一次网盘私密备份，以免主机故障丢失。而且有了备份，在家或在公司，都可以愉快的写blog啦！
 ---
 
 # 写在前面 #

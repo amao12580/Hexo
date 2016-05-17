@@ -87,7 +87,7 @@
     <link href="http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/"/>
     <id>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</id>
     <published>2016-04-28T04:45:59.000Z</published>
-    <updated>2016-05-11T04:53:05.122Z</updated>
+    <updated>2016-05-17T08:46:45.118Z</updated>
     
     <content type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;本文中的配置文件，已经整理到了GitHub：&lt;a href=&quot;https://github.com/amao12580/docker&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/amao12580/docker&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文假设读者对Nginx、Docker已经有了比较深入的了解，并掌握了docker-compose工具的使用。&lt;/p&gt;
@@ -188,8 +188,8 @@
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;对后端的健康管理&quot;&gt;&lt;a href=&quot;#对后端的健康管理&quot; class=&quot;headerlink&quot; title=&quot;对后端的健康管理&quot;&gt;&lt;/a&gt;对后端的健康管理&lt;/h2&gt;&lt;p&gt;使用nginx_upstream_check_module功能增强补丁&lt;/p&gt;
 &lt;p&gt;配置location,开放后端tomcat的健康状况访问。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://192.168.2.200/xw_TomcatStatus/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://192.168.2.200/xw_TomcatStatus/&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;自身的运行监控&quot;&gt;&lt;a href=&quot;#自身的运行监控&quot; class=&quot;headerlink&quot; title=&quot;自身的运行监控&quot;&gt;&lt;/a&gt;自身的运行监控&lt;/h2&gt;&lt;p&gt;监控Nginx：&lt;a href=&quot;http://192.168.2.200/xw_NginxStatus/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://192.168.2.200/xw_NginxStatus/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://your&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://your&lt;/a&gt; maintenance IP and Port/xw_TomcatStatus/&lt;/p&gt;
+&lt;h2 id=&quot;自身的运行监控&quot;&gt;&lt;a href=&quot;#自身的运行监控&quot; class=&quot;headerlink&quot; title=&quot;自身的运行监控&quot;&gt;&lt;/a&gt;自身的运行监控&lt;/h2&gt;&lt;p&gt;监控Nginx：&lt;a href=&quot;http://your&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://your&lt;/a&gt; maintenance IP and Port/xw_NginxStatus/&lt;/p&gt;
 &lt;h2 id=&quot;Reference&quot;&gt;&lt;a href=&quot;#Reference&quot; class=&quot;headerlink&quot; title=&quot;Reference&quot;&gt;&lt;/a&gt;Reference&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;软件架构模式：&lt;a href=&quot;http://colobu.com/2015/04/08/software-architecture-patterns/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://colobu.com/2015/04/08/software-architecture-patterns/&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
@@ -202,7 +202,7 @@
     
     <summary type="html">
     
-      Nginx在三高方面的的概览，以及解答如何更好的在Docker容器中使用Nginx。
+      介绍Nginx自身的设计思想，解决如何进行动静分离、负载均衡，还有软件热升级方案的应用。以及解答如何更好的在Docker容器中使用Nginx，对Nginx  Active-Standby应用模式的思考.
     
     </summary>
     
@@ -326,7 +326,7 @@
     <link href="http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/"/>
     <id>http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/</id>
     <published>2016-04-08T06:49:32.000Z</published>
-    <updated>2016-04-08T10:18:13.630Z</updated>
+    <updated>2016-05-17T08:27:49.745Z</updated>
     
     <content type="html">&lt;h1 id=&quot;需要做什么？&quot;&gt;&lt;a href=&quot;#需要做什么？&quot; class=&quot;headerlink&quot; title=&quot;需要做什么？&quot;&gt;&lt;/a&gt;需要做什么？&lt;/h1&gt;&lt;p&gt;最近接到的任务是:在Docker环境下，Nginx与Tomcat的反向代理与负载均衡配置。先拿出可行性方案，以便在业务量突发时，在线上环境实施。典型的技术预研，打有准备仗。同时还提出了安全需求，在配置上，需要有安全加固。&lt;/p&gt;
 &lt;p&gt;在Nginx配置时，针对不同的使用环境，配置的参数有很多不同。迫在眉睫的，我们需要先对线上的API服务系统进行反向代理与负载均衡配置。API服务系统是面向手机APP的接口系统，使用HTTP Restful+json进行数据通讯。&lt;/p&gt;
@@ -345,7 +345,7 @@
     
     <summary type="html">
     
-      全程记录在Docker环境下，Nginx与Tomcat的反向代理与负载均衡配置。
+      在Nginx配置时，针对不同的使用环境，配置的参数有很多不同。迫在眉睫的，我们需要先对线上的API服务系统进行反向代理与负载均衡配置。API服务系统是面向手机APP的接口系统，使用HTTP Restful+json进行数据通讯。
     
     </summary>
     
@@ -459,7 +459,7 @@
     <link href="http://amao12580.github.io/post/2016/04/A-new-start/"/>
     <id>http://amao12580.github.io/post/2016/04/A-new-start/</id>
     <published>2016-04-01T09:38:14.461Z</published>
-    <updated>2016-03-28T06:35:32.547Z</updated>
+    <updated>2016-05-17T08:29:41.100Z</updated>
     
     <content type="html">&lt;h1 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h1&gt;&lt;p&gt;　　转眼间3月份也即将过去了，在接受了众多的理论输入以及实践之后，决定要将一些值得分享的事情记录下来，一方面是避免自己重复的掉坑，另一方面也希望通过blog的方式锻炼自己的文字能力。输入+沉淀+输出，形成自我知识攫取过程的闭环。&lt;/p&gt;
 &lt;p&gt;　　下面记录从零开始的Blogging with Hexo的搭建过程，有一些简单的问题，在文末也会给出答案。&lt;/p&gt;
@@ -526,7 +526,7 @@
     
     <summary type="html">
     
-      记录从零开始的Blogging with Hexo的搭建过程.
+      刚开始折腾时，经常出现改了很多配置，一运行就报错了，但是无法定位是哪些配置的改动导致的？幸好我用Sublime Text 3修改的，有历史记录，这点真是太赞了！Hexo配置好后，最好做一次网盘私密备份，以免主机故障丢失。而且有了备份，在家或在公司，都可以愉快的写blog啦！
     
     </summary>
     
@@ -673,9 +673,9 @@
     <link href="http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/"/>
     <id>http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/</id>
     <published>2016-03-21T04:25:10.000Z</published>
-    <updated>2016-03-31T03:51:42.629Z</updated>
+    <updated>2016-05-17T08:39:33.401Z</updated>
     
-    <content type="html">&lt;p&gt;数据库中的表可通过键将彼此联系起来。主键（Primary Key）是一个列，在这个列中的每一行的值都是唯一的。在表中，每个主键的值都是唯一的。这样做的目的是在不重复每个表中的所有数据的情况下，把表间的数据交叉捆绑在一起。&lt;/p&gt;
+    <content type="html">&lt;p&gt;数据库中的表可通过外键将彼此联系起来。主键（Primary Key）是一个列，在这个列中的每一行的值都是唯一的。在表中，每个主键的值都是唯一的。这样做的目的是在不重复每个表中的所有数据的情况下，把表间的数据交叉捆绑在一起。&lt;/p&gt;
 &lt;p&gt;而在两个表之间建立关联关系，是不要求任何一个表的关联列(column)是主键的，这个关联列可以是任何类型的列，但是要求，两个表的关联列可以做关联关系的条件计算，为避免转换影响效率，两个关联列最好保持类型、长度一致。&lt;/p&gt;
 &lt;p&gt;为方便说明，定义以下2张表：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;用户信息表&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CREATE TABLE `user` (&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `uid` int(11) NOT NULL COMMENT &amp;apos;用户id&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `name` varchar(10) DEFAULT NULL COMMENT &amp;apos;姓名&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `sex` tinyint(1) DEFAULT NULL COMMENT &amp;apos;性别&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `age` tinyint(2) DEFAULT NULL COMMENT &amp;apos;年龄&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `mobile` varchar(11) DEFAULT NULL COMMENT &amp;apos;手机号码&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `password` varchar(64) NOT NULL COMMENT &amp;apos;密码&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `register_time` datetime NOT NULL COMMENT &amp;apos;注册时间&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  PRIMARY KEY (`uid`),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  UNIQUE KEY `index_mobile` (`mobile`) USING BTREE&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;) ENGINE=InnoDB DEFAULT CHARSET=utf8;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;INSERT INTO `user` VALUES (&amp;apos;100&amp;apos;, &amp;apos;张三&amp;apos;, &amp;apos;1&amp;apos;, &amp;apos;28&amp;apos;, &amp;apos;13547521456&amp;apos;, &amp;apos;ASDAWQ@!#SDF@#$%XCF&amp;apos;, &amp;apos;2016-03-30 17:47:51&amp;apos;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;INSERT INTO `user` VALUES (&amp;apos;101&amp;apos;, &amp;apos;李四&amp;apos;, &amp;apos;2&amp;apos;, &amp;apos;35&amp;apos;, &amp;apos;17025856329&amp;apos;, &amp;apos;234ASD@#$@#$AFSDFRT&amp;apos;, &amp;apos;2016-03-30 17:48:34&amp;apos;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;INSERT INTO `user` VALUES (&amp;apos;102&amp;apos;, &amp;apos;王五&amp;apos;, &amp;apos;1&amp;apos;, &amp;apos;48&amp;apos;, &amp;apos;15925874536&amp;apos;, &amp;apos;#$%SDFSDR@#$%@#$#@&amp;apos;, &amp;apos;2016-03-30 17:53:49&amp;apos;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;订单信息表&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CREATE TABLE `order` (&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `order_id` int(11) NOT NULL COMMENT &amp;apos;订单编号&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `uid` int(11) DEFAULT NULL COMMENT &amp;apos;用户Id&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `amout` mediumtext NOT NULL COMMENT &amp;apos;订单金额(单位为分)&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `status` tinyint(2) DEFAULT NULL COMMENT &amp;apos;订单状态&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  `order_time` datetime DEFAULT NULL COMMENT &amp;apos;订单时间&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  PRIMARY KEY (`order_id`)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;) ENGINE=InnoDB DEFAULT CHARSET=utf8;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;INSERT INTO `order` VALUES (&amp;apos;200&amp;apos;, &amp;apos;100&amp;apos;, &amp;apos;5899&amp;apos;, &amp;apos;0&amp;apos;, &amp;apos;2016-03-30 17:54:20&amp;apos;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;INSERT INTO `order` VALUES (&amp;apos;201&amp;apos;, &amp;apos;100&amp;apos;, &amp;apos;6799&amp;apos;, &amp;apos;0&amp;apos;, &amp;apos;2016-03-30 17:54:38&amp;apos;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;INSERT INTO `order` VALUES (&amp;apos;202&amp;apos;, &amp;apos;101&amp;apos;, &amp;apos;12699&amp;apos;, &amp;apos;0&amp;apos;, &amp;apos;2016-03-30 17:55:01&amp;apos;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;数据库现在2张表的数据看起来是这样：&lt;br&gt;user表&lt;/p&gt;
@@ -879,11 +879,19 @@
 &lt;li&gt;&lt;a href=&quot;http://shiyanjun.cn/archives/588.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hive JOIN使用详解&lt;/a&gt;&lt;h3 id=&quot;结合explain进行执行分析&quot;&gt;&lt;a href=&quot;#结合explain进行执行分析&quot; class=&quot;headerlink&quot; title=&quot;结合explain进行执行分析&quot;&gt;&lt;/a&gt;结合explain进行执行分析&lt;/h3&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/mchdba/article/details/9190771&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MySQL EXPLAIN 命令详解学习&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h3 id=&quot;数据库设计准则&quot;&gt;&lt;a href=&quot;#数据库设计准则&quot; class=&quot;headerlink&quot; title=&quot;数据库设计准则&quot;&gt;&lt;/a&gt;数据库设计准则&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;一范式就是属性不可分割。属性是什么？就是表中的字段。不可分割的意思就按字面理解就是最小单位，不能再分成更小单位了。这个字段只能是一个值，不能被拆分成多个字段，否则的话，它就是可分割的，就不符合一范式。不过能不能分割并没有绝对的答案，看需求，也就是看你的设计目标而定。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;二范式就是要有主键，要求其他字段都依赖于主键。为什么要有主键？没有主键就没有唯一性，没有唯一性在集合中就定位不到这行记录，所以要主键。其他字段为什么要依赖于主键？因为不依赖于主键，就找不到他们。更重要的是，其他字段组成的这行记录和主键表示的是同一个东西，而主键是唯一的，它们只需要依赖于主键，也就成了唯一的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;三范式就是要消除传递依赖，方便理解，可以看做是“消除冗余”。消除冗余应该比较好理解一些，就是各种信息只在一个地方存储，不出现在多张表中。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 </content>
     
     <summary type="html">
     
-      有时为了得到完整的结果，我们需要从两个或更多的表中获取结果。我们就需要执行 join。
+      按照数据库设计原则，为了消除冗余，一般会将共通的属性值进行表拆分，零散的表可通过主外键将彼此联系起来，有时为了得到完整的结果，我们需要从多个表中获取结果后再拼合起来，就需要执行连接查询。
     
     </summary>
     

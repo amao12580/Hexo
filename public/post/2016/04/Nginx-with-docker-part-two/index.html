@@ -86,16 +86,16 @@
 
 
 
-<meta name="description" content="Nginx在三高方面的的概览，以及解答如何更好的在Docker容器中使用Nginx。">
+<meta name="description" content="介绍Nginx自身的设计思想，解决如何进行动静分离、负载均衡，还有软件热升级方案的应用。以及解答如何更好的在Docker容器中使用Nginx，对Nginx  Active-Standby应用模式的思考.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx与Docker容器系列 <02:在生产环境的实践>">
 <meta property="og:url" content="http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/index.html">
 <meta property="og:site_name" content="Cat's Blog">
-<meta property="og:description" content="Nginx在三高方面的的概览，以及解答如何更好的在Docker容器中使用Nginx。">
-<meta property="og:updated_time" content="2016-05-11T04:53:05.122Z">
+<meta property="og:description" content="介绍Nginx自身的设计思想，解决如何进行动静分离、负载均衡，还有软件热升级方案的应用。以及解答如何更好的在Docker容器中使用Nginx，对Nginx  Active-Standby应用模式的思考.">
+<meta property="og:updated_time" content="2016-05-17T08:46:45.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx与Docker容器系列 <02:在生产环境的实践>">
-<meta name="twitter:description" content="Nginx在三高方面的的概览，以及解答如何更好的在Docker容器中使用Nginx。">
+<meta name="twitter:description" content="介绍Nginx自身的设计思想，解决如何进行动静分离、负载均衡，还有软件热升级方案的应用。以及解答如何更好的在Docker容器中使用Nginx，对Nginx  Active-Standby应用模式的思考.">
 
 
 
@@ -444,8 +444,8 @@
 }
 </code></pre><h2 id="对后端的健康管理"><a href="#对后端的健康管理" class="headerlink" title="对后端的健康管理"></a>对后端的健康管理</h2><p>使用nginx_upstream_check_module功能增强补丁</p>
 <p>配置location,开放后端tomcat的健康状况访问。</p>
-<p><a href="http://192.168.2.200/xw_TomcatStatus/" target="_blank" rel="external">http://192.168.2.200/xw_TomcatStatus/</a></p>
-<h2 id="自身的运行监控"><a href="#自身的运行监控" class="headerlink" title="自身的运行监控"></a>自身的运行监控</h2><p>监控Nginx：<a href="http://192.168.2.200/xw_NginxStatus/" target="_blank" rel="external">http://192.168.2.200/xw_NginxStatus/</a></p>
+<p><a href="http://your" target="_blank" rel="external">http://your</a> maintenance IP and Port/xw_TomcatStatus/</p>
+<h2 id="自身的运行监控"><a href="#自身的运行监控" class="headerlink" title="自身的运行监控"></a>自身的运行监控</h2><p>监控Nginx：<a href="http://your" target="_blank" rel="external">http://your</a> maintenance IP and Port/xw_NginxStatus/</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><p>软件架构模式：<a href="http://colobu.com/2015/04/08/software-architecture-patterns/" target="_blank" rel="external">http://colobu.com/2015/04/08/software-architecture-patterns/</a></p>
 </li>

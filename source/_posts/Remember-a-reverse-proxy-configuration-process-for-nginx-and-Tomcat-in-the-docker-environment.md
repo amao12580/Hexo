@@ -9,7 +9,7 @@ tags:
     - Load balance
 categories:
     - Record
-description: 全程记录在Docker环境下，Nginx与Tomcat的反向代理与负载均衡配置。
+description: 在Nginx配置时，针对不同的使用环境，配置的参数有很多不同。迫在眉睫的，我们需要先对线上的API服务系统进行反向代理与负载均衡配置。API服务系统是面向手机APP的接口系统，使用HTTP Restful+json进行数据通讯。
 ---
 # 需要做什么？
 最近接到的任务是:在Docker环境下，Nginx与Tomcat的反向代理与负载均衡配置。先拿出可行性方案，以便在业务量突发时，在线上环境实施。典型的技术预研，打有准备仗。同时还提出了安全需求，在配置上，需要有安全加固。

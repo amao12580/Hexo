@@ -136,8 +136,8 @@
 }
 </code></pre><h2 id="对后端的健康管理"><a href="#对后端的健康管理" class="headerlink" title="对后端的健康管理"></a>对后端的健康管理</h2><p>使用nginx_upstream_check_module功能增强补丁</p>
 <p>配置location,开放后端tomcat的健康状况访问。</p>
-<p><a href="http://192.168.2.200/xw_TomcatStatus/" target="_blank" rel="external">http://192.168.2.200/xw_TomcatStatus/</a></p>
-<h2 id="自身的运行监控"><a href="#自身的运行监控" class="headerlink" title="自身的运行监控"></a>自身的运行监控</h2><p>监控Nginx：<a href="http://192.168.2.200/xw_NginxStatus/" target="_blank" rel="external">http://192.168.2.200/xw_NginxStatus/</a></p>
+<p><a href="http://your" target="_blank" rel="external">http://your</a> maintenance IP and Port/xw_TomcatStatus/</p>
+<h2 id="自身的运行监控"><a href="#自身的运行监控" class="headerlink" title="自身的运行监控"></a>自身的运行监控</h2><p>监控Nginx：<a href="http://your" target="_blank" rel="external">http://your</a> maintenance IP and Port/xw_NginxStatus/</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><p>软件架构模式：<a href="http://colobu.com/2015/04/08/software-architecture-patterns/" target="_blank" rel="external">http://colobu.com/2015/04/08/software-architecture-patterns/</a></p>
 </li>
@@ -483,7 +483,7 @@
     <entry>
       <title><![CDATA[SQL查询提高篇：捋清连接查询的那些事儿]]></title>
       <url>http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/</url>
-      <content type="html"><![CDATA[<p>数据库中的表可通过键将彼此联系起来。主键（Primary Key）是一个列，在这个列中的每一行的值都是唯一的。在表中，每个主键的值都是唯一的。这样做的目的是在不重复每个表中的所有数据的情况下，把表间的数据交叉捆绑在一起。</p>
+      <content type="html"><![CDATA[<p>数据库中的表可通过外键将彼此联系起来。主键（Primary Key）是一个列，在这个列中的每一行的值都是唯一的。在表中，每个主键的值都是唯一的。这样做的目的是在不重复每个表中的所有数据的情况下，把表间的数据交叉捆绑在一起。</p>
 <p>而在两个表之间建立关联关系，是不要求任何一个表的关联列(column)是主键的，这个关联列可以是任何类型的列，但是要求，两个表的关联列可以做关联关系的条件计算，为避免转换影响效率，两个关联列最好保持类型、长度一致。</p>
 <p>为方便说明，定义以下2张表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">用户信息表</span><br><span class="line">CREATE TABLE `user` (</span><br><span class="line">  `uid` int(11) NOT NULL COMMENT &apos;用户id&apos;,</span><br><span class="line">  `name` varchar(10) DEFAULT NULL COMMENT &apos;姓名&apos;,</span><br><span class="line">  `sex` tinyint(1) DEFAULT NULL COMMENT &apos;性别&apos;,</span><br><span class="line">  `age` tinyint(2) DEFAULT NULL COMMENT &apos;年龄&apos;,</span><br><span class="line">  `mobile` varchar(11) DEFAULT NULL COMMENT &apos;手机号码&apos;,</span><br><span class="line">  `password` varchar(64) NOT NULL COMMENT &apos;密码&apos;,</span><br><span class="line">  `register_time` datetime NOT NULL COMMENT &apos;注册时间&apos;,</span><br><span class="line">  PRIMARY KEY (`uid`),</span><br><span class="line">  UNIQUE KEY `index_mobile` (`mobile`) USING BTREE</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line">INSERT INTO `user` VALUES (&apos;100&apos;, &apos;张三&apos;, &apos;1&apos;, &apos;28&apos;, &apos;13547521456&apos;, &apos;ASDAWQ@!#SDF@#$%XCF&apos;, &apos;2016-03-30 17:47:51&apos;);</span><br><span class="line">INSERT INTO `user` VALUES (&apos;101&apos;, &apos;李四&apos;, &apos;2&apos;, &apos;35&apos;, &apos;17025856329&apos;, &apos;234ASD@#$@#$AFSDFRT&apos;, &apos;2016-03-30 17:48:34&apos;);</span><br><span class="line">INSERT INTO `user` VALUES (&apos;102&apos;, &apos;王五&apos;, &apos;1&apos;, &apos;48&apos;, &apos;15925874536&apos;, &apos;#$%SDFSDR@#$%@#$#@&apos;, &apos;2016-03-30 17:53:49&apos;);</span><br><span class="line"></span><br><span class="line">订单信息表</span><br><span class="line">CREATE TABLE `order` (</span><br><span class="line">  `order_id` int(11) NOT NULL COMMENT &apos;订单编号&apos;,</span><br><span class="line">  `uid` int(11) DEFAULT NULL COMMENT &apos;用户Id&apos;,</span><br><span class="line">  `amout` mediumtext NOT NULL COMMENT &apos;订单金额(单位为分)&apos;,</span><br><span class="line">  `status` tinyint(2) DEFAULT NULL COMMENT &apos;订单状态&apos;,</span><br><span class="line">  `order_time` datetime DEFAULT NULL COMMENT &apos;订单时间&apos;,</span><br><span class="line">  PRIMARY KEY (`order_id`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line">INSERT INTO `order` VALUES (&apos;200&apos;, &apos;100&apos;, &apos;5899&apos;, &apos;0&apos;, &apos;2016-03-30 17:54:20&apos;);</span><br><span class="line">INSERT INTO `order` VALUES (&apos;201&apos;, &apos;100&apos;, &apos;6799&apos;, &apos;0&apos;, &apos;2016-03-30 17:54:38&apos;);</span><br><span class="line">INSERT INTO `order` VALUES (&apos;202&apos;, &apos;101&apos;, &apos;12699&apos;, &apos;0&apos;, &apos;2016-03-30 17:55:01&apos;);</span><br></pre></td></tr></table></figure></p>
 <p>数据库现在2张表的数据看起来是这样：<br>user表</p>
@@ -686,6 +686,14 @@
 <li><a href="http://blog.csdn.net/skywalker_only/article/details/39205973" target="_blank" rel="external">Hive学习之连接查询</a></li>
 <li><a href="http://shiyanjun.cn/archives/588.html" target="_blank" rel="external">Hive JOIN使用详解</a><h3 id="结合explain进行执行分析"><a href="#结合explain进行执行分析" class="headerlink" title="结合explain进行执行分析"></a>结合explain进行执行分析</h3></li>
 <li><a href="http://blog.csdn.net/mchdba/article/details/9190771" target="_blank" rel="external">MySQL EXPLAIN 命令详解学习</a></li>
+</ul>
+<h3 id="数据库设计准则"><a href="#数据库设计准则" class="headerlink" title="数据库设计准则"></a>数据库设计准则</h3><ul>
+<li><p>一范式就是属性不可分割。属性是什么？就是表中的字段。不可分割的意思就按字面理解就是最小单位，不能再分成更小单位了。这个字段只能是一个值，不能被拆分成多个字段，否则的话，它就是可分割的，就不符合一范式。不过能不能分割并没有绝对的答案，看需求，也就是看你的设计目标而定。</p>
+</li>
+<li><p>二范式就是要有主键，要求其他字段都依赖于主键。为什么要有主键？没有主键就没有唯一性，没有唯一性在集合中就定位不到这行记录，所以要主键。其他字段为什么要依赖于主键？因为不依赖于主键，就找不到他们。更重要的是，其他字段组成的这行记录和主键表示的是同一个东西，而主键是唯一的，它们只需要依赖于主键，也就成了唯一的。</p>
+</li>
+<li><p>三范式就是要消除传递依赖，方便理解，可以看做是“消除冗余”。消除冗余应该比较好理解一些，就是各种信息只在一个地方存储，不出现在多张表中。</p>
+</li>
 </ul>
 ]]></content>
     </entry>

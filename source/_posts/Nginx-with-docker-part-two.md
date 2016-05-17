@@ -10,7 +10,7 @@ tags:
     - Failover
 categories:
     - Record
-description: Nginx在三高方面的的概览，以及解答如何更好的在Docker容器中使用Nginx。
+description: 介绍Nginx自身的设计思想，解决如何进行动静分离、负载均衡，还有软件热升级方案的应用。以及解答如何更好的在Docker容器中使用Nginx，对Nginx  Active-Standby应用模式的思考.
 ---
 
 # 前言
@@ -156,11 +156,11 @@ docker exec -i -t <nginx container name or id> ./usr/local/nginx/sbin/nginx -s r
 
 配置location,开放后端tomcat的健康状况访问。
 
-http://192.168.2.200/xw_TomcatStatus/
+http://your maintenance IP and Port/xw_TomcatStatus/
 
 ## 自身的运行监控
 
-监控Nginx：http://192.168.2.200/xw_NginxStatus/
+监控Nginx：http://your maintenance IP and Port/xw_NginxStatus/
 
 ## Reference
 
