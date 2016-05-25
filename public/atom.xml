@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://amao12580.github.io/"/>
-  <updated>2016-05-17T07:29:31.806Z</updated>
+  <updated>2016-05-25T03:42:32.976Z</updated>
   <id>http://amao12580.github.io/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>分布式理论总结</title>
+    <link href="http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/"/>
+    <id>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</id>
+    <published>2016-05-23T03:34:28.000Z</published>
+    <updated>2016-05-25T03:42:32.976Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;软件系统的本质是什么？&quot;&gt;&lt;a href=&quot;#软件系统的本质是什么？&quot; class=&quot;headerlink&quot; title=&quot;软件系统的本质是什么？&quot;&gt;&lt;/a&gt;软件系统的本质是什么？&lt;/h1&gt;&lt;p&gt;软件是现实的抽象，讨论抽象的本质是困难的，让我们一起在现实中思考。小到一支笔，大到一部汽车，这些产品使我们在现实生活中得到了方便。我们说的方便，是指因为使用了这些产品，降低了成本，提高了效率。在没有笔的时代，想要记录信息需要岩画，篆刻，这是困难的，高成本的，效率也很低。同样的，没有车的时代，想要到达另一个城市，会因为天气被迫中途搁置，相应的通行时间也会比现在长得多。进一步的思考，笔与汽车的共同点又在哪里呢？&lt;/p&gt;
+&lt;p&gt;通过以上的思考，可以概括地说，笔与汽车，这些产品是为了满足人们的各类需求而发明的。即，人们因为现实需要，而发明或改进了产品，产品是为了帮助人们更好的生活而存在。同样的，软件系统也是如此，比如人们出于沟通交流需求，发明了电话拨号系统；因为信息交流的多样化、随时随地，发明了各种IM产品。&lt;/p&gt;
+&lt;p&gt;软件系统是依托于人们现实需求而存在，用以辅助人们更好的生活，它是现实世界在虚拟世界的抽象。同样的软件系统也存在着兴衰淘汰，一款软件刚问世时，受欢迎程度总是处于低谷，存在现实世界对其接受适应的时间窗口，到了逐渐闻名，达到了火热状态，此时依托此软件又会催生出许多子软件链（如chromium的众多壳浏览器）。随着技术革新，软件产业也会更新换代，跟不上时代的软件系统会逐渐退出市场（如vista操作系统的短命）。&lt;/p&gt;
+&lt;h1 id=&quot;传统软件的局限性&quot;&gt;&lt;a href=&quot;#传统软件的局限性&quot; class=&quot;headerlink&quot; title=&quot;传统软件的局限性&quot;&gt;&lt;/a&gt;传统软件的局限性&lt;/h1&gt;&lt;p&gt;在软件系统的发展初期，适用面狭窄，功能单一、用户少、价值不够高，造成对软件研发的不重视，成本投入较低，相应的软件所带来的经济收益也是有限的。此时的软件系统往往谈不上架构，往往是一个软件系统承载了所有功能，单个功能模块没有边界，逻辑分散，而各个功能模块之间的耦合关系是散乱的。&lt;/p&gt;
+&lt;p&gt;在软件系统有机会成长起来后，带来了一定的经济收益，我们会思考软件的功能增多，更适应与用户，此时会对软件系统提出更多的要求。而初期散乱的功能模块的堆叠，对软件的可扩展性带来了巨大的麻烦，紧耦合的架构带来了牵一发而动全身的问题，新功能的增加往往意味着巨大的改造成本。&lt;/p&gt;
+&lt;p&gt;集中式的软件系统还对系统重构带来挑战，随着功能需求越来越频繁的提出，系统无法适应低时间成本的灵活扩展，往往意味着需要对整个软件系统进行重构，而等到软件散乱性的膨胀到一定程度，重构几乎变成不可完成的任务，任何人无法评估重构带来的风险与收益究竟谁更多。&lt;/p&gt;
+&lt;p&gt;重构更多的是对软件的可维护性和可扩展性进行提高，无法完成重构的软件，往往都逃不过被淘汰的命运。何时适宜进行重构，需要考量的因素有三个：成本、收益、风险。其中风险是最为重要的，如果系统不进行重构，在未来可能带来巨大的问题，如不能适应分布式部署。此时就有必要进行重构了，重构的同时还需要考虑完成重构需要的成本，包括时间成本、人力成本，团队往往时刻肩负着新功能的开发和旧功能的维护工作，如何在不多的时间和人力中挤出资源呢？&lt;/p&gt;
+&lt;p&gt;单点服务向多点服务的转变&lt;/p&gt;
+&lt;p&gt;原因：&lt;br&gt;性能要求，多节点同时参与服务(按流量权重分发，负载均衡；按读写流量分发，读写分离)。&lt;br&gt;允许少部分节点失败，更可靠的运行。&lt;/p&gt;
+&lt;p&gt;数据存储跨机分片，同时每片在多机存在复制集。计算资源无状态，本身就可以动态管理。便捷的扩容缩容(伸缩性)。&lt;/p&gt;
+&lt;p&gt;因业务分拆，降低耦合粒度，降低系统扩展成本(可扩展性)，更高的可维护性。&lt;/p&gt;
+&lt;p&gt;带来的问题。&lt;br&gt;系统内部改造，支持多节点转变。&lt;/p&gt;
+&lt;p&gt;分布式事务，事务补偿。&lt;/p&gt;
+&lt;p&gt;分布式存储&lt;/p&gt;
+&lt;p&gt;分布式访问&lt;/p&gt;
+&lt;p&gt;容忍最终一致性。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      软件系统向分布式方向的演进，带来的利好和不足。
+    
+    </summary>
+    
+      <category term="Summary" scheme="http://amao12580.github.io/categories/Summary/"/>
+    
+    
+      <category term="Distributed" scheme="http://amao12580.github.io/tags/Distributed/"/>
+    
+  </entry>
   
   <entry>
     <title>软件重构经验总结</title>
@@ -46,7 +84,7 @@
     <link href="http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/"/>
     <id>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</id>
     <published>2016-05-11T10:38:31.000Z</published>
-    <updated>2016-05-17T07:22:34.370Z</updated>
+    <updated>2016-05-25T09:27:21.150Z</updated>
     
     <content type="html">&lt;h1 id=&quot;原则&quot;&gt;&lt;a href=&quot;#原则&quot; class=&quot;headerlink&quot; title=&quot;原则&quot;&gt;&lt;/a&gt;原则&lt;/h1&gt;&lt;h2 id=&quot;命名规范&quot;&gt;&lt;a href=&quot;#命名规范&quot; class=&quot;headerlink&quot; title=&quot;命名规范&quot;&gt;&lt;/a&gt;命名规范&lt;/h2&gt;&lt;h3 id=&quot;重要性&quot;&gt;&lt;a href=&quot;#重要性&quot; class=&quot;headerlink&quot; title=&quot;重要性&quot;&gt;&lt;/a&gt;重要性&lt;/h3&gt;&lt;h3 id=&quot;如何做？&quot;&gt;&lt;a href=&quot;#如何做？&quot; class=&quot;headerlink&quot; title=&quot;如何做？&quot;&gt;&lt;/a&gt;如何做？&lt;/h3&gt;&lt;h3 id=&quot;约定优于配置&quot;&gt;&lt;a href=&quot;#约定优于配置&quot; class=&quot;headerlink&quot; title=&quot;约定优于配置&quot;&gt;&lt;/a&gt;约定优于配置&lt;/h3&gt;&lt;h2 id=&quot;合理的设计&quot;&gt;&lt;a href=&quot;#合理的设计&quot; class=&quot;headerlink&quot; title=&quot;合理的设计&quot;&gt;&lt;/a&gt;合理的设计&lt;/h2&gt;&lt;h3 id=&quot;适时分层&quot;&gt;&lt;a href=&quot;#适时分层&quot; class=&quot;headerlink&quot; title=&quot;适时分层&quot;&gt;&lt;/a&gt;适时分层&lt;/h3&gt;&lt;h3 id=&quot;避免过度设计&quot;&gt;&lt;a href=&quot;#避免过度设计&quot; class=&quot;headerlink&quot; title=&quot;避免过度设计&quot;&gt;&lt;/a&gt;避免过度设计&lt;/h3&gt;&lt;h2 id=&quot;前轻后重&quot;&gt;&lt;a href=&quot;#前轻后重&quot; class=&quot;headerlink&quot; title=&quot;前轻后重&quot;&gt;&lt;/a&gt;前轻后重&lt;/h2&gt;&lt;p&gt;系统之间的调用链，前置系统轻逻辑。&lt;/p&gt;
 &lt;h3 id=&quot;上轻下重，核心逻辑内敛&quot;&gt;&lt;a href=&quot;#上轻下重，核心逻辑内敛&quot; class=&quot;headerlink&quot; title=&quot;上轻下重，核心逻辑内敛&quot;&gt;&lt;/a&gt;上轻下重，核心逻辑内敛&lt;/h3&gt;&lt;p&gt;模块之间的调用链，上层模块轻逻辑&lt;/p&gt;
@@ -60,7 +98,12 @@
 &lt;h2 id=&quot;技术升级&quot;&gt;&lt;a href=&quot;#技术升级&quot; class=&quot;headerlink&quot; title=&quot;技术升级&quot;&gt;&lt;/a&gt;技术升级&lt;/h2&gt;&lt;p&gt;系统容量与性能指标的要求，在业务发展的各个阶段是不固定的，技术需要保留一定前瞻性，不做被动跟随。&lt;/p&gt;
 &lt;h1 id=&quot;团队管理&quot;&gt;&lt;a href=&quot;#团队管理&quot; class=&quot;headerlink&quot; title=&quot;团队管理&quot;&gt;&lt;/a&gt;团队管理&lt;/h1&gt;&lt;h2 id=&quot;keep-watch&quot;&gt;&lt;a href=&quot;#keep-watch&quot; class=&quot;headerlink&quot; title=&quot;keep watch&quot;&gt;&lt;/a&gt;keep watch&lt;/h2&gt;&lt;p&gt;工作与心理的交流分享&lt;/p&gt;
 &lt;h2 id=&quot;保持信任&quot;&gt;&lt;a href=&quot;#保持信任&quot; class=&quot;headerlink&quot; title=&quot;保持信任&quot;&gt;&lt;/a&gt;保持信任&lt;/h2&gt;&lt;h2 id=&quot;保持怀疑&quot;&gt;&lt;a href=&quot;#保持怀疑&quot; class=&quot;headerlink&quot; title=&quot;保持怀疑&quot;&gt;&lt;/a&gt;保持怀疑&lt;/h2&gt;&lt;h2 id=&quot;持续考评&quot;&gt;&lt;a href=&quot;#持续考评&quot; class=&quot;headerlink&quot; title=&quot;持续考评&quot;&gt;&lt;/a&gt;持续考评&lt;/h2&gt;&lt;h2 id=&quot;分享中提高&quot;&gt;&lt;a href=&quot;#分享中提高&quot; class=&quot;headerlink&quot; title=&quot;分享中提高&quot;&gt;&lt;/a&gt;分享中提高&lt;/h2&gt;&lt;h2 id=&quot;互相备份&quot;&gt;&lt;a href=&quot;#互相备份&quot; class=&quot;headerlink&quot; title=&quot;互相备份&quot;&gt;&lt;/a&gt;互相备份&lt;/h2&gt;&lt;h2 id=&quot;互相支撑&quot;&gt;&lt;a href=&quot;#互相支撑&quot; class=&quot;headerlink&quot; title=&quot;互相支撑&quot;&gt;&lt;/a&gt;互相支撑&lt;/h2&gt;&lt;h2 id=&quot;向上管理&quot;&gt;&lt;a href=&quot;#向上管理&quot; class=&quot;headerlink&quot; title=&quot;向上管理&quot;&gt;&lt;/a&gt;向上管理&lt;/h2&gt;&lt;h2 id=&quot;向下管理&quot;&gt;&lt;a href=&quot;#向下管理&quot; class=&quot;headerlink&quot; title=&quot;向下管理&quot;&gt;&lt;/a&gt;向下管理&lt;/h2&gt;&lt;h3 id=&quot;了解队员的擅长与不足&quot;&gt;&lt;a href=&quot;#了解队员的擅长与不足&quot; class=&quot;headerlink&quot; title=&quot;了解队员的擅长与不足&quot;&gt;&lt;/a&gt;了解队员的擅长与不足&lt;/h3&gt;&lt;h3 id=&quot;合理的任务分配&quot;&gt;&lt;a href=&quot;#合理的任务分配&quot; class=&quot;headerlink&quot; title=&quot;合理的任务分配&quot;&gt;&lt;/a&gt;合理的任务分配&lt;/h3&gt;&lt;h3 id=&quot;适度挑战性的任务&quot;&gt;&lt;a href=&quot;#适度挑战性的任务&quot; class=&quot;headerlink&quot; title=&quot;适度挑战性的任务&quot;&gt;&lt;/a&gt;适度挑战性的任务&lt;/h3&gt;&lt;h3 id=&quot;给出完成任务需要的资源&quot;&gt;&lt;a href=&quot;#给出完成任务需要的资源&quot; class=&quot;headerlink&quot; title=&quot;给出完成任务需要的资源&quot;&gt;&lt;/a&gt;给出完成任务需要的资源&lt;/h3&gt;&lt;h3 id=&quot;激励中成长&quot;&gt;&lt;a href=&quot;#激励中成长&quot; class=&quot;headerlink&quot; title=&quot;激励中成长&quot;&gt;&lt;/a&gt;激励中成长&lt;/h3&gt;&lt;p&gt;眼前利益与发展前景&lt;/p&gt;
-&lt;h3 id=&quot;给出职业发展的机会&quot;&gt;&lt;a href=&quot;#给出职业发展的机会&quot; class=&quot;headerlink&quot; title=&quot;给出职业发展的机会&quot;&gt;&lt;/a&gt;给出职业发展的机会&lt;/h3&gt;&lt;h3 id=&quot;公开与公平中考评&quot;&gt;&lt;a href=&quot;#公开与公平中考评&quot; class=&quot;headerlink&quot; title=&quot;公开与公平中考评&quot;&gt;&lt;/a&gt;公开与公平中考评&lt;/h3&gt;&lt;h2 id=&quot;适时剔除不合格&quot;&gt;&lt;a href=&quot;#适时剔除不合格&quot; class=&quot;headerlink&quot; title=&quot;适时剔除不合格&quot;&gt;&lt;/a&gt;适时剔除不合格&lt;/h2&gt;&lt;h2 id=&quot;技术梯队&quot;&gt;&lt;a href=&quot;#技术梯队&quot; class=&quot;headerlink&quot; title=&quot;技术梯队&quot;&gt;&lt;/a&gt;技术梯队&lt;/h2&gt;&lt;p&gt;不同层次的人员配比，完成不同类型的任务。注意人员的上升下降渠道。&lt;/p&gt;
+&lt;h3 id=&quot;给出职业发展的机会&quot;&gt;&lt;a href=&quot;#给出职业发展的机会&quot; class=&quot;headerlink&quot; title=&quot;给出职业发展的机会&quot;&gt;&lt;/a&gt;给出职业发展的机会&lt;/h3&gt;&lt;h3 id=&quot;公开与公平中考评&quot;&gt;&lt;a href=&quot;#公开与公平中考评&quot; class=&quot;headerlink&quot; title=&quot;公开与公平中考评&quot;&gt;&lt;/a&gt;公开与公平中考评&lt;/h3&gt;&lt;h3 id=&quot;保持团队稳定&quot;&gt;&lt;a href=&quot;#保持团队稳定&quot; class=&quot;headerlink&quot; title=&quot;保持团队稳定&quot;&gt;&lt;/a&gt;保持团队稳定&lt;/h3&gt;&lt;p&gt;团队成员的诉求：团队，产品，薪资，发展。&lt;/p&gt;
+&lt;p&gt;团队提供集体成长的氛围环境。&lt;/p&gt;
+&lt;p&gt;令人兴奋的产品，提供持续打磨的动力。&lt;/p&gt;
+&lt;p&gt;合适的薪资，使个人不过多为生活所扰。&lt;/p&gt;
+&lt;p&gt;良好的发展前景，对个人的职业生涯带来腾飞。&lt;/p&gt;
+&lt;h2 id=&quot;适时剔除不合格&quot;&gt;&lt;a href=&quot;#适时剔除不合格&quot; class=&quot;headerlink&quot; title=&quot;适时剔除不合格&quot;&gt;&lt;/a&gt;适时剔除不合格&lt;/h2&gt;&lt;h2 id=&quot;技术梯队&quot;&gt;&lt;a href=&quot;#技术梯队&quot; class=&quot;headerlink&quot; title=&quot;技术梯队&quot;&gt;&lt;/a&gt;技术梯队&lt;/h2&gt;&lt;p&gt;不同层次的人员配比，完成不同类型的任务。注意人员的上升下降渠道。&lt;/p&gt;
 &lt;h1 id=&quot;接口&quot;&gt;&lt;a href=&quot;#接口&quot; class=&quot;headerlink&quot; title=&quot;接口&quot;&gt;&lt;/a&gt;接口&lt;/h1&gt;&lt;h2 id=&quot;版本控制&quot;&gt;&lt;a href=&quot;#版本控制&quot; class=&quot;headerlink&quot; title=&quot;版本控制&quot;&gt;&lt;/a&gt;版本控制&lt;/h2&gt;&lt;h2 id=&quot;访问控制&quot;&gt;&lt;a href=&quot;#访问控制&quot; class=&quot;headerlink&quot; title=&quot;访问控制&quot;&gt;&lt;/a&gt;访问控制&lt;/h2&gt;&lt;p&gt;访问权限的验证&lt;/p&gt;
 &lt;h2 id=&quot;流量控制&quot;&gt;&lt;a href=&quot;#流量控制&quot; class=&quot;headerlink&quot; title=&quot;流量控制&quot;&gt;&lt;/a&gt;流量控制&lt;/h2&gt;&lt;p&gt;拒绝恶意访问&lt;/p&gt;
 &lt;h2 id=&quot;审查与监控&quot;&gt;&lt;a href=&quot;#审查与监控&quot; class=&quot;headerlink&quot; title=&quot;审查与监控&quot;&gt;&lt;/a&gt;审查与监控&lt;/h2&gt;&lt;h2 id=&quot;灰度发布&quot;&gt;&lt;a href=&quot;#灰度发布&quot; class=&quot;headerlink&quot; title=&quot;灰度发布&quot;&gt;&lt;/a&gt;灰度发布&lt;/h2&gt;&lt;h2 id=&quot;无状态&quot;&gt;&lt;a href=&quot;#无状态&quot; class=&quot;headerlink&quot; title=&quot;无状态&quot;&gt;&lt;/a&gt;无状态&lt;/h2&gt;&lt;h2 id=&quot;原子化&quot;&gt;&lt;a href=&quot;#原子化&quot; class=&quot;headerlink&quot; title=&quot;原子化&quot;&gt;&lt;/a&gt;原子化&lt;/h2&gt;&lt;h2 id=&quot;CQRS&quot;&gt;&lt;a href=&quot;#CQRS&quot; class=&quot;headerlink&quot; title=&quot;CQRS&quot;&gt;&lt;/a&gt;CQRS&lt;/h2&gt;&lt;p&gt;命令查询职责分离模式，读不强依赖写。&lt;/p&gt;

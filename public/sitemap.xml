@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
+    
+    <lastmod>2016-05-25T09:27:21.150Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/about/index.html</loc>
+    
+    <lastmod>2016-05-25T05:55:01.592Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</loc>
+    
+    <lastmod>2016-05-25T03:42:32.976Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</loc>
     
     <lastmod>2016-05-17T08:46:45.118Z</lastmod>
@@ -30,13 +51,6 @@
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/about/index.html</loc>
-    
-    <lastmod>2016-05-17T08:11:33.412Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://amao12580.github.io/tags/index.html</loc>
     
     <lastmod>2016-05-17T07:42:01.384Z</lastmod>
@@ -54,13 +68,6 @@
     <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
     
     <lastmod>2016-05-17T07:29:31.806Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
-    
-    <lastmod>2016-05-17T07:22:34.370Z</lastmod>
     
   </url>
   

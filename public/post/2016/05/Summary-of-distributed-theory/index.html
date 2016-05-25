@@ -72,7 +72,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="amao12580" />
+  <meta name="keywords" content="Distributed," />
 
 
 
@@ -90,15 +90,16 @@
 
 
 
-<meta name="description" content="http://amao12580.github.io/about">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Cat's Blog">
-<meta property="og:url" content="http://amao12580.github.io/tags/GitHub/index.html">
+<meta name="description" content="软件系统向分布式方向的演进，带来的利好和不足。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式理论总结">
+<meta property="og:url" content="http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/index.html">
 <meta property="og:site_name" content="Cat's Blog">
-<meta property="og:description" content="http://amao12580.github.io/about">
+<meta property="og:description" content="软件系统向分布式方向的演进，带来的利好和不足。">
+<meta property="og:updated_time" content="2016-05-25T03:42:32.976Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cat's Blog">
-<meta name="twitter:description" content="http://amao12580.github.io/about">
+<meta name="twitter:title" content="分布式理论总结">
+<meta name="twitter:description" content="软件系统向分布式方向的演进，带来的利好和不足。">
 
 
 
@@ -116,7 +117,7 @@
   };
 </script>
 
-  <title> 标签: GitHub | Cat's Blog </title>
+  <title> 分布式理论总结 | Cat's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -137,7 +138,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <!----------- add Fork me on Github ------------>
@@ -254,46 +255,185 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        GitHub
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                分布式理论总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-23T11:34:28+08:00" content="2016-05-23">
+              2016-05-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Summary/" itemprop="url" rel="index">
+                    <span itemprop="name">Summary</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/post/2016/05/Summary-of-distributed-theory/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="post/2016/05/Summary-of-distributed-theory/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+
+	  
+	  <span>&nbsp; | &nbsp;
+	  <span id="busuanzi_value_page_pv" ></span>次阅读
+	  </span>
+	  
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h1 id="软件系统的本质是什么？"><a href="#软件系统的本质是什么？" class="headerlink" title="软件系统的本质是什么？"></a>软件系统的本质是什么？</h1><p>软件是现实的抽象，讨论抽象的本质是困难的，让我们一起在现实中思考。小到一支笔，大到一部汽车，这些产品使我们在现实生活中得到了方便。我们说的方便，是指因为使用了这些产品，降低了成本，提高了效率。在没有笔的时代，想要记录信息需要岩画，篆刻，这是困难的，高成本的，效率也很低。同样的，没有车的时代，想要到达另一个城市，会因为天气被迫中途搁置，相应的通行时间也会比现在长得多。进一步的思考，笔与汽车的共同点又在哪里呢？</p>
+<p>通过以上的思考，可以概括地说，笔与汽车，这些产品是为了满足人们的各类需求而发明的。即，人们因为现实需要，而发明或改进了产品，产品是为了帮助人们更好的生活而存在。同样的，软件系统也是如此，比如人们出于沟通交流需求，发明了电话拨号系统；因为信息交流的多样化、随时随地，发明了各种IM产品。</p>
+<p>软件系统是依托于人们现实需求而存在，用以辅助人们更好的生活，它是现实世界在虚拟世界的抽象。同样的软件系统也存在着兴衰淘汰，一款软件刚问世时，受欢迎程度总是处于低谷，存在现实世界对其接受适应的时间窗口，到了逐渐闻名，达到了火热状态，此时依托此软件又会催生出许多子软件链（如chromium的众多壳浏览器）。随着技术革新，软件产业也会更新换代，跟不上时代的软件系统会逐渐退出市场（如vista操作系统的短命）。</p>
+<h1 id="传统软件的局限性"><a href="#传统软件的局限性" class="headerlink" title="传统软件的局限性"></a>传统软件的局限性</h1><p>在软件系统的发展初期，适用面狭窄，功能单一、用户少、价值不够高，造成对软件研发的不重视，成本投入较低，相应的软件所带来的经济收益也是有限的。此时的软件系统往往谈不上架构，往往是一个软件系统承载了所有功能，单个功能模块没有边界，逻辑分散，而各个功能模块之间的耦合关系是散乱的。</p>
+<p>在软件系统有机会成长起来后，带来了一定的经济收益，我们会思考软件的功能增多，更适应与用户，此时会对软件系统提出更多的要求。而初期散乱的功能模块的堆叠，对软件的可扩展性带来了巨大的麻烦，紧耦合的架构带来了牵一发而动全身的问题，新功能的增加往往意味着巨大的改造成本。</p>
+<p>集中式的软件系统还对系统重构带来挑战，随着功能需求越来越频繁的提出，系统无法适应低时间成本的灵活扩展，往往意味着需要对整个软件系统进行重构，而等到软件散乱性的膨胀到一定程度，重构几乎变成不可完成的任务，任何人无法评估重构带来的风险与收益究竟谁更多。</p>
+<p>重构更多的是对软件的可维护性和可扩展性进行提高，无法完成重构的软件，往往都逃不过被淘汰的命运。何时适宜进行重构，需要考量的因素有三个：成本、收益、风险。其中风险是最为重要的，如果系统不进行重构，在未来可能带来巨大的问题，如不能适应分布式部署。此时就有必要进行重构了，重构的同时还需要考虑完成重构需要的成本，包括时间成本、人力成本，团队往往时刻肩负着新功能的开发和旧功能的维护工作，如何在不多的时间和人力中挤出资源呢？</p>
+<p>单点服务向多点服务的转变</p>
+<p>原因：<br>性能要求，多节点同时参与服务(按流量权重分发，负载均衡；按读写流量分发，读写分离)。<br>允许少部分节点失败，更可靠的运行。</p>
+<p>数据存储跨机分片，同时每片在多机存在复制集。计算资源无状态，本身就可以动态管理。便捷的扩容缩容(伸缩性)。</p>
+<p>因业务分拆，降低耦合粒度，降低系统扩展成本(可扩展性)，更高的可维护性。</p>
+<p>带来的问题。<br>系统内部改造，支持多节点转变。</p>
+<p>分布式事务，事务补偿。</p>
+<p>分布式存储</p>
+<p>分布式访问</p>
+<p>容忍最终一致性。</p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/post/2016/04/A-new-start/" itemprop="url">
-              
-                <span itemprop="name">从零开始Blogging with Hexo教程</span>
-              
-            </a>
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>Talk is cheap，show me the code.</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/rewards/wechat-reward-image.png" alt="Steven Cheng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-04-01T17:38:14+08:00"
-              content="2016-04-01" >
-          04-01
-        </time>
-      </div>
 
-    </header>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Distributed/" rel="tag">#Distributed</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/2016/05/Software-refactoring-experience-summary/" rel="next" title="软件重构经验总结">
+                <i class="fa fa-chevron-left"></i> 软件重构经验总结
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -301,6 +441,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="post/2016/05/Summary-of-distributed-theory/"
+           data-title="分布式理论总结" data-url="http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -320,8 +468,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -420,6 +577,17 @@
       </section>
 
       
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#软件系统的本质是什么？"><span class="nav-number">1.</span> <span class="nav-text">软件系统的本质是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#传统软件的局限性"><span class="nav-number">2.</span> <span class="nav-text">传统软件的局限性</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
 
     </div>
   </aside>
@@ -510,6 +678,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
