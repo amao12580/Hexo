@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
+    
+    <lastmod>2016-05-27T11:22:30.364Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</loc>
     
-    <lastmod>2016-05-26T11:27:12.683Z</lastmod>
+    <lastmod>2016-05-27T09:08:03.860Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
     
-    <lastmod>2016-05-26T11:23:02.694Z</lastmod>
+    <lastmod>2016-05-27T06:07:44.928Z</lastmod>
     
   </url>
   
@@ -68,13 +75,6 @@
     <loc>http://amao12580.github.io/index/index.html</loc>
     
     <lastmod>2016-05-17T07:41:54.280Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
-    
-    <lastmod>2016-05-16T05:22:03.239Z</lastmod>
     
   </url>
   

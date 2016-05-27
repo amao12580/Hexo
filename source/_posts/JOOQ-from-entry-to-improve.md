@@ -76,15 +76,6 @@ create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
     <artifactId>mysql-connector-java</artifactId>
     <version>5.1.36</version>
 </dependency>
-
-<!--如果不将该包导入, 编译会报错, 有人遇到了同样的问题.
-https://code.google.com/p/jsonrpc4j/issues/detail?id=21-->
-<dependency>
-    <groupId>javax.portlet</groupId>
-    <artifactId>portlet-api</artifactId>
-    <version>2.0</version>
-    <scope>provided</scope>
-</dependency>
 ```
 ### Code Generation
 
@@ -158,7 +149,7 @@ Flyway 是独立于数据库的应用、管理并跟踪数据库变更的数据�
     <!--数据库迁移所用的参数 -->
     <db.url>jdbc:mysql://localhost:3306</db.url>
     <db.username>root</db.username>
-    <db.password>zhilaiadmin</db.password>
+    <db.password>********</db.password>
     <db.schema>study</db.schema>
 </properties>
 
@@ -529,6 +520,36 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
 16:54:10.761 INFO  com.study.jooq.model.Example 239 view - uid:100，姓名:张三，订单号:201
 16:54:10.761 INFO  com.study.jooq.model.Example 239 view - uid:101，姓名:李四，订单号:202
 16:54:10.765 INFO  com.study.jooq.model.Example 244 view - 删除视图,执行结果:0
+```
+
+### 操作符
+
+有时候可能需要在SQL中，对字段进行加减乘除操作。
+
+```
+需求示例，在箱子规格表(不重复)中，找出前十条，按照箱子的容积的最大值(int 11)与最小值(int 11)范围，与给定值(528)进行比较排序，找出最接近的十条。
+select * from box
+    where min_size<=528 and max_size>=528
+    order by ((min_size+max_size)/2)-528 asc
+    limit 0,10;
+
+使用JOOQ完全可以满足这样的要求
+try(ScopedContext scopedContext=new ScopedContext()){//try with resource
+    DSLContext create=scopedContext.getDSLContext();
+    int conditionSize=528;
+    int pageNo=1;
+    int pageSize=10;
+
+    SortField sortFieldBySize = ((((BOX.MAX_SIZE.add(BOX.MIN_SIZE)).divide(2)).
+    minus(conditionSize)).asc();
+
+    Result result=create.selectFrom(BOX).
+    where(BOX.MIN_SIZE.lessOrEqual(conditionSize)).
+    and(BOX.MAX_SIZE.greaterOrEqual(conditionSize)).
+    orderBy(sortFieldBySize).
+    limit((pageNo-1) * pageSize, pageSize).
+    fetch();
+}
 ```
 
 ## 小技巧

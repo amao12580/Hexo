@@ -92,13 +92,13 @@
 
 <meta name="description" content="重构更多的是对软件的可维护性和可扩展性进行提高，无法完成重构的软件，往往都逃不过被淘汰的命运。何时适宜进行重构，需要考量的因素有三个：成本、收益、风险。其中风险是最为重要的，如果不进行重构，在未来可能带来巨大的问题，如不能适应分布式部署。此时就有必要进行重构了，重构的同时还需要考虑需要的成本，包括时间成本、人力成本。而团队往往时刻肩负着新功能的开发和旧功能的维护工作，如何在不多的时间和人力中挤出资">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分布式理论总结">
+<meta property="og:title" content="分布式软件理论总结">
 <meta property="og:url" content="http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/index.html">
 <meta property="og:site_name" content="Cat's Blog">
 <meta property="og:description" content="重构更多的是对软件的可维护性和可扩展性进行提高，无法完成重构的软件，往往都逃不过被淘汰的命运。何时适宜进行重构，需要考量的因素有三个：成本、收益、风险。其中风险是最为重要的，如果不进行重构，在未来可能带来巨大的问题，如不能适应分布式部署。此时就有必要进行重构了，重构的同时还需要考虑需要的成本，包括时间成本、人力成本。而团队往往时刻肩负着新功能的开发和旧功能的维护工作，如何在不多的时间和人力中挤出资">
-<meta property="og:updated_time" content="2016-05-26T11:27:12.683Z">
+<meta property="og:updated_time" content="2016-05-27T09:08:03.860Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分布式理论总结">
+<meta name="twitter:title" content="分布式软件理论总结">
 <meta name="twitter:description" content="重构更多的是对软件的可维护性和可扩展性进行提高，无法完成重构的软件，往往都逃不过被淘汰的命运。何时适宜进行重构，需要考量的因素有三个：成本、收益、风险。其中风险是最为重要的，如果不进行重构，在未来可能带来巨大的问题，如不能适应分布式部署。此时就有必要进行重构了，重构的同时还需要考虑需要的成本，包括时间成本、人力成本。而团队往往时刻肩负着新功能的开发和旧功能的维护工作，如何在不多的时间和人力中挤出资">
 
 
@@ -117,7 +117,7 @@
   };
 </script>
 
-  <title> 分布式理论总结 | Cat's Blog </title>
+  <title> 分布式软件理论总结 | Cat's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -276,7 +276,7 @@
             
             
               
-                分布式理论总结
+                分布式软件理论总结
               
             
           </h1>
@@ -354,18 +354,22 @@
 <p>软件系统是依托于人们现实需求而存在，用以辅助人们更好的生活，它是现实世界在虚拟世界的抽象。同样的软件系统也存在着兴衰淘汰，一款软件刚问世时，受欢迎程度总是处于低谷，存在现实世界对其接受适应的时间窗口，到了逐渐闻名，达到了火热状态，此时依托此软件又会催生出许多子软件链（如chromium的众多壳浏览器）。随着技术革新，软件产业也会更新换代，跟不上时代的软件系统会逐渐退出市场（如vista操作系统的短命）。</p>
 <h1 id="传统软件的局限性"><a href="#传统软件的局限性" class="headerlink" title="传统软件的局限性"></a>传统软件的局限性</h1><h2 id="停不下来的运动员"><a href="#停不下来的运动员" class="headerlink" title="停不下来的运动员"></a>停不下来的运动员</h2><p>在软件系统的发展初期，适用面狭窄，功能单一、用户少、价值不够高，造成对软件研发的不重视，成本投入较低，相应的软件所带来的经济收益也是有限的。此时的软件系统往往谈不上架构，往往是一个软件系统承载了所有功能，单个功能模块没有边界，逻辑分散，而各个功能模块之间的耦合关系是散乱的。</p>
 <p>在软件系统有机会成长起来后，带来了一定的经济收益，我们会思考软件的功能增多，更适应于用户（市场需要），或者考虑增强原有用户的黏性，此时会对软件系统提出更多的要求。而初期散乱的功能模块的堆叠，对软件的可扩展性带来了巨大的麻烦，紧耦合的架构带来了牵一发而动全身的问题，新功能的增加往往意味着巨大的改造成本。</p>
-<p>集中式的软件系统还对系统重构带来挑战，随着功能需求越来越频繁的提出，往往意味着需要更短的版本迭代周期。现有系统无法适应低时间成本的灵活扩展，往往意味着需要对整个软件系统进行重构，而等到软件散乱性的膨胀到一定程度，重构几乎变成不可完成的任务，就算是系统起始负责人，也无法评估重构带来的风险与收益究竟谁更多。</p>
+<p>集中式的软件系统还对系统重构带来挑战，随着功能需求越来越频繁的提出，往往意味着需要更短的版本迭代周期。现有系统无法适应低时间成本的灵活扩展，往往意味着需要对整个软件系统进行重构，而等到软件散乱性的膨胀到一定程度，重构几乎变成不可完成的任务，就算是系统起始负责人，也无法评估重构带来的风险与收益究竟谁更多？</p>
 <p>集中式的软件系统在生命的后期，开发团队往往面临两难，团队任何人都知道急需重构，但因为开发团队往往没有决策权，最高决策领导也往往兼顾到市场利益，而不可能给出重构所需的时间窗口。在愈发杂乱的系统上进行维护和新功能叠加，这让团队内的每个人都需要指数级的投入成本，往往还达不到市场需要的软件质量。</p>
 <p>这就像只能跑一公里的运动员，在一公里的极限跑步后，本应停下来适度休息，自我调整。而由于上层裁判的压力，运动员只能咬牙坚持，但迈出的每一步都越来越累，没法再像刚开始那样保持加速度。更令人担忧的是，此时裁判还吹响了冲刺哨，要求运动员进行冲锋。这样下去，运动员只有倒下了。相应的到此时，团队内的成员会加速流失，新招进来的人也不能理解整套系统的运作，从而导致最终的系统失败。</p>
-<p>这也就是为什么公司的CTO必需对技术团队保持深入理解，同时还应有对需求开发的决策权，以支持技术团队在适时进行系统级别的重构，以更好的满足公司的战略需求，这是非常有必要的。</p>
+<p>这也就是为什么CTO必需对技术团队保持深入理解，同时还应有对产品、开发的决策权，以支持技术团队在适时进行系统级别的重构，以更好的满足公司的战略需求，这是非常有必要的。</p>
 <h2 id="转向敏捷式-agile-开发"><a href="#转向敏捷式-agile-开发" class="headerlink" title="转向敏捷式(agile)开发"></a>转向敏捷式(agile)开发</h2><p>重构更多的是对软件的可维护性和可扩展性进行提高，无法完成重构的软件，往往都逃不过被淘汰的命运。何时适宜进行重构，需要考量的因素有三个：成本、收益、风险。其中风险是最为重要的，如果系统不进行重构，在未来可能带来巨大的问题，如不能适应分布式部署。此时就有必要进行重构了，重构的同时还需要考虑完成重构需要的成本，包括时间成本、人力成本，团队往往时刻肩负着新功能的开发和旧功能的维护工作，如何在不多的时间和人力中挤出资源呢？</p>
 <p>在软件系统有机会从集中式软件模式，过渡到积木型的软件模式后。系统原有是100%的功能堆叠到一个系统，现在变成了多个积木，也就是软件子系统，每个积木只负责其中的部分功能，积木间的协作，从而拼装出完整的软件系统。</p>
-<p>这是一个巨大的转变，首当其冲的就是可维护性，只需要定义一套灵活的通信协议，子系统之间通过这套协议进行通讯，我们在对子系统内部的功能进行维护时，不必担忧其他子系统受到干扰。这也存在一个前提，能够封装在一个子系统的功能模块集合，必须是内聚型的，它们几乎很少对外层子系统产生耦合，或者通过统一的出口进行耦合关联。</p>
-<p>其次是软件的可扩展性，新功能的开发，只需要新加一个子系统，扩展通讯协议，就可以满足要求，这对团队内的任何一个人都是令人振奋的。</p>
-<p>同时，软件的质量可以得到保证，测试部门可以明确的针对某个软件子系统进行测试，而不需要每次系统上线都进行整体测试，工作量的降低，在相等的时间内，有了更多的时间进行问题修复，这往往意味着质量的提高。</p>
-<p>积木性的软件，是对积木之间的通讯协议的高要求，实际上，我们需要引入一整套消息通讯的中间件来解决这个问题，在SOA和EDA架构中，最为关键的就是MQ协议的设计了。</p>
-<p>松耦合的系统还带来局部失败和最终一致性的问题，可能会给用户造成短时间迷惑，但不影响最终的数据状态统一，这在传统软件往往是不可接受的，但进入到互联网后，在系统层面往往需要进行权衡，是市场机遇重要？还是少部分的用户利益重要？这个问题需要每一个互联网人的思考，产品是不是要满足每一个人的要求呢？</p>
-<h1 id="分布式系统的利与弊"><a href="#分布式系统的利与弊" class="headerlink" title="分布式系统的利与弊"></a>分布式系统的利与弊</h1><p>单点服务向多点服务的转变</p>
+<h3 id="快速交付"><a href="#快速交付" class="headerlink" title="快速交付"></a>快速交付</h3><p>集中式的软件往往灵活性低下，这体现在很多方面。1.设计的灵活性，想要以好的设计替换掉不再适应设计方案，会遭遇无法评估改造成本。2.构建的灵活性，软件功能过于集中，导致一个小小的编译问题，都会影响整个软件的构建，就像走钢丝一样，必需每一步都完美无差才能交付到下一环节。3.测试的灵活性，测试任务因为功能互相紧耦合而变得繁重，无法评估已经做好的功能是否会受到影响。4.部署的灵活性，运维无法根据系统的特性来优化软硬件配置，如JVM调优，LB等。5.自我修复的灵活性，这一点往往在集中式软件中是一个优势，在线上出现问题，只需要简单的分析少量的运行日志即可定位问题，这在模块化系统中是一个软肋。</p>
+<p>敏捷开发的主要优势就在于，合理的利用分治思想，将复杂的功能的系统模块化处理，拆分成由只有简单功能的子系统而拼凑出来的完整系统，每一个子系统可以交付到小团队来维护，甚至与有单独的运维人员来进行保障。</p>
+<h3 id="可维护性"><a href="#可维护性" class="headerlink" title="可维护性"></a>可维护性</h3><p>这是一个巨大的转变，首当其冲的就是可维护性，只需要定义一套灵活的通信协议，子系统之间通过这套协议进行通讯，我们在对子系统内部的功能进行维护时，不必担忧其他子系统受到干扰。这也存在一个前提，能够封装在一个子系统的功能模块集合，必须是内聚型的，它们几乎很少对外层子系统产生耦合，或者通过统一的出口进行耦合关联。</p>
+<h3 id="可扩展性"><a href="#可扩展性" class="headerlink" title="可扩展性"></a>可扩展性</h3><p>其次是软件的可扩展性，新功能的开发，只需要新加一个子系统，扩展通讯协议，就可以满足要求，这对团队内的任何一个人都是令人振奋的。</p>
+<h3 id="隔离性"><a href="#隔离性" class="headerlink" title="隔离性"></a>隔离性</h3><p>积木型的软件构建，还给了我们保持专注的可能。现在我们可以为软件进行动静分离设计，以适应不同的最优部署方式。还可以为一些共用性强的功能进行剥离独立出来，譬如独立的文件系统负责所有的文件服务，以避免重复造轮子，独立的服务还为以后的可维护性、伸缩性带来了诸多方便。</p>
+<h3 id="质量可控"><a href="#质量可控" class="headerlink" title="质量可控"></a>质量可控</h3><p>同时，软件的质量可以得到保证，测试部门可以明确的针对某个软件子系统进行测试，而不需要每次系统上线都进行整体测试，工作量的降低，在相等的时间内，有了更多的时间进行问题修复，这往往意味着质量的提高。</p>
+<p>积木型的软件，是对积木之间的通讯协议的高要求，实际上，我们需要引入一整套消息通讯的中间件来解决这个问题，在SOA和EDA架构中，最为关键的就是MQ协议的设计了。</p>
+<p>松耦合的模式还带来局部失败和最终一致性的问题，可能会给用户造成短时间迷惑，但不影响最终的数据状态统一，这在传统软件领域往往是不可接受的，但进入到互联网后，在系统层面往往需要进行权衡，是市场机遇重要？还是少部分的用户利益重要？这个问题需要每一个互联网人的思考，产品是不是要满足每一个人的要求呢？</p>
+<h1 id="分布式系统的利与弊"><a href="#分布式系统的利与弊" class="headerlink" title="分布式系统的利与弊"></a>分布式系统的利与弊</h1><h2 id="软件的构成"><a href="#软件的构成" class="headerlink" title="软件的构成"></a>软件的构成</h2><p>概括的讲，软件普遍是由三部分组成：接入、逻辑、存储。其中接入是可能没有的，比如定时任务型软件，由操作系统时间来触发，不需要外界的主动调度。而逻辑和存储，很难有软件是不需要的。而比如典型的在线社交服务，常规的构成可以分为：聊天服务、长连接服务、推送服务、好友信息服务、文件服务、推荐服务、广告服务。这些按业务功能相关性而划分的服务，没有哪一个可以脱离接入、逻辑和存储的。这些服务从本质上来说大部分都是OLTP(<a href="http://blog.csdn.net/tianlesoftware/article/details/5794844" target="_blank" rel="external">Online Transaction Processing</a>)，就是将现实生活中的沟通交流需求转移到了互联网进行。</p>
+<h2 id="Design-for-failure"><a href="#Design-for-failure" class="headerlink" title="Design for failure"></a>Design for failure</h2><h3 id="Fast-fail"><a href="#Fast-fail" class="headerlink" title="Fast fail"></a>Fast fail</h3><p>单点服务向多点服务的转变</p>
 <p>原因：<br>性能要求，多节点同时参与服务(按流量权重分发，负载均衡；按读写流量分发，读写分离)。<br>允许少部分节点失败，更可靠的运行。</p>
 <p>数据存储跨机分片，同时每片在多机存在复制集。计算资源无状态，本身就可以动态管理。便捷的扩容缩容(伸缩性)。</p>
 <p>因业务分拆，降低耦合粒度，降低系统扩展成本(可扩展性)，更高的可维护性。</p>
@@ -453,7 +457,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="post/2016/05/Summary-of-distributed-theory/"
-           data-title="分布式理论总结" data-url="http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/">
+           data-title="分布式软件理论总结" data-url="http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/">
       </div>
     
   </div>
@@ -592,7 +596,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#软件系统的本质是什么？"><span class="nav-number">1.</span> <span class="nav-text">软件系统的本质是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#传统软件的局限性"><span class="nav-number">2.</span> <span class="nav-text">传统软件的局限性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#停不下来的运动员"><span class="nav-number">2.1.</span> <span class="nav-text">停不下来的运动员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转向敏捷式-agile-开发"><span class="nav-number">2.2.</span> <span class="nav-text">转向敏捷式(agile)开发</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式系统的利与弊"><span class="nav-number">3.</span> <span class="nav-text">分布式系统的利与弊</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#软件系统的本质是什么？"><span class="nav-number">1.</span> <span class="nav-text">软件系统的本质是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#传统软件的局限性"><span class="nav-number">2.</span> <span class="nav-text">传统软件的局限性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#停不下来的运动员"><span class="nav-number">2.1.</span> <span class="nav-text">停不下来的运动员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转向敏捷式-agile-开发"><span class="nav-number">2.2.</span> <span class="nav-text">转向敏捷式(agile)开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#快速交付"><span class="nav-number">2.2.1.</span> <span class="nav-text">快速交付</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可维护性"><span class="nav-number">2.2.2.</span> <span class="nav-text">可维护性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可扩展性"><span class="nav-number">2.2.3.</span> <span class="nav-text">可扩展性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离性"><span class="nav-number">2.2.4.</span> <span class="nav-text">隔离性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#质量可控"><span class="nav-number">2.2.5.</span> <span class="nav-text">质量可控</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式系统的利与弊"><span class="nav-number">3.</span> <span class="nav-text">分布式系统的利与弊</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#软件的构成"><span class="nav-number">3.1.</span> <span class="nav-text">软件的构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-for-failure"><span class="nav-number">3.2.</span> <span class="nav-text">Design for failure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fast-fail"><span class="nav-number">3.2.1.</span> <span class="nav-text">Fast fail</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
