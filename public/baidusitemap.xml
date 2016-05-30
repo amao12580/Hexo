@@ -5,10 +5,10 @@
     
   <url>
     <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
-    <lastmod>2016-05-27T11:22:30.364Z</lastmod>
+    <lastmod>2016-05-30T10:32:35.163Z</lastmod>
     <data>
         <display>
-        <title>JOOQ 3.6.1 使用总结：从入门到提高</title>
+        <title>JOOQ 3.8.2 使用 教程：从入门到提高</title>
         <pubTime>2016-04-01T09:38:14.463Z</pubTime>
         
         <tag>JOOQ</tag>
@@ -18,6 +18,8 @@
         <tag>ARM</tag>
          
         <tag>ORM</tag>
+         
+        <tag>Transaction</tag>
          
          
            

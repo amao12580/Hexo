@@ -1,18 +1,26 @@
 ---
-title: JOOQ 3.6.1 使用总结：从入门到提高
+title: JOOQ 3.8.2 使用 教程：从入门到提高
 date: 2016年3月31日14:00:22
 tags:
     - JOOQ
     - SQL
     - ARM
     - ORM
+    - Transaction
 categories:
     - Learning
-description:
+description: JOOQ (Java Object Oriented Querying) 作为ORM框架，其原理是：在DAO层使用Java语言编写SQL语句，在Intellij IDEA的辅助下，复杂SQL的维护变得很容易。通过内部SQL Builder转换成数据库可执行的SQL文本，使用数据库驱动，提交SQL到RDBMS执行，接受处理结果，转换为POJO，返回到应用层。
 ---
-2016年后换了一家公司干，后台ORM框架用的JOOQ，完全陌生的东西。干这一行越久，越觉得有更多有趣的新事物需要去探索。想起小说[《火星救援》](https://book.douban.com/subject/26586492/)，主人Mark侥幸在火星风暴中幸存后，一步步将自己救出困境，遇到的难题或大或小，皆有优雅解决之法。<!--more-->一切看似偶然蹊跷，其实与Mark的长期知识储备分不开。所谓艺多不压身，应该在有限的时间里，得到更多成长，以期待机会来时不辜负。
 
-下文中的学习示例代码，已经整理完毕：[https://github.com/amao12580/JOOQ](https://github.com/amao12580/JOOQ)
+## 写在前面
+
+2016年后换了一家公司干，后台ORM框架用的JOOQ，完全陌生的东西。干这一行越久，越觉得有更多有趣的新事物需要去探索。想起小说[《火星救援》](https://book.douban.com/subject/26586492/)，Mark侥幸在火星风暴中幸存后，一步步将自己救出困境，遇到的难题或大或小，皆有优雅解决之法。一切看似偶然蹊跷，其实与Mark的长期知识储备分不开。所谓艺多不压身，应该在有限的时间里，得到更多成长，以期待机会来时不辜负。
+
+下文中的学习示例代码，已经整理完毕：
+
+* 原味基础学习：[https://github.com/amao12580/JOOQ](https://github.com/amao12580/JOOQ)
+
+* 与Spring深度整合：[https://github.com/amao12580/JOOQ-With-Spring](https://github.com/amao12580/JOOQ-With-Spring)
 
 ## 什么是JOOQ？
 [JOOQ](http://www.jooq.org/)，全称Java Object Oriented Querying，即面向Java对象查询。它是[Data Geekery](http://www.datageekery.com/)公司研发的DA方案(Data Access Layer)，主要解决两个问题：
@@ -31,7 +39,13 @@ JOOQ希望干的就是在上述两者中寻找一个最佳的平衡。它依据�
 
 OpenSource版本针对开源数据库，已经够用了。其它的几个版本针对非开源数据库，差异在于不同的后续支持。
 
-JOOQ应用在DAO层中，原理是：在DAO层使用Java语言编写SQL语句，内部转换成数据库可执行的SQL语句，通过数据库驱动，提交SQL语句到RDBMS执行，接受处理结果，转换为POJO，返回到应用层。
+想了解各版本的更多区别，跟我一起看吧。
+
+* http://www.jooq.org/legal/licensing
+
+* http://www.jooq.org/download/
+
+JOOQ作为ORM框架，其原理是：在DAO层使用Java语言编写SQL语句，在Intellij IDEA的辅助下，复杂SQL的维护变得很容易。通过内部SQL Builder转换成数据库可执行的SQL文本，使用数据库驱动，提交SQL到RDBMS执行，接受处理结果，转换为POJO，返回到应用层。
 
 它与Hibernate不同，不依赖使用字符串变量在Java代码中拼接SQL语句。在复杂SQL语句中，与变量的组合拼接时，SQL被割裂成多个部分，失去了宝贵的可读性，这简直是噩梦。而且Hibernate饱受诟病的连接查询配置复杂以及HQL语法的问题，在JOOQ中不复存在。
 
@@ -68,7 +82,7 @@ create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 * 开发人员需要转换思维，接受新事物，May be better？
 
 ## 入门篇
-### With Maven
+### With MySQL
 ```
 <!--MySQL JDBC driver, 数据库迁移等情况下需要. -->
 <dependency>
@@ -84,7 +98,7 @@ create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 <dependency>
     <groupId>org.jooq</groupId>
     <artifactId>jooq-codegen</artifactId>
-    <version>3.6.1</version>
+    <version>3.8.2</version>
 </dependency>
 
 <!--数据库代码生成的插件 -->
@@ -92,7 +106,7 @@ create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
     <!-- Specify the maven code generator plugin -->
     <groupId>org.jooq</groupId>
     <artifactId>jooq-codegen-maven</artifactId>
-    <version>3.6.1</version>
+    <version>3.8.2</version>
     <!-- The plugin should hook into the generate goal -->
     <executions>
         <execution>
@@ -209,8 +223,9 @@ HikariCP在github上的地址：[https://github.com/brettwooldridge/HikariCP](ht
 ### 简单的CRUD
 为保持example的干净与轻便，不使用Spring进行ORM层的管理，我采用[ARM](http://www.oschina.net/question/12_10706)的方式来管理SQL链接，在try with resource块结束后自动释放SQL链接。
 
-有需要与Spring进行整合的，Follow这篇文章吧！
-[Using JOOQ with Spring and Apache DBCP](http://www.jooq.org/doc/3.7/manual/getting-started/tutorials/jooq-with-spring/)
+有需要与Spring进行整合的，Follow这篇文章吧！[Using JOOQ with Spring and Apache DBCP](http://www.jooq.org/doc/3.7/manual/getting-started/tutorials/jooq-with-spring/)
+
+同时我也将JOOQ与Spring 4、Spring-MVC进行了整合，代码地址：[https://github.com/amao12580/JOOQ-With-Spring](https://github.com/amao12580/JOOQ-With-Spring)，使用Spring Transaction进行事务管理。
 
 ```
 try(ScopedContext scopedContext=new ScopedContext()){//try with resource
@@ -281,7 +296,7 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
 @@@@@@@@@@        @@        @@@@@@@@@@
 @@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Thank you for using jOOQ 3.6.1
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Thank you for using jOOQ 3.8.2
 
 21:01:20.593 INFO  com.study.jooq.model.Example 42 base - insertRet:1
 21:01:21.197 INFO  com.study.jooq.model.Example 51 base - dropIndexRet:0,createIndexRet:0
@@ -293,7 +308,15 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
 21:01:21.331 INFO  com.zaxxer.hikari.util.ConcurrentBag 197 add - ConcurrentBag has been closed, ignoring add()
 ```
 ## 进阶篇
+
 ### 事务
+
+JOOQ目前并不支持类似Spring的声明式事务管理，暂时只支持由自身API提供的编程式事务管理。有关声明式事务管理与编程式事务管理的区别，请Follow：[编程式事务与声明式事务](http://blog.csdn.net/u012228718/article/details/42750119#t1)。但JOOQ作者Lukas Eder明确表示在未来的3.9版本中，会提供解决方案。
+
+* [http://www.jooq.org/doc/3.8/manual/sql-execution/transaction-management/](http://www.jooq.org/doc/3.8/manual/sql-execution/transaction-management/)
+
+* [https://github.com/jOOQ/jOOQ/issues/4836](https://github.com/jOOQ/jOOQ/issues/4836)
+
 ```
 try(ScopedContext scopedContext=new ScopedContext()){//try with resource
     DSLContext create=scopedContext.getDSLContext();
@@ -522,9 +545,9 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
 16:54:10.765 INFO  com.study.jooq.model.Example 244 view - 删除视图,执行结果:0
 ```
 
-### 操作符
+### 运算符
 
-有时候可能需要在SQL中，对字段进行加减乘除操作。
+有时候可能需要在SQL中，对字段(或字段之间)进行加减乘除等运算操作。
 
 ```
 需求示例，在箱子规格表(不重复)中，找出前十条，按照箱子的容积的最大值(int 11)与最小值(int 11)范围，与给定值(528)进行比较排序，找出最接近的十条。
@@ -551,6 +574,32 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
     fetch();
 }
 ```
+
+### [draft] With ehcache
+
+未完成。
+
+讨论JOOQ与Ehcache等进程级别缓存模块的集成，引申地，会谈到中间件级别的数据库缓存，如：Redis。
+
+### [draft] DefaultRecordListener 如何使用？
+
+未完成。
+
+讨论JOOQ重要特性：RecordListener(简称Listener)。
+
+Listener的应用场景，数据库操作完成后同步回调。
+
+示例需求：简书网站，完成MySQL插入或更新文章后，需要在搜索接口(Slor)中半实时的查询到最新文章。
+
+分析：强一致性需求，在MySQL和搜索引擎同时操作成功，才算一个事务成功。
+
+使用JOOQ获取MySQL数据库链接时，注册Listener，指向更新Slor的业务逻辑。
+
+### [draft] 更快的分页(seek)
+
+未完成。
+
+Seek方法本来就没有跳过OFFSET之前的记录，它跳过的是所有以前获取到的最后一条记录之前的记录。考虑一下谷歌的翻页。从实用角度看的话，你几乎不可能准确地跳过100'000行记录。
 
 ## 小技巧
 ### 获取SQL语句
