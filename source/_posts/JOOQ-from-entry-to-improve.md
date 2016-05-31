@@ -575,25 +575,75 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
 }
 ```
 
-### [draft] With ehcache
+## 高级篇
+这部分面向于对JOOQ保持更多热情的读者，谈到JOOQ的高阶特性，这些特性在企业级开发中往往会用的很多，但对于个人开发者可能就没那么重要了。因此个人开发者可以选择性的阅读。
+
+推荐企业在大面积应用JOOQ之前详细阅读这部分的内容，以更好的在生产环境稳定使用。
+
+### 重复使用Statement
+
+数据库系统对SQL语句的处理一般会经过如下过程。
+
+- 1.查询解析器（Query parser）：用于检查查询是否合法
+- 2.查询重写器（Query rewriter）：用于预优化查询
+- 3.查询优化器（Query optimizer）：用于优化查询
+- 4.查询执行器（Query executor）：用于编译和执行查询
+
+PreparedStatement是java.sql包下面的一个接口，用来执行SQL语句查询，通过调用connection.preparedStatement(sql)方法可以获得PreparedStatment对象。数据库系统会对sql语句进行预编译处理（如果JDBC驱动支持的话），预处理语句将被预先编译好，这条预编译的sql查询语句能在将来的查询中重用，这样一来，它比Statement对象生成的查询速度更快。
+
+对比以上4条处理过程，复用的PreparedStatement对象，将直接跳过3.5步（最后一步的编译部分也跳过啦），直接被数据库执行，对于复杂并且高频率执行的SQL，这将极大的提高TPS！
+
+在JDBC中如何做？
+
+```
+// 获取PreparedStatement对象，此时数据库已经将String类型的SQL预编译过了。
+try (PreparedStatement stmt = connection.prepareStatement("SELECT 1 FROM DUAL")) {
+
+    // 第一次使用，获取结果集
+    try (ResultSet rs1 = stmt.executeQuery()) { ... }
+
+    // 不关闭，再次使用，获取结果集（此时结果集可能发生了变化）
+    try (ResultSet rs2 = stmt.executeQuery()) { ... }
+}
+```
+
+在JOOQ中如何做？
+
+```
+//重复使用Statement
+try (ScopedContext scopedContext = new ScopedContext()) {//try with resource
+    DSLContext create = scopedContext.getDSLContext();
+
+    // 创建一个被配置保持打开的Statement
+    try (ResultQuery<Record1<Integer>> query = create.selectOne().keepStatement(true)) {
+        Result<Record1<Integer>> result1 = query.fetch(); // This will lazily create a new PreparedStatement
+        log.info("result1:" + result1.toString());
+        Result<Record1<Integer>> result2 = query.fetch(); // This will reuse the previous PreparedStatement
+        log.info("result2:" + result2.toString());
+    }
+}
+
+```
+
+### [draft] With Ehcache
 
 未完成。
 
 讨论JOOQ与Ehcache等进程级别缓存模块的集成，引申地，会谈到中间件级别的数据库缓存，如：Redis。
 
-### [draft] DefaultRecordListener 如何使用？
+### [draft] 钩子函数：DefaultRecordListener 如何使用？
 
 未完成。
 
-讨论JOOQ重要特性：RecordListener(简称Listener)。
+讨论JOOQ重要特性：DefaultRecordListener(简称Listener)。
 
 Listener的应用场景，数据库操作完成后同步回调。
 
-示例需求：简书网站，完成MySQL插入或更新文章后，需要在搜索接口(Slor)中半实时的查询到最新文章。
+示例需求：简书网站，完成MySQL插入或更新文章后，需要在搜索接口(Solr)中半实时的查询到最新文章。
 
 分析：强一致性需求，在MySQL和搜索引擎同时操作成功，才算一个事务成功。
 
-使用JOOQ获取MySQL数据库链接时，注册Listener，指向更新Slor的业务逻辑。
+使用JOOQ获取MySQL数据库链接时，注册Listener，指向更新Solr的业务逻辑。
 
 ### [draft] 更快的分页(seek)
 
@@ -628,5 +678,13 @@ log.info("s1:" + sfus.getSQL());
 ## Some else
 ### JPA与JDBC有什么区别？
 
-* JDBC：Java Data Base Connectivity，java数据库连接，用于直接调用SQL 命令，也就是用于执行SQL语句的Java API，是面向数据库的。
-* JPA：Java Persistence API，Java持久性API，用来操作实体对象，持久性提供了很多实现，编程人员只需要编写实体类，实体类中的主要信息为实体与数据库中表、字段、主键的对应，可以免除编写繁琐的SQL。
+- JDBC：Java Data Base Connectivity，java数据库连接，用于直接调用SQL 命令，也就是用于执行SQL语句的Java API，是面向数据库的。
+- JPA：Java Persistence API，Java持久性API，用来操作实体对象，持久性提供了很多实现，编程人员只需要编写实体类，实体类中的主要信息为实体与数据库中表、字段、主键的对应，可以免除编写繁琐的SQL。
+
+### JOOQ与JDBC的详细区别
+
+- [Comparison between jOOQ and JDBC](http://www.jooq.org/doc/3.8/manual/sql-execution/comparison-with-jdbc/)
+
+## Reference
+
+- [如果有人问你数据库的原理，叫他看这篇文章](http://blog.jobbole.com/100349/)

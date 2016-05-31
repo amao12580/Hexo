@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</loc>
+    <lastmod>2016-05-31T10:39:24.302Z</lastmod>
+    <data>
+        <display>
+        <title>分布式软件理论总结</title>
+        <pubTime>2016-05-23T03:34:28.000Z</pubTime>
+        
+        <tag>Distributed</tag>
+         
+         
+           
+             
+              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
-    <lastmod>2016-05-30T10:32:35.163Z</lastmod>
+    <lastmod>2016-05-31T04:38:02.270Z</lastmod>
     <data>
         <display>
         <title>JOOQ 3.8.2 使用 教程：从入门到提高</title>
@@ -25,26 +45,6 @@
            
              
               <breadCrumb title="Learning" url="http://amao12580.github.io/categories/Learning/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</loc>
-    <lastmod>2016-05-27T09:08:03.860Z</lastmod>
-    <data>
-        <display>
-        <title>分布式软件理论总结</title>
-        <pubTime>2016-05-23T03:34:28.000Z</pubTime>
-        
-        <tag>Distributed</tag>
-         
-         
-           
-             
-              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
           
         </display>
     </data>
