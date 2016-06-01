@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</loc>
+    
+    <lastmod>2016-06-01T10:57:11.027Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
+    
+    <lastmod>2016-06-01T10:50:37.279Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</loc>
     
     <lastmod>2016-06-01T09:49:55.968Z</lastmod>
@@ -26,20 +40,6 @@
     <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
     
     <lastmod>2016-06-01T05:23:24.593Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</loc>
-    
-    <lastmod>2016-06-01T05:23:18.873Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
-    
-    <lastmod>2016-05-27T06:07:44.928Z</lastmod>
     
   </url>
   

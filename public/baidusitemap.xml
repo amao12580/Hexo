@@ -4,6 +4,50 @@
 
     
   <url>
+    <loc>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</loc>
+    <lastmod>2016-06-01T10:57:11.027Z</lastmod>
+    <data>
+        <display>
+        <title>消息系统的架构演进之路</title>
+        <pubTime>2016-06-01T05:18:41.875Z</pubTime>
+        
+        <tag>MessageSystem</tag>
+         
+        <tag>architecture</tag>
+         
+         
+           
+             
+              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
+    <lastmod>2016-06-01T10:50:37.279Z</lastmod>
+    <data>
+        <display>
+        <title>技术架构规范总结</title>
+        <pubTime>2016-05-11T10:38:31.000Z</pubTime>
+        
+        <tag>Architecture</tag>
+         
+        <tag>Specification</tag>
+         
+         
+           
+             
+              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</loc>
     <lastmod>2016-06-01T09:49:55.968Z</lastmod>
     <data>
@@ -92,50 +136,6 @@
         <tag>RedoLog</tag>
          
         <tag>RelayLog</tag>
-         
-         
-           
-             
-              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</loc>
-    <lastmod>2016-06-01T05:23:18.873Z</lastmod>
-    <data>
-        <display>
-        <title>消息系统的架构演进之路</title>
-        <pubTime>2016-06-01T05:18:41.875Z</pubTime>
-        
-        <tag>MessageSystem</tag>
-         
-        <tag>architecture</tag>
-         
-         
-           
-             
-              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
-    <lastmod>2016-05-27T06:07:44.928Z</lastmod>
-    <data>
-        <display>
-        <title>技术架构规范总结</title>
-        <pubTime>2016-05-11T10:38:31.000Z</pubTime>
-        
-        <tag>Architecture</tag>
-         
-        <tag>Specification</tag>
          
          
            
