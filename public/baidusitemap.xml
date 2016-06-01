@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</loc>
-    <lastmod>2016-05-31T10:39:24.302Z</lastmod>
+    <lastmod>2016-06-01T09:49:55.968Z</lastmod>
     <data>
         <display>
         <title>分布式软件理论总结</title>
@@ -24,8 +24,30 @@
 
     
   <url>
+    <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
+    <lastmod>2016-06-01T09:18:38.301Z</lastmod>
+    <data>
+        <display>
+        <title>软件重构经验总结</title>
+        <pubTime>2016-05-17T07:24:39.000Z</pubTime>
+        
+        <tag>Experience</tag>
+         
+        <tag>Refactor</tag>
+         
+         
+           
+             
+              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
-    <lastmod>2016-05-31T04:38:02.270Z</lastmod>
+    <lastmod>2016-06-01T07:39:32.688Z</lastmod>
     <data>
         <display>
         <title>JOOQ 3.8.2 使用 教程：从入门到提高</title>
@@ -52,16 +74,24 @@
 
     
   <url>
-    <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
-    <lastmod>2016-05-27T06:07:44.928Z</lastmod>
+    <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
+    <lastmod>2016-06-01T05:23:24.593Z</lastmod>
     <data>
         <display>
-        <title>技术架构规范总结</title>
-        <pubTime>2016-05-11T10:38:31.000Z</pubTime>
+        <title>当我们谈事务时，我们在谈什么</title>
+        <pubTime>2016-06-01T05:01:50.068Z</pubTime>
         
-        <tag>Architecture</tag>
+        <tag>Transaction</tag>
          
-        <tag>Specification</tag>
+        <tag>Spring</tag>
+         
+        <tag>MVCC</tag>
+         
+        <tag>WAL</tag>
+         
+        <tag>RedoLog</tag>
+         
+        <tag>RelayLog</tag>
          
          
            
@@ -74,16 +104,38 @@
 
     
   <url>
-    <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
-    <lastmod>2016-05-26T11:23:01.382Z</lastmod>
+    <loc>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</loc>
+    <lastmod>2016-06-01T05:23:18.873Z</lastmod>
     <data>
         <display>
-        <title>软件重构经验总结</title>
-        <pubTime>2016-05-17T07:24:39.000Z</pubTime>
+        <title>消息系统的架构演进之路</title>
+        <pubTime>2016-06-01T05:18:41.875Z</pubTime>
         
-        <tag>Experience</tag>
+        <tag>MessageSystem</tag>
          
-        <tag>Refactor</tag>
+        <tag>architecture</tag>
+         
+         
+           
+             
+              <breadCrumb title="Summary" url="http://amao12580.github.io/categories/Summary/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
+    <lastmod>2016-05-27T06:07:44.928Z</lastmod>
+    <data>
+        <display>
+        <title>技术架构规范总结</title>
+        <pubTime>2016-05-11T10:38:31.000Z</pubTime>
+        
+        <tag>Architecture</tag>
+         
+        <tag>Specification</tag>
          
          
            

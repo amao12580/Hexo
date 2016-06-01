@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://amao12580.github.io/"/>
-  <updated>2016-05-31T10:39:24.302Z</updated>
+  <updated>2016-06-01T05:23:18.873Z</updated>
   <id>http://amao12580.github.io/</id>
   
   <author>
@@ -16,32 +16,96 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>消息系统的架构演进之路</title>
+    <link href="http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/"/>
+    <id>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</id>
+    <published>2016-06-01T05:18:41.875Z</published>
+    <updated>2016-06-01T05:23:18.873Z</updated>
+    
+    <content type="html">&lt;p&gt;暂时未完成&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      消息系统在分阶段的架构演进
+    
+    </summary>
+    
+      <category term="Summary" scheme="http://amao12580.github.io/categories/Summary/"/>
+    
+    
+      <category term="MessageSystem" scheme="http://amao12580.github.io/tags/MessageSystem/"/>
+    
+      <category term="architecture" scheme="http://amao12580.github.io/tags/architecture/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>当我们谈事务时，我们在谈什么</title>
+    <link href="http://amao12580.github.io/post/2016/06/What-is-a-transaction/"/>
+    <id>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</id>
+    <published>2016-06-01T05:01:50.068Z</published>
+    <updated>2016-06-01T05:23:24.593Z</updated>
+    
+    <content type="html">&lt;p&gt;暂时未完成&lt;/p&gt;
+&lt;h2 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h2&gt;&lt;p&gt;讨论传统关系型数据库内的事务，以及如何与NoSQL领域结合进行事务化。&lt;/p&gt;
+&lt;h2 id=&quot;什么是事务？&quot;&gt;&lt;a href=&quot;#什么是事务？&quot; class=&quot;headerlink&quot; title=&quot;什么是事务？&quot;&gt;&lt;/a&gt;什么是事务？&lt;/h2&gt;&lt;p&gt;数据库事务（简称：事务）是数据库管理系统执行过程中的一个逻辑单位，由一个有限的数据库操作序列构成。这是使用Google Search以“事务”为关键字查找时，第一条是wikipedia给出的描述。&lt;/p&gt;
+&lt;h2 id=&quot;单系统事务&quot;&gt;&lt;a href=&quot;#单系统事务&quot; class=&quot;headerlink&quot; title=&quot;单系统事务&quot;&gt;&lt;/a&gt;单系统事务&lt;/h2&gt;&lt;h3 id=&quot;ACID&quot;&gt;&lt;a href=&quot;#ACID&quot; class=&quot;headerlink&quot; title=&quot;ACID&quot;&gt;&lt;/a&gt;ACID&lt;/h3&gt;&lt;h3 id=&quot;逻辑事务-VS-物理事务&quot;&gt;&lt;a href=&quot;#逻辑事务-VS-物理事务&quot; class=&quot;headerlink&quot; title=&quot;逻辑事务 VS 物理事务&quot;&gt;&lt;/a&gt;逻辑事务 VS 物理事务&lt;/h3&gt;&lt;h3 id=&quot;编程式事务-VS-声明式事务&quot;&gt;&lt;a href=&quot;#编程式事务-VS-声明式事务&quot; class=&quot;headerlink&quot; title=&quot;编程式事务 VS 声明式事务&quot;&gt;&lt;/a&gt;编程式事务 VS 声明式事务&lt;/h3&gt;&lt;h3 id=&quot;事务隔离级别&quot;&gt;&lt;a href=&quot;#事务隔离级别&quot; class=&quot;headerlink&quot; title=&quot;事务隔离级别&quot;&gt;&lt;/a&gt;事务隔离级别&lt;/h3&gt;&lt;h4 id=&quot;默认隔离级别&quot;&gt;&lt;a href=&quot;#默认隔离级别&quot; class=&quot;headerlink&quot; title=&quot;默认隔离级别&quot;&gt;&lt;/a&gt;默认隔离级别&lt;/h4&gt;&lt;h5 id=&quot;不同ORM框架的默认隔离级别&quot;&gt;&lt;a href=&quot;#不同ORM框架的默认隔离级别&quot; class=&quot;headerlink&quot; title=&quot;不同ORM框架的默认隔离级别&quot;&gt;&lt;/a&gt;不同ORM框架的默认隔离级别&lt;/h5&gt;&lt;h5 id=&quot;不同RDBMS的默认隔离级别&quot;&gt;&lt;a href=&quot;#不同RDBMS的默认隔离级别&quot; class=&quot;headerlink&quot; title=&quot;不同RDBMS的默认隔离级别&quot;&gt;&lt;/a&gt;不同RDBMS的默认隔离级别&lt;/h5&gt;&lt;h3 id=&quot;事务传播行为&quot;&gt;&lt;a href=&quot;#事务传播行为&quot; class=&quot;headerlink&quot; title=&quot;事务传播行为&quot;&gt;&lt;/a&gt;事务传播行为&lt;/h3&gt;&lt;h4 id=&quot;默认传播行为&quot;&gt;&lt;a href=&quot;#默认传播行为&quot; class=&quot;headerlink&quot; title=&quot;默认传播行为&quot;&gt;&lt;/a&gt;默认传播行为&lt;/h4&gt;&lt;h3 id=&quot;RDBMS如何权衡事务隔离与高并发读写？&quot;&gt;&lt;a href=&quot;#RDBMS如何权衡事务隔离与高并发读写？&quot; class=&quot;headerlink&quot; title=&quot;RDBMS如何权衡事务隔离与高并发读写？&quot;&gt;&lt;/a&gt;RDBMS如何权衡事务隔离与高并发读写？&lt;/h3&gt;&lt;h4 id=&quot;MVCC与Free-Lock&quot;&gt;&lt;a href=&quot;#MVCC与Free-Lock&quot; class=&quot;headerlink&quot; title=&quot;MVCC与Free Lock&quot;&gt;&lt;/a&gt;MVCC与Free Lock&lt;/h4&gt;&lt;h5 id=&quot;共享锁&quot;&gt;&lt;a href=&quot;#共享锁&quot; class=&quot;headerlink&quot; title=&quot;共享锁&quot;&gt;&lt;/a&gt;共享锁&lt;/h5&gt;&lt;h5 id=&quot;排它锁&quot;&gt;&lt;a href=&quot;#排它锁&quot; class=&quot;headerlink&quot; title=&quot;排它锁&quot;&gt;&lt;/a&gt;排它锁&lt;/h5&gt;&lt;h5 id=&quot;间隙锁&quot;&gt;&lt;a href=&quot;#间隙锁&quot; class=&quot;headerlink&quot; title=&quot;间隙锁&quot;&gt;&lt;/a&gt;间隙锁&lt;/h5&gt;&lt;h3 id=&quot;在主从架构下RDBMS如何保证事务？&quot;&gt;&lt;a href=&quot;#在主从架构下RDBMS如何保证事务？&quot; class=&quot;headerlink&quot; title=&quot;在主从架构下RDBMS如何保证事务？&quot;&gt;&lt;/a&gt;在主从架构下RDBMS如何保证事务？&lt;/h3&gt;&lt;h3 id=&quot;在双主结构下RDBMS如何保证事务？&quot;&gt;&lt;a href=&quot;#在双主结构下RDBMS如何保证事务？&quot; class=&quot;headerlink&quot; title=&quot;在双主结构下RDBMS如何保证事务？&quot;&gt;&lt;/a&gt;在双主结构下RDBMS如何保证事务？&lt;/h3&gt;&lt;h3 id=&quot;双活数据中心的事务管理&quot;&gt;&lt;a href=&quot;#双活数据中心的事务管理&quot; class=&quot;headerlink&quot; title=&quot;双活数据中心的事务管理&quot;&gt;&lt;/a&gt;双活数据中心的事务管理&lt;/h3&gt;&lt;h2 id=&quot;分布式事务&quot;&gt;&lt;a href=&quot;#分布式事务&quot; class=&quot;headerlink&quot; title=&quot;分布式事务&quot;&gt;&lt;/a&gt;分布式事务&lt;/h2&gt;&lt;h3 id=&quot;事务解耦&quot;&gt;&lt;a href=&quot;#事务解耦&quot; class=&quot;headerlink&quot; title=&quot;事务解耦&quot;&gt;&lt;/a&gt;事务解耦&lt;/h3&gt;&lt;h3 id=&quot;事务补偿&quot;&gt;&lt;a href=&quot;#事务补偿&quot; class=&quot;headerlink&quot; title=&quot;事务补偿&quot;&gt;&lt;/a&gt;事务补偿&lt;/h3&gt;&lt;h3 id=&quot;事务回滚&quot;&gt;&lt;a href=&quot;#事务回滚&quot; class=&quot;headerlink&quot; title=&quot;事务回滚&quot;&gt;&lt;/a&gt;事务回滚&lt;/h3&gt;&lt;h3 id=&quot;最终资源一致性&quot;&gt;&lt;a href=&quot;#最终资源一致性&quot; class=&quot;headerlink&quot; title=&quot;最终资源一致性&quot;&gt;&lt;/a&gt;最终资源一致性&lt;/h3&gt;&lt;h3 id=&quot;与nosql&quot;&gt;&lt;a href=&quot;#与nosql&quot; class=&quot;headerlink&quot; title=&quot;与nosql&quot;&gt;&lt;/a&gt;与nosql&lt;/h3&gt;&lt;h3 id=&quot;阿里DTS&quot;&gt;&lt;a href=&quot;#阿里DTS&quot; class=&quot;headerlink&quot; title=&quot;阿里DTS&quot;&gt;&lt;/a&gt;阿里DTS&lt;/h3&gt;&lt;h2 id=&quot;Reference&quot;&gt;&lt;a href=&quot;#Reference&quot; class=&quot;headerlink&quot; title=&quot;Reference&quot;&gt;&lt;/a&gt;Reference&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;数据库事务-维基百科&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      数据库事务（简称：事务）是数据库管理系统执行过程中的一个逻辑单位，由一个有限的数据库操作序列构成。
+    
+    </summary>
+    
+      <category term="Summary" scheme="http://amao12580.github.io/categories/Summary/"/>
+    
+    
+      <category term="Transaction" scheme="http://amao12580.github.io/tags/Transaction/"/>
+    
+      <category term="Spring" scheme="http://amao12580.github.io/tags/Spring/"/>
+    
+      <category term="MVCC" scheme="http://amao12580.github.io/tags/MVCC/"/>
+    
+      <category term="WAL" scheme="http://amao12580.github.io/tags/WAL/"/>
+    
+      <category term="RedoLog" scheme="http://amao12580.github.io/tags/RedoLog/"/>
+    
+      <category term="RelayLog" scheme="http://amao12580.github.io/tags/RelayLog/"/>
+    
+  </entry>
+  
+  <entry>
     <title>分布式软件理论总结</title>
     <link href="http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/"/>
     <id>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</id>
     <published>2016-05-23T03:34:28.000Z</published>
-    <updated>2016-05-31T10:39:24.302Z</updated>
+    <updated>2016-06-01T09:49:55.968Z</updated>
     
     <content type="html">&lt;p&gt;&lt;img src=&quot;/img/thinking.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;软件系统的本质&quot;&gt;&lt;a href=&quot;#软件系统的本质&quot; class=&quot;headerlink&quot; title=&quot;软件系统的本质&quot;&gt;&lt;/a&gt;软件系统的本质&lt;/h1&gt;&lt;p&gt;软件是现实的抽象，讨论抽象的本质是困难的，让我们一起在现实中思考。小到一支笔，大到一部汽车，这些产品的出现，使我们在现实生活中得到了方便。这里说的方便，是指因为使用了这些产品，降低了成本，提高了效率。在没有笔的时代，想要记录信息需要结绳、岩画或篆刻，这是高成本的，效率也很低。同样的，没有汽车的时代，想要到达另一个城市，会因为恶劣天气而被迫中途搁置，相应的通行时间也会比现在长得多。进一步的思考，笔与汽车的共同点又在哪里呢？&lt;/p&gt;
 &lt;p&gt;笔与汽车，这些产品是为了满足人们的各类生活需求而发明的。即，人们因为现实需要，而发明或改进了产品，产品是为了帮助人们更好的生活而存在。同样的，软件系统也是如此，人们出于远距离沟通交流需要，发明电话拨号系统；因为更随时随地的信息多样化交流，发明了各种互联网IM产品。&lt;/p&gt;
 &lt;p&gt;软件系统是依托于人们现实需求而存在，用以辅助人们更好的生活，它是现实世界在虚拟世界的抽象。同样的软件系统也存在着兴衰淘汰，一款软件刚问世时，受欢迎程度总是处于低谷，存在现实世界对其接受适应的时间窗。突破时间窗，进而逐渐闻名天下，此时依托此软件又会催生出许多子软件链（如chromium的众多壳浏览器、SVN的众多客户端）。随着技术革新，软件产业也会更新换代，跟不上时代的软件系统会逐渐退出市场（如vista操作系统的短命）。但市场总是存在需要的，类似的软件在倒下后总会有后继者，如浏览器，这几乎在国内，每家互联网公司都想做或者已经在做。&lt;/p&gt;
-&lt;h1 id=&quot;不良设计的局限性&quot;&gt;&lt;a href=&quot;#不良设计的局限性&quot; class=&quot;headerlink&quot; title=&quot;不良设计的局限性&quot;&gt;&lt;/a&gt;不良设计的局限性&lt;/h1&gt;&lt;h2 id=&quot;停不下来的运动员&quot;&gt;&lt;a href=&quot;#停不下来的运动员&quot; class=&quot;headerlink&quot; title=&quot;停不下来的运动员&quot;&gt;&lt;/a&gt;停不下来的运动员&lt;/h2&gt;&lt;p&gt;在软件系统的发展初期，适用面狭窄，功能单一、用户少、价值不够高，造成对软件系统研发的不重视，成本投入低。相应的，软件所带来的经济收益也是有限的。此时的软件系统往往谈不上架构，往往是一个软件系统承载了所有功能，单个功能模块没有边界，逻辑分散，而各个功能模块之间的耦合关系是散乱的。&lt;/p&gt;
-&lt;p&gt;在软件系统有机会成长起来后，带来了一定的经济收益。我们会思考软件系统的功能增多，更适应于用户（市场需要），或者考虑增强原有用户黏性，此时会对软件系统提出更多要求。而初期功能模块散乱的堆叠，对迫切需要的可扩展性带来了的麻烦，紧耦合的架构造成牵一发而动全身的问题，新功能的增加，往往意味着巨大地改造成本。勉强加上一些功能后，整个软件系统简直是乱作一团，就像是一堆红豆、绿豆，这样的软件系统，我们称之为集中式软件系统。&lt;/p&gt;
-&lt;p&gt;集中式的软件系统还对重构带来挑战，随着功能需求越来越频繁的提出，往往意味着需要更短的版本迭代周期。现有系统无法灵活扩展，意味着需要对整个软件系统进行重构，而等到软件散乱性膨胀到一定程度，重构几乎变成不可完成的任务，就算是系统起始负责人，也无法评估重构带来的风险与收益究竟谁更多？&lt;/p&gt;
-&lt;p&gt;集中式的软件系统在生命的后期，开发团队往往面临两难，团队任何人都知道急需重构，但因为开发团队往往没有决策权，最高决策领导也往往兼顾到市场利益，而不可能给出重构所需的时间窗口。在愈发杂乱的系统上进行维护和新功能叠加，这让团队内的每个人都需要指数级的投入成本，往往还达不到市场需要的软件质量。&lt;/p&gt;
-&lt;p&gt;这就像只能跑一公里的运动员，在一公里的极限跑步后，本应停下来适度休息，自我调整。而由于上层裁判的压力，运动员只能咬牙坚持，但迈出的每一步都越来越累，没法再像刚开始保持加速度。更令人担忧的是，此时裁判还吹响了冲刺哨，要求运动员进行冲锋。这样，运动员只有倒下了。相应的到此时，团队内的成员会加速流失，新招进来的人也不能理解整套系统的运作，经常顾此失彼，从而导致最终的系统失败。&lt;/p&gt;
-&lt;p&gt;这也就是为什么CTO必需对技术团队保持深入理解，同时还应有对产品、开发的最高决策权，以支持技术团队在适时进行系统级别的重构，从而更好地满足公司的战略需求，这是非常有必要的。&lt;/p&gt;
-&lt;h1 id=&quot;向敏捷开发过渡&quot;&gt;&lt;a href=&quot;#向敏捷开发过渡&quot; class=&quot;headerlink&quot; title=&quot;向敏捷开发过渡&quot;&gt;&lt;/a&gt;向敏捷开发过渡&lt;/h1&gt;&lt;p&gt;重构更多的是对软件的可维护性和可扩展性进行提高，无法完成重构的软件，往往都逃不过被淘汰的命运。何时适宜进行重构，需要考量的因素有三个：成本、收益、风险。其中风险是最为重要的，如果系统不进行重构，在未来可能带来巨大的问题，如不能适应分布式部署。此时就有必要进行重构了，重构的同时还需要考虑完成重构需要的成本，包括时间成本、人力成本，团队往往时刻肩负着新功能的开发和旧功能的维护工作，如何在不多的时间和人力中挤出资源呢？&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/building-blocks.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;不良设计的局限性&quot;&gt;&lt;a href=&quot;#不良设计的局限性&quot; class=&quot;headerlink&quot; title=&quot;不良设计的局限性&quot;&gt;&lt;/a&gt;不良设计的局限性&lt;/h1&gt;&lt;p&gt;在软件系统的发展初期，适用面狭窄，功能单一、用户少、价值不够高，造成对软件系统研发的不重视，成本投入低。相应的，软件所带来的经济收益也是有限的。此时的软件系统往往谈不上架构，往往是一个软件系统承载了所有功能，单个功能模块没有边界，逻辑分散，而各个功能模块之间的耦合关系是散乱的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/chaos.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在软件系统有机会成长起来后，带来了一定的经济收益。我们会思考软件系统的功能增多，更适应于用户（市场需要），或者考虑增强原有用户黏性，此时会对软件系统提出更多要求。而初期功能模块散乱的堆叠，对迫切需要的可扩展性带来了的麻烦，紧耦合的架构造成牵一发而动全身的问题，新功能的增加，往往意味着巨大地改造成本。勉强加上一些功能后，整个软件系统简直是乱作一团，就像是一堆红豆绿豆，这样的软件系统，我们称之为集中式软件系统。&lt;/p&gt;
+&lt;p&gt;集中式的软件系统还对重构带来挑战，随着功能需求越来越频繁的提出，往往意味着需要更短的版本迭代周期。现有系统无法灵活扩展，意味着需要对整个软件系统进行重构，而等到软件散乱性膨胀到一定程度，重构几乎变成不可完成的任务，就算是系统初始负责人，也无法评估重构带来的风险与收益究竟谁更多？&lt;/p&gt;
+&lt;h2 id=&quot;停不下来的运动员&quot;&gt;&lt;a href=&quot;#停不下来的运动员&quot; class=&quot;headerlink&quot; title=&quot;停不下来的运动员&quot;&gt;&lt;/a&gt;停不下来的运动员&lt;/h2&gt;&lt;p&gt;集中式的软件系统在濒危阶段，开发团队往往面临两难，团队任何人都知道急需重构，但因为没有决策权，最高决策领导也顾虑着市场利益，而不可能给出重构所需的资源(时间、人力、软硬件)。在愈发杂乱的系统上进行维护和新功能叠加，这让团队内的每个人都需要指数级的投入成本，往往还达不到市场需要的质量。&lt;/p&gt;
+&lt;p&gt;就像田径400米接力比赛中，只能跑第一棒的运动员，本应在交棒后停下来休息，自我调整。而由于接手下一棒的运动员迟迟不能到位，运动员只能咬牙坚持跑第二棒，但迈出的每一步都越来越累，没法再像刚开始保持加速度。更令人担忧的是，此时裁判还吹响了冲刺哨，要求运动员进行冲锋。这样，运动员只有倒下了。相应的，软件系统到此时，开发团队成员会加速流失，新招进来的人也很难理解整套系统的协作，经常顾此失彼，从而导致最终的系统失败。&lt;/p&gt;
+&lt;p&gt;这也就是为什么CTO必需对技术团队保持深入理解，同时还应有对产品、开发的最高决策权，以支持技术团队在适时进行系统级别的重构，让失去体力的软件系统下线休息，换上更适合的新软件系统上线，从而更好地满足公司的战略需求，这是非常有必要的。&lt;/p&gt;
+&lt;h1 id=&quot;向敏捷开发过渡&quot;&gt;&lt;a href=&quot;#向敏捷开发过渡&quot; class=&quot;headerlink&quot; title=&quot;向敏捷开发过渡&quot;&gt;&lt;/a&gt;向敏捷开发过渡&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;/img/building-blocks.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;在软件系统有机会从集中式软件模式，过渡到积木型的软件模式后。系统原有是100%的功能堆叠到一个系统，现在变成了多个积木，也就是软件子系统，每个积木只负责其中的部分功能，积木间的协作，从而拼装出完整的软件系统。&lt;/p&gt;
 &lt;h2 id=&quot;快速交付&quot;&gt;&lt;a href=&quot;#快速交付&quot; class=&quot;headerlink&quot; title=&quot;快速交付&quot;&gt;&lt;/a&gt;快速交付&lt;/h2&gt;&lt;p&gt;集中式的软件往往灵活性低下，这体现在很多方面。&lt;/p&gt;
 &lt;p&gt;1.设计的灵活性，想要以好的设计替换掉不再适应设计方案，会遭遇无法评估改造成本。&lt;/p&gt;
-&lt;p&gt;2.构建的灵活性，软件功能过于集中，导致一个小小的编译问题，都会影响整个软件的构建，就像走钢丝一样，必需每一步都完美无差才能交付到下一环节。&lt;/p&gt;
+&lt;p&gt;2.构建的灵活性，软件功能过于集中，导致一个小的编译问题，都会影响整个软件的构建，就像走钢丝一样，必需每一步都完美无缺才能安全走到终点。&lt;/p&gt;
 &lt;p&gt;3.测试的灵活性，测试任务因为功能互相紧耦合而变得繁重，无法评估已经做好的功能是否会受到影响。&lt;/p&gt;
-&lt;p&gt;4.部署的灵活性，运维无法根据系统的流量特性来优化软硬件配置，如JVM调优，LB等。&lt;/p&gt;
-&lt;p&gt;5.修复的灵活性，这一点往往在集中式软件中是一个优势，在线上出现问题，只需要简单的分析少量的运行日志即可定位问题，这在模块化系统中是一个软肋。&lt;/p&gt;
+&lt;p&gt;4.部署的灵活性，运维无法根据系统的流量特性来优化软硬件配置，如JVM调优，Load Balance等。&lt;/p&gt;
+&lt;p&gt;5.修复的灵活性，这一点往往在集中式软件中是一个优势，在线上出现问题，只需要简单的分析少量的运行日志即可定位问题，这在积木性系统中是一个软肋。&lt;/p&gt;
 &lt;p&gt;敏捷开发的主要优势就在于，合理的利用分治思想，将复杂的功能的系统模块化处理，拆分成由只有简单功能的子系统而拼凑出来的完整系统，每一个子系统可以交付到小团队来维护，甚至与有单独的运维人员来进行保障。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/MircoService.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;h2 id=&quot;可维护性&quot;&gt;&lt;a href=&quot;#可维护性&quot; class=&quot;headerlink&quot; title=&quot;可维护性&quot;&gt;&lt;/a&gt;可维护性&lt;/h2&gt;&lt;p&gt;这是一个巨大的转变，首当其冲的就是可维护性，只需要定义一套灵活的通信协议，子系统之间通过这套协议进行通讯，我们在对子系统内部的功能进行维护时，不必担忧其他子系统受到干扰。这也存在一个前提，能够封装在一个子系统的功能模块集合，必须是内聚型的，它们几乎很少对外层子系统产生耦合，或者通过统一的出口进行耦合关联。&lt;/p&gt;
 &lt;h2 id=&quot;可扩展性&quot;&gt;&lt;a href=&quot;#可扩展性&quot; class=&quot;headerlink&quot; title=&quot;可扩展性&quot;&gt;&lt;/a&gt;可扩展性&lt;/h2&gt;&lt;p&gt;其次是软件的可扩展性，新功能的开发，只需要新加一个子系统，扩展通讯协议，就可以满足要求，这对团队内的任何一个人都是令人振奋的。&lt;/p&gt;
 &lt;h2 id=&quot;隔离性&quot;&gt;&lt;a href=&quot;#隔离性&quot; class=&quot;headerlink&quot; title=&quot;隔离性&quot;&gt;&lt;/a&gt;隔离性&lt;/h2&gt;&lt;p&gt;积木型的软件构建，还给了我们保持专注的可能。现在我们可以为软件进行动静分离设计，以适应不同的最佳部署方式。可以按照系统流量特性，应用CQRS架构，提供更好的局部性能。进一步的还可以为强共用性的功能进行独立剥离出来，譬如单独的文件系统负责所有的文件服务，以在避免各个积木内部的重复造轮子，独立的服务还为以后的：可维护性、伸缩性带来了诸多方便。&lt;/p&gt;
@@ -70,7 +134,7 @@
     
     <summary type="html">
     
-      重构更多的是对软件的可维护性和可扩展性进行提高，无法完成重构的软件，往往都逃不过被淘汰的命运。何时适宜进行重构，需要考量的因素有三个：成本、收益、风险。其中风险是最为重要的，如果不进行重构，在未来可能带来巨大的问题，如不能适应分布式部署。此时就有必要进行重构了，重构的同时还需要考虑需要的成本，包括时间成本、人力成本。而团队往往时刻肩负着新功能的开发和旧功能的维护工作，如何在不多的时间和人力中挤出资源呢？
+      集中式的软件系统在濒危阶段，开发团队往往面临两难，团队任何人都知道急需重构，但因为没有决策权，最高决策领导也顾虑着市场利益，而不可能给出重构所需的资源(时间、人力、软硬件)。在愈发杂乱的系统上进行维护和新功能叠加，这让团队内的每个人都需要指数级的投入成本，往往还达不到市场需要的质量。
     
     </summary>
     
@@ -86,7 +150,7 @@
     <link href="http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/"/>
     <id>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</id>
     <published>2016-05-17T07:24:39.000Z</published>
-    <updated>2016-05-26T11:23:01.382Z</updated>
+    <updated>2016-06-01T09:18:38.301Z</updated>
     
     <content type="html">&lt;h1 id=&quot;先了解&quot;&gt;&lt;a href=&quot;#先了解&quot; class=&quot;headerlink&quot; title=&quot;先了解&quot;&gt;&lt;/a&gt;先了解&lt;/h1&gt;&lt;h2 id=&quot;了解中发现问题症结&quot;&gt;&lt;a href=&quot;#了解中发现问题症结&quot; class=&quot;headerlink&quot; title=&quot;了解中发现问题症结&quot;&gt;&lt;/a&gt;了解中发现问题症结&lt;/h2&gt;&lt;h2 id=&quot;了解中思考解决方案&quot;&gt;&lt;a href=&quot;#了解中思考解决方案&quot; class=&quot;headerlink&quot; title=&quot;了解中思考解决方案&quot;&gt;&lt;/a&gt;了解中思考解决方案&lt;/h2&gt;&lt;h2 id=&quot;选取合适的解决方案&quot;&gt;&lt;a href=&quot;#选取合适的解决方案&quot; class=&quot;headerlink&quot; title=&quot;选取合适的解决方案&quot;&gt;&lt;/a&gt;选取合适的解决方案&lt;/h2&gt;&lt;h2 id=&quot;保留可扩展性&quot;&gt;&lt;a href=&quot;#保留可扩展性&quot; class=&quot;headerlink&quot; title=&quot;保留可扩展性&quot;&gt;&lt;/a&gt;保留可扩展性&lt;/h2&gt;&lt;h2 id=&quot;保留可维护性&quot;&gt;&lt;a href=&quot;#保留可维护性&quot; class=&quot;headerlink&quot; title=&quot;保留可维护性&quot;&gt;&lt;/a&gt;保留可维护性&lt;/h2&gt;&lt;h1 id=&quot;再动手&quot;&gt;&lt;a href=&quot;#再动手&quot; class=&quot;headerlink&quot; title=&quot;再动手&quot;&gt;&lt;/a&gt;再动手&lt;/h1&gt;&lt;h2 id=&quot;重构方案的评审&quot;&gt;&lt;a href=&quot;#重构方案的评审&quot; class=&quot;headerlink&quot; title=&quot;重构方案的评审&quot;&gt;&lt;/a&gt;重构方案的评审&lt;/h2&gt;&lt;h2 id=&quot;理清方案的优势与不足&quot;&gt;&lt;a href=&quot;#理清方案的优势与不足&quot; class=&quot;headerlink&quot; title=&quot;理清方案的优势与不足&quot;&gt;&lt;/a&gt;理清方案的优势与不足&lt;/h2&gt;&lt;h2 id=&quot;资源预先到位&quot;&gt;&lt;a href=&quot;#资源预先到位&quot; class=&quot;headerlink&quot; title=&quot;资源预先到位&quot;&gt;&lt;/a&gt;资源预先到位&lt;/h2&gt;&lt;p&gt;包括重构的时间争取，参与人员配比，对其他软硬件资源、中间件的预研。&lt;/p&gt;
 &lt;h2 id=&quot;重构前后的效果量化&quot;&gt;&lt;a href=&quot;#重构前后的效果量化&quot; class=&quot;headerlink&quot; title=&quot;重构前后的效果量化&quot;&gt;&lt;/a&gt;重构前后的效果量化&lt;/h2&gt;&lt;h2 id=&quot;充分的测试&quot;&gt;&lt;a href=&quot;#充分的测试&quot; class=&quot;headerlink&quot; title=&quot;充分的测试&quot;&gt;&lt;/a&gt;充分的测试&lt;/h2&gt;&lt;p&gt;基础方面的重构，需要充分的测试&lt;/p&gt;
@@ -94,7 +158,7 @@
     
     <summary type="html">
     
-      总结软件系统的持续重构经验和一些教训。
+      重构更多的是对软件的可维护性和可扩展性进行提高，无法完成重构的软件，往往都逃不过被淘汰的命运。何时适宜进行重构，需要考量的因素有三个：成本、收益、风险。其中风险是最为重要的，如果系统不进行重构，在未来可能带来巨大的问题，如不能适应分布式部署。此时就有必要进行重构了，重构的同时还需要考虑完成重构需要的成本，包括时间成本、人力成本，团队往往时刻肩负着新功能的开发和旧功能的维护工作，如何在不多的时间和人力中挤出资源呢？
     
     </summary>
     
@@ -445,7 +509,7 @@
     <link href="http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/"/>
     <id>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</id>
     <published>2016-04-01T09:38:14.463Z</published>
-    <updated>2016-05-31T04:38:02.270Z</updated>
+    <updated>2016-06-01T07:39:32.688Z</updated>
     
     <content type="html">&lt;h2 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h2&gt;&lt;p&gt;2016年后换了一家公司干，后台ORM框架用的JOOQ，完全陌生的东西。干这一行越久，越觉得有更多有趣的新事物需要去探索。想起小说&lt;a href=&quot;https://book.douban.com/subject/26586492/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《火星救援》&lt;/a&gt;，Mark侥幸在火星风暴中幸存后，一步步将自己救出困境，遇到的难题或大或小，皆有优雅解决之法。一切看似偶然蹊跷，其实与Mark的长期知识储备分不开。所谓艺多不压身，应该在有限的时间里，得到更多成长，以期待机会来时不辜负。&lt;/p&gt;
 &lt;p&gt;下文中的学习示例代码，已经整理完毕：&lt;/p&gt;

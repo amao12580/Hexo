@@ -389,7 +389,6 @@ vendors:
   # http://fontawesome.io/
   fontawesome: //maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css
 
-
 # Assets
 css: css
 js: js
