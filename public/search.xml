@@ -112,6 +112,7 @@
 <p>令人兴奋的产品，提供持续打磨的动力。</p>
 <p>合适的薪资，使个人不过多为生活所扰。</p>
 <p>良好的发展前景，对个人的职业生涯带来腾飞。</p>
+<p>“穷得只剩钱”。小公司对企业文化不慎重视，开发团队的整体风气也没要求，招人过来只求出活，对团队个人发展是零投入的态度。这样的企业要想招到人、留住人，只剩钱了，但个人发展到一定高度，往往企业再也给不出足够的钱，这时再想留住人就很难了。这就是企业只依靠薪资吸引人带来的问题，对其他人才诉求不重视，穷得只剩钱。</p>
 <h2 id="适时剔除不合格"><a href="#适时剔除不合格" class="headerlink" title="适时剔除不合格"></a>适时剔除不合格</h2><h2 id="技术梯队"><a href="#技术梯队" class="headerlink" title="技术梯队"></a>技术梯队</h2><p>不同层次的人员配比，完成不同类型的任务。注意人员的上升下降渠道。</p>
 <h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><p>访问权限的验证</p>
 <h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><p>拒绝恶意访问</p>
@@ -124,7 +125,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Nginx与Docker容器系列 <02:在生产环境的实践>]]></title>
+      <title><![CDATA[Nginx与Docker容器系列 - 2.在生产环境的实践]]></title>
       <url>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</url>
       <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文中的配置文件，已经整理到了GitHub：<a href="https://github.com/amao12580/docker" target="_blank" rel="external">https://github.com/amao12580/docker</a></p>
 <p>本文假设读者对Nginx、Docker已经有了比较深入的了解，并掌握了docker-compose工具的使用。</p>
@@ -239,7 +240,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Nginx与Docker容器系列 <01:进行编译安装>]]></title>
+      <title><![CDATA[Nginx与Docker容器系列 - 1.进行编译安装]]></title>
       <url>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-one/</url>
       <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Docker容器的出现，为应用运行环境一致性带来了很好的解决方案。同时也带来了远比虚拟机更好的体验，提供资源隔离(Linux namespace)和资源分配(Linux control group)的功能、应用可扩展性的功能，但是更加轻量级的运行。为了解决多容器的依赖性和互相调用，提供了docker-compose等工具进行容器编排。</p>
 <p>我们项目中，对docker的使用非常深入，在线上环境和线下的测试环境、开发环境，都使用了docker作为运行时环境一致性支持。由于linux的发行版本和内核版本的不同组合，在没有docker之前，DevOps很难为不同的运行环境编写统一的软件安装维护的脚本，几乎只能借助虚拟机来达到这一目的，虚拟机的笨重和可调度性差，扩容与缩容也无法做到快速有效，已经被逐渐淘汰。</p>
@@ -314,7 +315,7 @@
     
     <entry>
       <title><![CDATA[Nginx与Tomcat 8在Docker环境的反向代理配置过程]]></title>
-      <url>http://amao12580.github.io/post/2016/04/Remember-a-reverse-proxy-configuration-process-for-nginx-and-Tomcat-in-the-docker-environment/</url>
+      <url>http://amao12580.github.io/post/2016/04/Nginx-reverse-proxy-with-tomcat-in-docker/</url>
       <content type="html"><![CDATA[<h1 id="需要做什么？"><a href="#需要做什么？" class="headerlink" title="需要做什么？"></a>需要做什么？</h1><p>最近接到的任务是:在Docker环境下，Nginx与Tomcat的反向代理与负载均衡配置。先拿出可行性方案，以便在业务量突发时，在线上环境实施。典型的技术预研，打有准备仗。同时还提出了安全需求，在配置上，需要有安全加固。</p>
 <p>在Nginx配置时，针对不同的使用环境，配置的参数有很多不同。迫在眉睫的，我们需要先对线上的API服务系统进行反向代理与负载均衡配置。API服务系统是面向手机APP的接口系统，使用HTTP Restful+json进行数据通讯。</p>
 <p>我们在局域网环境下，有2台机器在软硬件配置方面，与线上的API服务系统类似。这2台机器的局域网IP分别是：192.168.1.158(简称为：158机器)、192.168.1.188(简称为：188机器)。由于188机器正在做压力测试，而且近期需要持续的对所有接口进行压力测试，没有办法空闲出来做实验。所以在实验之初我使用了158机器的普通账号进行，很快就因为权限不足，遭遇了很多莫名其妙的问题，而且158的使用量比较多，主要作为功能测试的机器。</p>

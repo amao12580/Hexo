@@ -1,5 +1,5 @@
 ---
-title: Nginx与Docker容器系列 <01:进行编译安装>
+title: Nginx与Docker容器系列 - 1.进行编译安装
 date: 2016-04-27 10:47:59
 tags:
     - Nginx

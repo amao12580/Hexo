@@ -1,8 +1,10 @@
 var gulp = require('gulp');
 //html压缩
-var minifyHtml = require("gulp-minify-html");
+var htmlmin = require('gulp-htmlmin');
+var htmlclean = require('gulp-htmlclean');
 //js压缩
 var jsmin = require('gulp-jsmin');
+var uglify = require('gulp-uglify');
 //文件重命名
 var rename = require('gulp-rename');
 //图片压缩png/jpg/gif
@@ -20,13 +22,25 @@ var datas={
     js:[root+"/**/*.js",'!*min.js']
 }
 // 压缩html
-gulp.task('minifyHtml', function () {
-    gulp.src(datas.html)
-    .pipe(minifyHtml().on('error', function(e){
+gulp.task('htmlmin', function(){
+    var options = {
+        removeComments: true,//清除HTML注释
+        collapseWhitespace: true,//压缩HTML
+        collapseBooleanAttributes: true,//省略布尔属性的值 <input checked="true"/> ==> <input />
+        removeEmptyAttributes: true,//删除所有空格作属性值 <input id="" /> ==> <input />
+        removeScriptTypeAttributes: true,//删除<script>的type="text/javascript"
+        removeStyleLinkTypeAttributes: true,//删除<style>和<link>的type="text/css"
+        minifyJS: true,//压缩页面JS
+        minifyCSS: true//压缩页面CSS
+    };
+  gulp.src(datas.html)
+  .pipe(htmlclean())
+  .pipe(htmlmin(options).on('error', function(e){
             console.log(e);
          }))
-    .pipe(gulp.dest(buildDir));
+  .pipe(gulp.dest(buildDir));
 });
+
 // png图片压缩
 gulp.task("imagemin",function(){
     gulp.src(datas.image)
@@ -42,7 +56,7 @@ gulp.task("imagemin",function(){
 // js压缩
 gulp.task("jsmin",function(){
     gulp.src(datas.js)
-    .pipe(jsmin().on('error', function(e){
+    .pipe(uglify().on('error', function(e){
          console.log(e);
     }))
     //.pipe(rename({suffix:'.min'}))
@@ -56,4 +70,4 @@ gulp.task("cssmin",function(){
      }))
     .pipe(gulp.dest(buildDir));
 });
-gulp.task("default",["minifyHtml","imagemin","jsmin","cssmin"]);
+gulp.task("default",["htmlmin","imagemin","jsmin","cssmin"]);

@@ -1,5 +1,5 @@
 ---
-title: Nginx与Docker容器系列 <02:在生产环境的实践>
+title: Nginx与Docker容器系列 - 2.在生产环境的实践
 date: 2016-04-28 12:45:59
 tags:
     - Nginx
