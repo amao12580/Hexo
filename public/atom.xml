@@ -464,9 +464,9 @@
     
       <category term="Nginx" scheme="http://amao12580.github.io/tags/Nginx/"/>
     
-      <category term="Docker" scheme="http://amao12580.github.io/tags/Docker/"/>
-    
       <category term="Alpine" scheme="http://amao12580.github.io/tags/Alpine/"/>
+    
+      <category term="Docker" scheme="http://amao12580.github.io/tags/Docker/"/>
     
       <category term="Centos" scheme="http://amao12580.github.io/tags/Centos/"/>
     
@@ -507,9 +507,9 @@
     
       <category term="Nginx" scheme="http://amao12580.github.io/tags/Nginx/"/>
     
-      <category term="Tomcat" scheme="http://amao12580.github.io/tags/Tomcat/"/>
-    
       <category term="Docker" scheme="http://amao12580.github.io/tags/Docker/"/>
+    
+      <category term="Tomcat" scheme="http://amao12580.github.io/tags/Tomcat/"/>
     
       <category term="SSL" scheme="http://amao12580.github.io/tags/SSL/"/>
     
