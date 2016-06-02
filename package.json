@@ -32,5 +32,8 @@
     "hexo-server": "^0.1.3",
     "hexo-wordcount": "^1.2.0",
     "imagemin-pngquant": "^5.0.0"
+  },
+  "devDependencies": {
+    "gulp-cache": "^0.4.5"
   }
 }

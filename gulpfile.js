@@ -11,13 +11,14 @@ var rename = require('gulp-rename');
 var imagemin = require('gulp-imagemin');
 //png压缩
 var pngquant = require('imagemin-pngquant');
+var cache = require('gulp-cache');
 //css压缩
 var csso = require('gulp-csso');
 var root = "./public";
 var buildDir = root;
 var datas={
     html:[root+"/**/*.html"],
-    image:[root+"/**/*.png"],
+    image:[root+"/**/*.{png,jpg,jpeg,gif,ico}"],
     css:[root+"/**/*.css"],
     js:[root+"/**/*.js",'!*min.js']
 }
@@ -45,7 +46,10 @@ gulp.task('htmlmin', function(){
 gulp.task("imagemin",function(){
     gulp.src(datas.image)
     .pipe(imagemin({
-        progressive:true,
+        optimizationLevel: 7, //类型：Number  默认：3  取值范围：0-7（优化等级）
+        progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
+        interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染
+        multipass: true, //类型：Boolean 默认：false 多次优化svg直到完全优化
         svgoPlugins:[{removeViewBox:false}],
         use:[pngquant()] //压缩率64%
     }).on('error', function(e){
