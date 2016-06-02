@@ -80,6 +80,12 @@
             </span>
           {% endif %}
 
+          {% if not is_index %}
+            <span id="busuanzi_container_page_pv">
+              &nbsp; | &nbsp; 热度&nbsp; <span id="busuanzi_value_page_pv"></span>°C
+            </span>
+          {% endif %}
+
           {% if post.comments %}
             {% if (theme.duoshuo and theme.duoshuo.shortname) or theme.duoshuo_shortname %}
               <span class="post-comments-count">
@@ -97,13 +103,6 @@
               </span>
             {% endif %}
           {% endif %}
-
-
-	  {% if is_pv %}
-	  <span>&nbsp; | &nbsp;
-	  <span id="busuanzi_value_page_pv" ></span>次阅读
-	  </span>
-	  {% endif %}
 
           {% if not is_index and theme.facebook_sdk.enable and theme.facebook_sdk.like_button %}
             &nbsp; | &nbsp;

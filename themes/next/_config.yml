@@ -26,10 +26,10 @@ since: 2016
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash (/archives -> archives)
 menu:
   #home: /
-  categories: /categories
+  #categories: /categories
   #archives: /archives
   index: /index
-  tags: /tags
+  #tags: /tags
   about: /about
   #commonweal: /404.html
 
@@ -58,9 +58,9 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Mist
 #scheme: Mist
-#scheme: Pisces
+#scheme: Mist
+scheme: Pisces
 
 
 # ---------------------------------------------------------------
@@ -197,7 +197,7 @@ links:
   伯乐在线: http://blog.jobbole.com/
   政见: http://cnpolitics.org/
   大家: http://dajia.qq.com/
-  JerryQu 的小站: https://imququ.com/
+  ImportNew: http://www.importnew.com/
 
 
 # ---------------------------------------------------------------
@@ -296,6 +296,9 @@ duoshuo_info:
   admin_enable: false
   user_id: 6263687443199821000
   admin_nickname: 这是作者大大
+
+# 多说热评文章 true 或者 false
+duoshuo_hotartical: true
 
 
 # Facebook SDK Support.

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
+    
+    <lastmod>2016-06-02T06:39:17.887Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</loc>
     
     <lastmod>2016-06-02T05:25:54.286Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
     
     <lastmod>2016-06-01T07:39:32.688Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
-    
-    <lastmod>2016-06-01T05:23:24.593Z</lastmod>
     
   </url>
   

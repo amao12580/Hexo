@@ -14,6 +14,7 @@ var pngquant = require('imagemin-pngquant');
 var cache = require('gulp-cache');
 //css压缩
 var csso = require('gulp-csso');
+
 var root = "./public";
 var buildDir = root;
 var datas={

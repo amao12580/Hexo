@@ -47,7 +47,7 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace:
 
 # Category & Tag
@@ -117,3 +117,7 @@ sitemap:
 search:
  path: search.xml
  field: post
+
+
+# JiaThis 分享服务
+jiathis: false
