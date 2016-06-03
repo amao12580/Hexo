@@ -12,3 +12,20 @@
 访问量 <span id="busuanzi_value_site_pv"></span> &nbsp
 您是第<span id="busuanzi_value_site_uv"></span>个来到的小伙伴
 {% block footer %}{% endblock %}
+
+<script>
+var OriginTitile=document.title;
+var st;
+document.addEventListener('visibilitychange',function(){
+if(document.hidden){
+  document.title="(つェ⊂)我藏好了哦";
+  clearTimeout(st);
+}else{
+  document.title='(*´∇｀*)  被你发现啦~ '+OriginTitile;
+  console.log('show');
+  st=setTimeout(function(){
+      document.title=OriginTitile;
+  },4000);
+}
+});
+</script>

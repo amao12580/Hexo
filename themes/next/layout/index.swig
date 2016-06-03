@@ -3,7 +3,7 @@
 {% import '_macro/sidebar.swig' as sidebar_template %}
 
 {% block title %}
-  {{ theme.keywords }} - {{ config.title }} - {{ theme.description }}
+  {{ config.title }} - {{ config.subtitle }} - {{ config.author }}
 {% endblock %}
 
 {% block page_class %}

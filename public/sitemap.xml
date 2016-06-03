@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</loc>
+    
+    <lastmod>2016-06-03T02:31:04.879Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
     
     <lastmod>2016-06-02T06:39:17.887Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-one/</loc>
     
     <lastmod>2016-06-02T05:25:42.287Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</loc>
-    
-    <lastmod>2016-06-02T05:18:24.322Z</lastmod>
     
   </url>
   

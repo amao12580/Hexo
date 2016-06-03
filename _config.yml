@@ -6,7 +6,7 @@
 title: Cat's Blog
 subtitle: 一饮一啄，莫非前定.
 #为了更便于搜索引擎爬到，添加了网站的keywords
-keywords: cat's,chengliang,amao12580,redis,nginx
+keywords: redis,nginx,JOOQ,architecture,transaction
 description: http://amao12580.github.io/about
 author: Steven Cheng
 #language: zh-CN
@@ -107,7 +107,7 @@ category_generator:
 feed:
     type: atom ##feed类型 atom或者rss2
     path: atom.xml ##feed路径
-    limit: 20  ##feed文章最小数量
+    limit: 5  ##feed文章最小数量
 
 #访问zipperary/sitemap.xml即可看到站点地图。不过，sitemap的初衷是给搜索引擎看的，为了提高搜索引擎对自己站点的收录效果，我们最好手动到google和百度等搜索引擎提交sitemap.xml。
 #sitemap
