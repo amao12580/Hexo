@@ -353,7 +353,7 @@ baidu_push: false
 use_motion: true
 
 # Fancybox
-fancybox: true
+fancybox: false
 
 
 # Script Vendors.
@@ -370,8 +370,8 @@ vendors:
 
   # Internal version: 2.1.5
   # Fancybox: http://fancyapps.com/fancybox/
-  fancybox: //cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js
-  fancybox_css: //cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css
+  #fancybox: //cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js
+  #fancybox_css: //cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css
 
   # Internal version: 1.0.6
   fastclick: //cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js

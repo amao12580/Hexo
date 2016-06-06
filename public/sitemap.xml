@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://amao12580.github.io/post/2016/05/How-to-better-manage-the-technical-team/</loc>
+    
+    <lastmod>2016-06-06T10:52:46.981Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
     
     <lastmod>2016-06-03T07:42:24.986Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-one/</loc>
     
     <lastmod>2016-06-02T05:25:42.287Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/05/Technical-architecture-specification-summary/</loc>
-    
-    <lastmod>2016-06-02T01:57:00.511Z</lastmod>
     
   </url>
   
