@@ -223,10 +223,6 @@ HikariCP在github上的地址：[https://github.com/brettwooldridge/HikariCP](ht
 ### 简单的CRUD
 为保持example的干净与轻便，不使用Spring进行ORM层的管理，我采用[ARM](http://www.oschina.net/question/12_10706)的方式来管理SQL链接，在try with resource块结束后自动释放SQL链接。
 
-有需要与Spring进行整合的，Follow这篇文章吧！[Using JOOQ with Spring and Apache DBCP](http://www.jooq.org/doc/3.7/manual/getting-started/tutorials/jooq-with-spring/)
-
-同时我也将JOOQ与Spring 4、Spring-MVC进行了整合，代码地址：[https://github.com/amao12580/JOOQ-With-Spring](https://github.com/amao12580/JOOQ-With-Spring)，使用Spring Transaction进行事务管理。
-
 ```
 try(ScopedContext scopedContext=new ScopedContext()){//try with resource
     DSLContext create=scopedContext.getDSLContext();
@@ -309,6 +305,106 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
 ```
 ## 进阶篇
 
+### 连接查询
+在处理复杂SQL时，JOOQ的思路是由Java代码以[链式编程](http://www.jianshu.com/p/540711c1a507)的方式来解决可读性的问题。完全按照SQL语法来链式调用，简单到可怕！从未有过类似的API？
+
+下文中的查询语句，等价于：
+
+SELECT
+    `study`.`user`.`mobile`,
+    `study`.`user`.`name`,
+    `study`.`user`.`age`,
+    `study`.`order`.`order_id`,
+    `study`.`order`.`amout`,
+    `study`.`order`.`order_time`
+FROM
+    `study`.`user`
+LEFT OUTER JOIN `study`.`order` ON `study`.`user`.`uid` = `study`.`order`.`uid`
+WHERE
+    (
+        `study`.`user`.`uid` = ?
+        AND `study`.`order`.`amout` >= ?
+    )
+LIMIT ?
+
+可以发现SQL语句与代码保持了很高的相似性，可读性几乎没有损失。
+
+其他的特性：group by与having、union、union all也都是在api级别支持的。
+```
+try(ScopedContext scopedContext=new ScopedContext()){//try with resource
+    DSLContext create=scopedContext.getDSLContext();
+    int uid=15874523;
+
+    //join select
+
+    Result<Record6<String,String,Byte,Integer,Long,Timestamp>> results=create
+            .select(USER.MOBILE,USER.NAME,USER.AGE,ORDER.ORDER_ID,ORDER.AMOUT,ORDER.ORDER_TIME)
+            .from(USER).leftOuterJoin(ORDER)
+            .on(USER.UID.eq(ORDER.UID))
+            .where(USER.UID.eq(uid[0]).and(ORDER.AMOUT.ge(100l)))
+            .limit(0,10).fetch();
+    for (Record6<String,String,Byte,Integer,Long,Timestamp> record:results){
+        log.info("姓名:{}，手机号码:{}，年龄:{}，订单号:{}，订单金额:{}，订单时间:{}",
+                record.getValue(USER.NAME),record.getValue(USER.MOBILE),record.getValue(USER.AGE),
+                record.getValue(ORDER.ORDER_ID),record.getValue(ORDER.AMOUT),
+                record.getValue(ORDER.ORDER_TIME));
+    }
+}
+
+12:51:14.898 INFO  com.study.jooq.model.Example 110 advance - 姓名:赵六，手机号码:18525874539，年龄:18，订单号:-1725080559，订单金额:25000，订单时间:1459486275000
+```
+
+### 子查询
+
+子查询API的使用稍显麻烦，对于内层table，如果在外层需要参与使用， alias需要在内层构建是指定。并且在外层使用时，也无法显式指定字段名，需要按照field的index值进行指定。
+
+```
+try (ScopedContext scopedContext = new ScopedContext()) {//try with resource
+    DSLContext create = scopedContext.getDSLContext();
+    //查询指定多个用户的最新一个订单信息
+    Set<Integer> uids=new HashSet<>();
+    uids.add(10001);
+    uids.add(10002);
+    uids.add(10003);
+    //构建内层查询语句
+    Table<OrderRecord> subTable = create.selectFrom(ORDER).
+            where(ORDER.UID.in(uids)).
+            orderBy(ORDER.ORDER_TIME.desc()).
+            asTable("A");
+
+    Result<OrderRecord> oreders = create.selectFrom(subTable).
+            groupBy(subTable.field(0), subTable.field(1)).//按照第一个、第二个字段进行group by
+            fetch();
+}
+
+构建完成的SQL语句：
+SELECT
+    `A`.`order_id`,
+    `A`.`uid`,
+    `A`.`amout`,
+    `A`.`status`,
+    `A`.`order_time`
+FROM
+    (
+        SELECT
+            `study`.`order`.`order_id`,
+            `study`.`order`.`uid`,
+            `study`.`order`.`amout`,
+            `study`.`order`.`status`,
+            `study`.`order`.`order_time`
+        FROM
+            `study`.`order`
+        WHERE
+            `study`.`order`.`uid` IN (10001, 10002, 10003)
+        ORDER BY
+            `study`.`order`.`order_time` DESC
+    ) AS `A`
+GROUP BY
+    `A`.`order_id`,
+    `A`.`uid`;
+
+```
+
 ### 事务
 
 JOOQ目前并不支持类似Spring的声明式事务管理，暂时只支持由自身API提供的编程式事务管理。有关声明式事务管理与编程式事务管理的区别，请Follow：[编程式事务与声明式事务](http://blog.csdn.net/u012228718/article/details/42750119#t1)。但JOOQ作者Lukas Eder明确表示在未来的3.9版本中，会提供解决方案。
@@ -351,41 +447,7 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
 12:51:14.724 INFO  com.study.jooq.model.Example 90 lambda$advance$0 - insertUserRet:1
 12:51:14.743 INFO  com.study.jooq.model.Example 99 lambda$advance$0 - insertOrderRet:1
 ```
-### 连接查询
-在处理复杂SQL时，JOOQ的思路是由Java代码以[链式编程](http://www.jianshu.com/p/540711c1a507)的方式来解决可读性的问题。
 
-下文中的查询语句，等价于：
-select `study`.`user`.`mobile`, `study`.`user`.`name`, `study`.`user`.`age`, `study`.`order`.`order_id`, `study`.`order`.`amout`, `study`.`order`.`order_time`
-    from `study`.`user` left outer join `study`.`order`
-    on `study`.`user`.`uid` = `study`.`order`.`uid`
-    where (`study`.`user`.`uid` = ? and `study`.`order`.`amout` >= ?)
-    limit ?
-可以发现SQL语句与代码保持了很高的相似性，可读性几乎没有损失。
-
-其他的特性：group by与having、union、union all也都是在api级别支持的。
-```
-try(ScopedContext scopedContext=new ScopedContext()){//try with resource
-    DSLContext create=scopedContext.getDSLContext();
-    int uid=15874523;
-
-    //join select
-
-    Result<Record6<String,String,Byte,Integer,Long,Timestamp>> results=create
-            .select(USER.MOBILE,USER.NAME,USER.AGE,ORDER.ORDER_ID,ORDER.AMOUT,ORDER.ORDER_TIME)
-            .from(USER).leftOuterJoin(ORDER)
-            .on(USER.UID.eq(ORDER.UID))
-            .where(USER.UID.eq(uid[0]).and(ORDER.AMOUT.ge(100l)))
-            .limit(0,10).fetch();
-    for (Record6<String,String,Byte,Integer,Long,Timestamp> record:results){
-        log.info("姓名:{}，手机号码:{}，年龄:{}，订单号:{}，订单金额:{}，订单时间:{}",
-                record.getValue(USER.NAME),record.getValue(USER.MOBILE),record.getValue(USER.AGE),
-                record.getValue(ORDER.ORDER_ID),record.getValue(ORDER.AMOUT),
-                record.getValue(ORDER.ORDER_TIME));
-    }
-}
-
-12:51:14.898 INFO  com.study.jooq.model.Example 110 advance - 姓名:赵六，手机号码:18525874539，年龄:18，订单号:-1725080559，订单金额:25000，订单时间:1459486275000
-```
 ### 批处理
 ```
 //batchInsert
@@ -447,10 +509,24 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
 15:06:46.291 INFO  com.study.jooq.model.Example 182 batch - deleteRetArr:[0, 0]
 ```
 ### 函数
-JOOQ没有提供API对函数进行显式的支持，这意味着不能通过JOOQ进行函数的create/execute/drop。但是JOOQ支持直接执行拼接好的字符串SQL语句，这为我们进行函数execute提供了可行性。实际使用中，使用ORM层对数据库函数进行create/drop的需求几乎不存在。
-```
-1. 先在Mysql中添加自定义函数，你也可以使用Flyway的方式来做，在migration文件夹下加一个V2 sql文件。重新执行maven -install即可生效，实际上我更推荐使用这种方式来进行数据库历史SQL执行管理。
+对RDBMS内置函数，JOOQ提供了API进行调用，但JOOQ没有提供API对自定义函数进行显式的支持，这意味着不能通过JOOQ进行自定义函数的create/execute/drop。但是JOOQ支持直接执行拼接好的字符串SQL语句，这为我们进行函数execute提供了可行性。实际使用中，使用ORM层对数据库函数进行create/drop的需求几乎不存在。
 
+#### 内置函数
+
+```
+
+求平均数avg()
+
+Record record = create.select(USER.AGE.avg()).from(USER).fetchOne();//求用户的平均年龄
+if (record != null) {
+    log.info("平均年龄是:" + record.into(Double.class).toString());
+}
+```
+#### 自定义函数
+
+在Mysql中添加自定义函数，你也可以使用Flyway的方式来做，在migration文件夹下加一个V2 sql文件。重新执行maven-install即可生效，实际上我更推荐使用这种方式来进行数据库历史SQL执行管理。
+
+```
 USE study;
 DROP FUNCTION IF EXISTS formatDate;
 

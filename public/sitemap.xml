@@ -2,16 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/05/How-to-better-manage-the-technical-team/</loc>
+    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
     
-    <lastmod>2016-06-06T10:52:46.981Z</lastmod>
+    <lastmod>2016-06-15T02:50:22.580Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
     
-    <lastmod>2016-06-03T07:42:24.986Z</lastmod>
+    <lastmod>2016-06-13T06:01:50.058Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/post/2016/05/How-to-better-manage-the-technical-team/</loc>
+    
+    <lastmod>2016-06-13T02:18:22.784Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</loc>
+    
+    <lastmod>2016-06-12T02:31:38.775Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
+    
+    <lastmod>2016-06-12T02:25:04.330Z</lastmod>
     
   </url>
   
@@ -33,27 +54,6 @@
     <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-one/</loc>
     
     <lastmod>2016-06-02T05:25:42.287Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</loc>
-    
-    <lastmod>2016-06-01T10:57:11.027Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
-    
-    <lastmod>2016-06-01T09:18:38.301Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
-    
-    <lastmod>2016-06-01T07:39:32.688Z</lastmod>
     
   </url>
   
