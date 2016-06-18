@@ -1,9 +1,15 @@
 ---
-title: '个人常用资源汇总'
+title: '常用资源汇总'
 date: 2016年3月31日13:01:55
 comments: false   #去除多说评论框
 
 ---
+## 工具
+
+### HTML2Markdown
+
+* [在线转换：支持table](http://tool.lu/markdown/)
+
 ## 软件
 
 ### Docker
@@ -188,6 +194,20 @@ EXPLAIN select DISTINCT uid from `order`;
 EXPLAIN select max(uid) from `order`;//返回字段进行函数操作，不能使用索引
 
 ```
+
+### 排序算法的特点
+
+| 排序法 | 平均时间 | 最差情形 | 稳定度 | 额外空间 | 备注 |
+| ------------- |:-------------:| -----:|-----:|-----:|-----:|
+| 冒泡 | O(n<sup>2</sup>) | O(n<sup>2</sup>) | 稳定 | O(1) | n小时较好 |
+| 交换 | O(n<sup>2</sup>) | O(n<sup>2</sup>) | 不稳定 | O(1) | n小时较好 |
+| 选择 | O(n<sup>2</sup>) | O(n<sup>2</sup>) | 不稳定 | O(1) | n小时较好 |
+| 插入 | O(n<sup>2</sup>) | O(n<sup>2</sup>) | 稳定 | O(1) | 大部分已排序时较好 |
+| 基数 | O(log<sub>R</sub>B) | O(log<sub>R</sub>B) | 稳定 | O(n) |B是真数(0-9)，R是基数(个十百) |
+| Shell | O(nlogn) | O(n<sup>s</sup>) 1<s<2 | 不稳定 | O(1) | s是所选分组 |
+| 快速 | O(nlogn) | O(n<sup>2</sup>) | 不稳定 | O(nlogn) | n大时较好 |
+| 归并 | O(nlogn) | O(nlogn) | 稳定 | O(1) | n大时较好 |
+| 堆 | O(nlogn) | O(nlogn) | 不稳定 | O(1) | n大时较好 |
 
 ## Referrence
 

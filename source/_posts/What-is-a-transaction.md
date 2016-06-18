@@ -43,7 +43,9 @@ description: 以MySQL数据库系统为例，数据被按页（16K）存储在�
 对于应用层程序的同一个线程X来说，逻辑伪码如下：
 
 ```
+//定义转账金额
 double transferAmount=100.00;
+
 //1.开始事务
 
 //2.检查A同学账户余额是否大于100元
@@ -111,7 +113,7 @@ Phantom Reads：
 事务一旦提交生效，其结果将永久保存，不受任何故障影响。A 转账一但完成，那么 A 就是 900，B 就是 1,100，这个结果将永远保存在银行的数据库中，直到他们下次交易事务的发生。
 
 
-redo log，undo log，WAL。
+redo log，undo log，WAL(write ahead log) and Checkpoint。
 
 MySQL数据库innodb的事务，是通过redo log（innodb log)，undo log，锁机制，来维护这个一致性的。
 
@@ -130,9 +132,15 @@ MySQL数据库innodb的事务，是通过redo log（innodb log)，undo log，锁
 
 ##### 不同RDBMS的默认隔离级别
 
+MySQL InnoDB Default：可重复读
+
+Oracle Default：读已提交
+
 不同存储引擎的默认隔离级别
 
 ### 事务传播行为
+
+Spring 事务传播行为
 
 #### 默认传播行为
 
@@ -141,6 +149,8 @@ MySQL数据库innodb的事务，是通过redo log（innodb log)，undo log，锁
 #### MVCC与Free Lock
 
 多线程环境下各种数据结构的实现有了很大的变化，每当我们更新某个数据的时候，我们都要考虑其它线程是否对其进行了修改。最简单的一种方法就是加锁，不过加锁会导致性能低下，而且可能阻塞其他线程。因此，我们引入了非阻塞(non-blocking)的算法 —— 通过CAS（Compare & Set，或是Compare & Swap）操作保证操作的原子性，同时我们还引入了 lock-free 的概念，它指的是一个线程出现问题（如阻塞，失败）但不影响其他线程（从总体看程序仍然是在运行的）
+
+CPU：CAS_ADD
 
 ##### 共享锁
 
