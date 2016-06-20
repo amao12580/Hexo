@@ -1,12 +1,11 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-{# #238, Disable Baidu tranformation #}
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.css" rel="stylesheet" />
 
 {% if theme.google_site_verification %}
   <meta name="google-site-verification" content="{{ theme.google_site_verification }}" />
@@ -22,38 +21,13 @@
   <meta name="360-site-verification" content="{{ theme.qihu_site_verification }}" />
 {% endif %}
 
-
-<script async="async" src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
-
-<style>
-  .pace .pace-progress {
-    background: #1E92FB; /*进度条颜色*/
-    height: 3px;
-  }
-  .pace .pace-progress-inner {
-    box-shadow: 0 0 10px #1E92FB, 0 0 5px #1E92FB; /*阴影颜色*/
-  }
-  .pace .pace-activity {
-    border-top-color: #1E92FB;  /*上边框颜色*/
-    border-left-color: #1E92FB; /*左边框颜色*/
-  }
-</style>
-
 <link href="//cdn.bootcss.com/animate.css/3.5.0/animate.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
 
-<script src="//cdn.bootcss.com/offline-js/0.7.14/offline.min.js" async="async"></script>
-<link href="//cdn.bootcss.com/offline-js/0.7.14/themes/offline-language-english.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
-<link href="//cdn.bootcss.com/offline-js/0.7.14/themes/offline-theme-chrome.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
+<script src="//cdn.bootcss.com/offline-js/0.7.17/offline.min.js" async="async"></script>
+<link href="//cdn.bootcss.com/offline-js/0.7.17/themes/offline-language-english.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
+<link href="//cdn.bootcss.com/offline-js/0.7.17/themes/offline-theme-chrome.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
 
-
-{% if theme.fancybox %}
-  {% set fancybox_css_uri = url_for(theme.vendors._internal + '/fancybox/source/jquery.fancybox.css?v=2.1.5') %}
-  {% if theme.vendors.fancybox_css %}
-    {% set fancybox_css_uri = theme.vendors.fancybox_css %}
-  {% endif %}
-  <link href="{{ fancybox_css_uri }}" rel="stylesheet" type="text/css" />
-{% endif %}
+<link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
 
 {% include "./head/external-fonts.swig" %}
 

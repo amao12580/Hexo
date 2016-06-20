@@ -9,13 +9,13 @@ tags:
     - Gulp
 categories:
     - Tutorial
-description: 不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！！！
+description: 不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！
 
 ---
 
 # 写在前面
 
-不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了是每天利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用脚本吧！！！
+不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！
 
 最开始主要依靠图形界面进行blog发布，来看看有哪些操作吧！
 
@@ -163,13 +163,26 @@ gulp.task("default",["htmlmin","imagemin","jsmin","cssmin"]);
 
 想起了windows 7环境已经支持powershell（增强版DOS！），试想如果有一个ps1脚本可以完成发布blog，再配合windows计划任务，不就可以定时或按用户动作触发了吗？YES，这才是我想要的，不啰嗦，开始干吧！
 
-Finally，一起来看看我的“syncArticle.ps1”，遇到无数坑（语句块是大坑！），不过还是被我搞定了！
-
 PS：脚本运行之前，别忘了装一个：Git-2.9.0-64-bit.exe，然后配置好自己的github信息。
 ```
 配置完成后的验证：ssh -T git@github.com
 如果提示：Hi *** You've successfully authenticated, but GitHub does not provide shell access. 说明你连接成功了
 ```
+
+设置PowerShell环境，使能“allow scripts to run”选项，步骤如下：
+以管理员的身份运行PowerShell
+执行Set-ExecutionPolicy RemoteSigned命令，在对话框中选择Y，如下
+```
+PS C:\Windows\system32> Set-ExecutionPolicy RemoteSigned
+执行策略更改
+执行策略可帮助你防止执行不信任的脚本。更改执行策略可能会产生安全风险，如 http://go.microsoft.com/fwlink/?LinkID=135170
+中的 about_Execution_Policies 帮助主题所述。是否要更改执行策略?
+[Y] 是(Y)  [N] 否(N)  [S] 挂起(S)  [?] 帮助 (默认值为“Y”): Y
+PS C:\Windows\system32>
+```
+
+Finally，一起来看看我的“syncArticle.ps1”，遇到无数坑（语句块是大坑！），不过还是被我搞定了！
+
 'D:\Program Files\Git\bin\git.exe'是我的Git安装目录。
 
 ```
