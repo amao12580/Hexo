@@ -248,7 +248,7 @@ auto_excerpt:
 # MathJax Support
 mathjax:
   enable: false
-  cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  cdn: //cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
 
 # Swiftype Search API Key
@@ -370,8 +370,6 @@ vendors:
   lazyload: //cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js
   velocity: //cdn.bootcss.com/velocity/1.2.3/velocity.min.js
   velocity_ui: //cdn.bootcss.com/velocity/1.2.3/velocity.ui.min.js
-  ua_parser: //cdn.bootcss.com/UAParser.js/0.7.10/ua-parser.min.js
-  fontawesome: //cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css
 
 # Assets
 css: css

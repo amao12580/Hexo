@@ -21,17 +21,13 @@
   <meta name="360-site-verification" content="{{ theme.qihu_site_verification }}" />
 {% endif %}
 
-<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.css" rel="stylesheet"/>
 
-<link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
+<link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet"/>
 
 {% include "./head/external-fonts.swig" %}
 
-{% set font_awesome_uri = url_for(theme.vendors._internal + '/font-awesome/css/font-awesome.min.css?v=4.4.0') %}
-{% if theme.vendors.fontawesome %}
-  {% set font_awesome_uri = theme.vendors.fontawesome %}
-{% endif %}
-<link href="{{ font_awesome_uri }}" rel="stylesheet" type="text/css" media="none" onload="if(media!='all')media='all'" />
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
 <link href="{{ url_for(theme.css) }}/main.css?v={{ theme.version }}" rel="stylesheet" type="text/css" />
 
