@@ -23,10 +23,6 @@
 
 <link href="//cdn.bootcss.com/animate.css/3.5.0/animate.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
 
-<script src="//cdn.bootcss.com/offline-js/0.7.17/offline.min.js" async="async"></script>
-<link href="//cdn.bootcss.com/offline-js/0.7.17/themes/offline-language-english.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
-<link href="//cdn.bootcss.com/offline-js/0.7.17/themes/offline-theme-chrome.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
-
 <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
 
 {% include "./head/external-fonts.swig" %}
