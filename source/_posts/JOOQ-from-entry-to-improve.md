@@ -308,7 +308,7 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
 ### 连接查询
 在处理复杂SQL时，JOOQ的思路是由Java代码以[链式编程](http://www.jianshu.com/p/540711c1a507)的方式来解决可读性的问题。完全按照SQL语法来链式调用，简单到可怕！从未有过类似的API？
 
-下文中的查询语句，等价于：
+下文代码构建出的查询SQL，等价于：
 
 SELECT
     `study`.`user`.`mobile`,
@@ -322,10 +322,10 @@ FROM
 LEFT OUTER JOIN `study`.`order` ON `study`.`user`.`uid` = `study`.`order`.`uid`
 WHERE
     (
-        `study`.`user`.`uid` = ?
-        AND `study`.`order`.`amout` >= ?
+        `study`.`user`.`uid` = 15874523
+        AND `study`.`order`.`amout` >= 1001
     )
-LIMIT ?
+LIMIT 10
 
 可以发现SQL语句与代码保持了很高的相似性，可读性几乎没有损失。
 
@@ -341,13 +341,13 @@ try(ScopedContext scopedContext=new ScopedContext()){//try with resource
             .select(USER.MOBILE,USER.NAME,USER.AGE,ORDER.ORDER_ID,ORDER.AMOUT,ORDER.ORDER_TIME)
             .from(USER).leftOuterJoin(ORDER)
             .on(USER.UID.eq(ORDER.UID))
-            .where(USER.UID.eq(uid[0]).and(ORDER.AMOUT.ge(100l)))
+            .where(USER.UID.eq(uid).and(ORDER.AMOUT.ge(100l)))
             .limit(0,10).fetch();
     for (Record6<String,String,Byte,Integer,Long,Timestamp> record:results){
         log.info("姓名:{}，手机号码:{}，年龄:{}，订单号:{}，订单金额:{}，订单时间:{}",
-                record.getValue(USER.NAME),record.getValue(USER.MOBILE),record.getValue(USER.AGE),
-                record.getValue(ORDER.ORDER_ID),record.getValue(ORDER.AMOUT),
-                record.getValue(ORDER.ORDER_TIME));
+        record.getValue(USER.NAME),record.getValue(USER.MOBILE),record.getValue(USER.AGE),
+        record.getValue(ORDER.ORDER_ID),record.getValue(ORDER.AMOUT),
+        record.getValue(ORDER.ORDER_TIME));
     }
 }
 

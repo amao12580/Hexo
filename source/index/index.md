@@ -4,11 +4,21 @@ date: 2016年3月31日13:01:55
 comments: false   #去除多说评论框
 
 ---
+
+## Shortcut
+
+术语缩写
+
+### lsof - list of open files
+
+一个列出当前系统打开文件的工具。在Linux环境下，任何事物都是以文件的形式存在，通过文件不仅可以访问常规数据，还可以访问网络连接和硬件。
+
+
 ## 工具
 
 ### HTML2Markdown
 
-* [在线转换：支持table](http://tool.lu/markdown/)
+* [在线转换：支持table](http://html2markdown.eliyar.biz/)
 
 ## 软件
 
@@ -63,12 +73,10 @@ select id from t where num=20
 select id from t where name like ‘%abc%’
 若要提高效率，可以考虑全文检索。
 
-6、in 和 not in 也要慎用，否则会导致全表扫描，如：
+6、not in 要慎用，否则会导致全表扫描
 
-select id from t where num in(1,2,3)
-对于连续的数值，能用 between 就不要用 in 了：
+in操作在有索引的字段（主键索引或普通索引）时，会使用索引
 
-select id from t where num between 1 and 3
 7、如果在 where 子句中使用参数，也会导致全表扫描。因为SQL只有在运行时才会解析局部变量，但优化程序不能将访问计划的选择推迟到运行时；它必须在编译时进行选择。然 而，如果在编译时建立访问计划，变量的值还是未知的，因而无法作为索引选择的输入项。如下面语句将进行全表扫描：
 
 select id from t where num=@num
@@ -208,6 +216,55 @@ EXPLAIN select max(uid) from `order`;//返回字段进行函数操作，不能�
 | 快速 | O(nlogn) | O(n<sup>2</sup>) | 不稳定 | O(nlogn) | n大时较好 |
 | 归并 | O(nlogn) | O(nlogn) | 稳定 | O(1) | n大时较好 |
 | 堆 | O(nlogn) | O(nlogn) | 不稳定 | O(1) | n大时较好 |
+
+### MySQL快速导入4个G的SQL文件
+
+```
+1.首先假设SQL文件中的目标数据库是DB1
+2.先在本机新建一个数据库DB1，设置好字符集:
+
+utf8 -- UTF-8 Unicode
+utf8_general_ci
+
+3.确保数据库配置的字符集是utf8.
+mysql.ini文件，修改之后最好重启实例
+[client]
+default-character-set=utf8
+[mysql]
+default-character-set=utf8
+[mysqld]
+character_set_server=utf8
+
+4.在DOS下执行
+
+Microsoft Windows [版本 6.1.7601]
+版权所有 (c) 2009 Microsoft Corporation。保留所有权利。
+
+C:\Users\Administrator>cd f:
+F:\
+
+C:\Users\Administrator>f:
+
+F:\>cd mysql
+
+F:\mysql>cd bin
+
+F:\mysql\bin>mysql <F:\data2\dump.sql  //这一步会执行非常久
+
+4G的文件我执行了1个小时
+```
+
+### Hash算法
+
+[一致性hash算法](http://blogread.cn/it/article/7577?f=wb)提出了在动态变化的Cache环境中，判定哈希算法好坏的四个定义：
+
+ 1、平衡性(Balance)：平衡性是指哈希的结果能够尽可能分布到所有的缓存中去，这样可以使得所有的缓冲空间都得到利用。
+
+ 2、单调性(Monotonicity)：单调性是指如果已经有一些内容通过哈希分派到了相应的缓存中，又有新的缓存加入到系统中。哈希的结果应能够保证原有已分配的内容可以被映射到原有的或者新的缓存中去，而不会被映射到旧的缓存集合中的其他缓冲区。
+
+ 3、分散性(Spread)：在分布式环境中，终端有可能看不到所有的缓冲，而是只能看到其中的一部分。当终端希望通过哈希过程将内容映射到缓冲上时，由于不同终端所见的缓冲范围有可能不同，从而导致哈希的结果不一致，最终的结果是相同的内容被不同的终端映射到不同的缓冲区中。这种情况显然是应该避免的，因为它导致相同内容被存储到不同缓冲中去，降低了系统存储的效率。分散性的定义就是上述情况发生的严重程度。好的哈希算法应能够尽量避免不一致的情况发生，也就是尽量降低分散性。
+
+ 4、负载(Load)：负载问题实际上是从另一个角度看待分散性问题。既然不同的终端可能将相同的内容映射到不同的缓冲区中，那么对于一个特定的缓冲区而言，也可能被不同的用户映射为不同 的内容。与分散性一样，这种情况也是应当避免的，因此好的哈希算法应能够尽量降低缓冲的负荷。
 
 ## Referrence
 
