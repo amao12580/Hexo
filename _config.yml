@@ -7,7 +7,7 @@ title: Cat's Blog
 subtitle: 一饮一啄，莫非前定.
 #为了更便于搜索引擎爬到，添加了网站的keywords
 keywords: redis,nginx,JOOQ,architecture,transaction
-description: http://amao12580.github.io/about
+description: https://www.kisscat.pro/about
 author: Steven Cheng
 #language: zh-CN
 language: zh-Hans
@@ -15,7 +15,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://amao12580.github.io
+url: https://www.kisscat.pro
 root: /
 permalink: post/:year/:month/:title/
 permalink_defaults:

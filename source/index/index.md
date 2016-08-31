@@ -9,9 +9,50 @@ comments: false   #去除多说评论框
 
 术语缩写
 
-### lsof - list of open files
+### lsof
+
+list of open files
 
 一个列出当前系统打开文件的工具。在Linux环境下，任何事物都是以文件的形式存在，通过文件不仅可以访问常规数据，还可以访问网络连接和硬件。
+
+### grep
+
+global search regular expression(RE) and print out the line
+
+全面搜索正则表达式并把行打印出来)是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。
+
+### Redis
+
+remote dictionary server
+
+### AOF
+
+append only log file
+
+顺序记录系统日志
+
+## Linux 技巧
+
+### 1.批量转换文件字符集 GBK--> UTF8
+
+1）查看文件编码
+file -i filename
+
+2）递归转换(包括子文件夹)
+find default -type d -exec mkdir -p utf/{} \;
+find default -type f -exec iconv -f GBK -t UTF-8 {} -o utf/{} \;
+
+这两行命令将default目录下的文件由GBK编码转换为UTF-8编码，目录结构不变，转码后的文件保存在utf/default目录下。
+
+注意：如果原来就是utf-8编码，使用iconv -f GBK -t UTF-8命令转换后，会出现乱码，或截断等各种问题；
+一定要保证原文件是不是utf-8编码；
+
+3）使用如下命令把文件编码先查出来：
+find default -type f -exec file -i {} \; > /tmp/a
+查询是否存在已经是utf-8编码的文件：
+grep "charset=utf-8" /tmp/a
+
+用这个将算法学习工程的混合文件编码转换好了，使用maven install再也不报字符集问题了。
 
 
 ## 工具
@@ -35,6 +76,10 @@ curl -s https://get.docker.io/ubuntu/ | sudo sh
 sudo apt-get update
 sudo apt-get install lxc-docker --fix-missing
 
+
+一行脚本，安装最新版docker
+sudo apt-get update && sudo apt-get -y install curl && curl -fsSL https://get.docker.com/gpg | sudo apt-key add - && curl -fsSL https://get.docker.com/ | sh
+
 ### Docker Compose
 
 Compose 项目目前在[ Github ](https://github.com/docker/compose)上进行维护，目前最新版本是 1.2.0。
@@ -44,7 +89,44 @@ Dockerfile 可以让用户管理一个单独的应用容器；而 Compose 则允
 
 该项目由 Python 编写，实际上调用了 Docker 提供的 API 来实现。
 
+通过Python pip安装。
+apt-get install python-pip python-dev
+pip install -U docker-compose
+
 ```
+
+### VPS 搭建
+```
+#选用ubuntu 16稳定版 root用户
+
+# 检查linux kernel版本
+uname -a
+
+# 更新系统
+
+apt update
+
+# 安装openresty
+wget https://openresty.org/download/openresty-1.9.15.1.tar.gz
+
+tar xzvf openresty-1.9.15.1.tar.gz
+
+mv openresty-1.9.15.1 openresty
+
+cd openresty
+
+apt-get install libpcre3 libpcre3-dev
+
+apt-get install openssl libssl-dev
+
+./configure
+
+make
+
+make install
+
+```
+
 
 ## 学习资源
 
@@ -266,8 +348,25 @@ F:\mysql\bin>mysql <F:\data2\dump.sql  //这一步会执行非常久
 
  4、负载(Load)：负载问题实际上是从另一个角度看待分散性问题。既然不同的终端可能将相同的内容映射到不同的缓冲区中，那么对于一个特定的缓冲区而言，也可能被不同的用户映射为不同 的内容。与分散性一样，这种情况也是应当避免的，因此好的哈希算法应能够尽量降低缓冲的负荷。
 
+### ++i vs i++
+
+（1）如果只是看i++和++i，这两个是等价的，都等同于i=i+1，都是变量自身加1。
+（2）在一般情况下，它们都是跟赋值联系在一起。
+比如：
+int a;
+a=i++;//将i的值赋值给a，即a=i；然后再执行i=i+1；
+也就是【a=i++;】与【a=i; i=i+1;】等价。
+a=++i;//将i+1的值赋给a,即a=i+1;然后再执行i=i+1；
+也就是【a=++i;】与【a=i+1;i=i+1;】等价。
+
+（3）【总结一下】
+①前置++是将自身加1的值赋值给新变量，同时自身也加1；
+②后置++是将自身的值赋给新变量，然后才自身加1.
+
 ## Referrence
 
 * [美团点评技术团队：MySQL索引原理及慢查询优化](http://tech.meituan.com/mysql-index.html)
 
 * [Docker —— 从入门到实践](https://yeasy.gitbooks.io/docker_practice/content/compose/intro.html)
+
+* [linux-利用iconv批量转换GBK文件到UTF-8编码方法](http://www.51testing.com/html/00/130600-868004.html)

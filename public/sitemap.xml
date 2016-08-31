@@ -2,133 +2,140 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/07/MySQL-in-operator-must-lead-to-full-scan/</loc>
+    <loc>https://www.kisscat.pro/index/index.html</loc>
     
-    <lastmod>2016-07-04T10:09:31.146Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://amao12580.github.io/post/2016/06/What-is-a-transaction/</loc>
-    
-    <lastmod>2016-07-04T07:31:01.357Z</lastmod>
+    <lastmod>2016-08-31T10:31:37.386Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/index/index.html</loc>
+    <loc>https://www.kisscat.pro/post/2016/07/mmseg4j-solr-compatible-solr-6-1/</loc>
     
-    <lastmod>2016-07-01T09:26:26.646Z</lastmod>
+    <lastmod>2016-07-25T06:09:59.526Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/06/LeetCode-training-3-elements-sum-zero/</loc>
+    <loc>https://www.kisscat.pro/post/2016/06/What-is-a-transaction/</loc>
+    
+    <lastmod>2016-07-14T06:24:14.128Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.kisscat.pro/post/2016/07/MySQL-in-operator-must-lead-to-full-scan/</loc>
+    
+    <lastmod>2016-07-05T02:07:14.562Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.kisscat.pro/post/2016/06/LeetCode-training-3-elements-sum-zero/</loc>
     
     <lastmod>2016-06-30T10:23:13.579Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/04/JOOQ-from-entry-to-improve/</loc>
+    <loc>https://www.kisscat.pro/post/2016/04/JOOQ-from-entry-to-improve/</loc>
     
     <lastmod>2016-06-22T02:54:13.352Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/06/How-to-better-write-the-blog/</loc>
+    <loc>https://www.kisscat.pro/post/2016/06/How-to-better-write-the-blog/</loc>
     
     <lastmod>2016-06-20T05:21:53.065Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/05/How-to-better-manage-the-technical-team/</loc>
+    <loc>https://www.kisscat.pro/post/2016/05/How-to-better-manage-the-technical-team/</loc>
     
     <lastmod>2016-06-17T07:48:00.854Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/05/Software-refactoring-experience-summary/</loc>
+    <loc>https://www.kisscat.pro/post/2016/05/Software-refactoring-experience-summary/</loc>
     
     <lastmod>2016-06-16T02:14:07.784Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/06/Message-system-architecture-evolution/</loc>
+    <loc>https://www.kisscat.pro/post/2016/06/Message-system-architecture-evolution/</loc>
     
     <lastmod>2016-06-12T02:31:38.775Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/05/Summary-of-distributed-theory/</loc>
+    <loc>https://www.kisscat.pro/post/2016/05/Summary-of-distributed-theory/</loc>
     
     <lastmod>2016-06-03T02:31:04.879Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-two/</loc>
+    <loc>https://www.kisscat.pro/post/2016/04/Nginx-with-docker-part-two/</loc>
     
     <lastmod>2016-06-02T05:25:54.286Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/04/Nginx-with-docker-part-one/</loc>
+    <loc>https://www.kisscat.pro/post/2016/04/Nginx-with-docker-part-one/</loc>
     
     <lastmod>2016-06-02T05:25:42.287Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/about/index.html</loc>
+    <loc>https://www.kisscat.pro/about/index.html</loc>
     
     <lastmod>2016-05-25T05:55:01.592Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/03/SQL-improve-elegant-use-join-query/</loc>
+    <loc>https://www.kisscat.pro/post/2016/03/SQL-improve-elegant-use-join-query/</loc>
     
     <lastmod>2016-05-17T08:39:33.401Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/04/A-new-start/</loc>
+    <loc>https://www.kisscat.pro/post/2016/04/A-new-start/</loc>
     
     <lastmod>2016-05-17T08:29:41.100Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/04/Nginx-reverse-proxy-with-tomcat-in-docker/</loc>
+    <loc>https://www.kisscat.pro/post/2016/04/Nginx-reverse-proxy-with-tomcat-in-docker/</loc>
     
     <lastmod>2016-05-17T08:27:49.745Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/tags/index.html</loc>
+    <loc>https://www.kisscat.pro/tags/index.html</loc>
     
     <lastmod>2016-05-17T07:42:01.384Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/categories/index.html</loc>
+    <loc>https://www.kisscat.pro/categories/index.html</loc>
     
     <lastmod>2016-05-16T02:23:12.793Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://amao12580.github.io/post/2016/03/A-successful-redis-tuning-record/</loc>
+    <loc>https://www.kisscat.pro/post/2016/03/A-successful-redis-tuning-record/</loc>
     
     <lastmod>2016-04-20T10:27:57.287Z</lastmod>
     
