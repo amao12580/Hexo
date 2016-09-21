@@ -1,0 +1,902 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.css" rel="stylesheet"/>
+
+<link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet"/>
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.proxy.ustclug.org/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Solr," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Cat's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content=".">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Solr - 生产环境的设计原则">
+<meta property="og:url" content="https://www.kisscat.pro/post/2016/09/solr-design-principles/index.html">
+<meta property="og:site_name" content="Cat's Blog">
+<meta property="og:description" content=".">
+<meta property="og:image" content="https://www.kisscat.pro/img/rough-and-tumble.jpg">
+<meta property="og:image" content="https://www.kisscat.pro/img/Solr-core-dir-desc.jpg">
+<meta property="og:updated_time" content="2016-09-21T05:21:46.761Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Solr - 生产环境的设计原则">
+<meta name="twitter:description" content=".">
+<meta name="twitter:image" content="https://www.kisscat.pro/img/rough-and-tumble.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6263687443199821000,
+      author: '这是作者大大'
+    }
+  };
+</script>
+  <title> Solr - 生产环境的设计原则 | Cat's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cat's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">一饮一啄，莫非前定.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-index">
+          <a href="/index" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            索引
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Solr - 生产环境的设计原则
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-20T09:54:46+08:00" content="2016-09-20">
+              2016-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Record/" itemprop="url" rel="index">
+                    <span itemprop="name">Record</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            <span id="busuanzi_container_page_pv">
+              &nbsp; | &nbsp; 热度&nbsp; <span id="busuanzi_value_page_pv"></span>°C
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/post/2016/09/solr-design-principles/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="post/2016/09/solr-design-principles/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>中午追番（大力推荐【<a href="https://movie.douban.com/subject/25774052/" target="_blank" rel="external">寄生兽</a>】）没睡觉，现在有点困，洗了把脸，思路恢复清晰了。这篇文章经过数天的腹稿终于要发出来了，早上来公司简单草拟了提纲，没想着一口气写完，但下午想到blog是<a href="http://amao12580.github.io/post/2016/06/How-to-better-write-the-blog/" target="_blank" rel="external">自动up的</a>，不能给个提纲就完事啊！读者的感受在哪里？太不负责了！！！</p>
+<p>自从接盘了离职同事的代码，一直在做搜索引擎(Solr)方面的工作，都忙成狗了，各个业务线都有搜索的需求，零零落落20多个搜索接口吧！维护的过程，看着十多年工作经验的同事写的代码，有褒有贬，自己也学到了一些小技巧，最最最主要的，对搜索引擎不再陌生了，虽然谈不上完全了解，但是日常工作中应用、调优没有问题了。</p>
+<p>代码维护是艰难的事，维护一坨shit一般的代码是想死的事！如果让我从头到尾构建搜索业务，也许没这么多痛苦，看着没有编码规范和零注释的代码，经过数位同事的修改，变得一片浑浊，想理清却已找不到人，只能自己加班看，梳理思路，同时还得整理重构方案！可见团队的规范性在后期节省了多少维护成本，然而这个收益在前期是看不到或容易被忽视的的，并且在工期和人力的压迫下，是最容易被leader妥协的点！不加规范的代码就像脱缰的野马一样，早期不仔细调教，后面再想驯服就难上加难了，这也是技术债务吧！接盘是个苦差事，希望大家谨慎，努力不给后人留坑吧！</p>
+<p><img src="/img/rough-and-tumble.jpg" alt=""></p>
+<h1 id="Core设计原则"><a href="#Core设计原则" class="headerlink" title="Core设计原则"></a>Core设计原则</h1><p>在Client操作Solr时，通过HTTP RESTful接口要求Solr索引时，用Core名指明操作范围，Core名还是RESTful中最后一级资源路径。</p>
+<p>Client常用的操作有5类：index、delete、query、optimize。不常用的操作还有：create、rename、unload、reload、swap、ping、commit。其中index、delete、query、optimize、rename、unload、reload、swap需要指定Core才可以操作，delete和optimize有些特殊，可以不指定Core，默认对所有Core执行。而create、rename、unload、reload、swap仅在Solr Admin页面(http ://your solr ip:8983/)上提供，在SolrJ客户端(面向Java语言)无法直接使用，不过可以使用HTTPClient模拟操作！</p>
+<p>何不将Core想象成MySQL中的Table？在MySQL中，对Table进行CURD操作时，是不是也要加上table name呢？create table “test”… 、alter table “test” … 、select * from “test”…、delete from “test”…绝大多数的sql都需要指定表名，但也有例外：show process list、show variables like ‘character ‘、show innodb engine status;等等。除了在查询时，solr的Core与MySQL的表有相同的功能（事实上Solr的查询远比MySQL的查询强大），在其他的操作中，Solr没法与MySQL相比，这主要是Solr除了查询，不提供对字段级别的操作API！（我们将在后文中讨论为什么有这个限制）这意味着Solr没法通过API修改字段名、删除字段、重命名字段、添加字段等等，同时也无法对单个row进行部分字段的更新，需要修改单个row，就调用index API给出最新的数据对象，Solr会依据主键Id将历史覆盖，这与memcached是一致的。这意味着主键Id是必须预定义的，且不允许修改！</p>
+<p>Solr就像是个操作系统，安装在操作系统中的软件就是Core，每个Core有自身的配置文件及数据。在磁盘的角度看，Core是一个文件夹，比如我在线上有名为user和order的2个Core，在Solr的工作目录(%SolrHome%/server/solr)下，有类似的文件目录：</p>
+<p><img src="/img/Solr-core-dir-desc.jpg" alt=""><br>可以看到Solr依靠文件夹管理索引文件和日志文件，我们将在后文中说明这些文件的作用和相对路径配置！</p>
+<p>既然Core与Table类似，那我们是不是按照传统在MySQL的思路，按照业务功能，拆分出符合三范式的Table呢？值得注意的是，Solr对多核心join提供非常有限的支持。</p>
+<p>1.仅支持最多2个Core进行join query（formIndex=user toIndex=order）<br>2.仅支持对formIndex中的Core field进行filter query以及response，这是打折的inner join<br>3.两个core都在一个solr instance上</p>
+<p>这些限制意味着什么呢？在一次query中，2个核心之间的交互很低。为了更方便的讲清楚这个问题，以及考虑下文，我们假设现在的user和order核心的结构定义文件（schema.xml）的内容如下:</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user与<span class="keyword">order</span>是1:<span class="keyword">N</span>的关系，即：一个用户拥有多个订单，一个订单只从属一个用户</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">user/conf/schema.xml</span><br><span class="line"></span><br><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">schema</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">version</span>=<span class="string">"1.5"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--类型设定中的参数，required/multiValued的默认值是false;indexed/stored的默认值是true--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"_version_"</span> <span class="attr">type</span>=<span class="string">"long"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">uniqueKey</span>&gt;</span>id<span class="tag">&lt;/<span class="name">uniqueKey</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 用户唯一编号 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">type</span>=<span class="string">"int"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 0=普通用户；1=VIP用户 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"type"</span> <span class="attr">type</span>=<span class="string">"int"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 昵称 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"nickname"</span> <span class="attr">type</span>=<span class="string">"simplChinese"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 0=失效；1=有效 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"status"</span> <span class="attr">type</span>=<span class="string">"int"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 账户最后一次活动时间 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"updateTime"</span> <span class="attr">type</span>=<span class="string">"long"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldType</span> <span class="attr">name</span>=<span class="string">"string"</span> <span class="attr">class</span>=<span class="string">"solr.StrField"</span> <span class="attr">sortMissingLast</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldType</span> <span class="attr">name</span>=<span class="string">"int"</span> <span class="attr">class</span>=<span class="string">"solr.TrieIntField"</span> <span class="attr">precisionStep</span>=<span class="string">"0"</span> <span class="attr">positionIncrementGap</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldType</span> <span class="attr">name</span>=<span class="string">"long"</span> <span class="attr">class</span>=<span class="string">"solr.TrieLongField"</span> <span class="attr">precisionStep</span>=<span class="string">"0"</span> <span class="attr">positionIncrementGap</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldType</span> <span class="attr">name</span>=<span class="string">"simplChinese"</span> <span class="attr">class</span>=<span class="string">"solr.TextField"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">analyzer</span> <span class="attr">type</span>=<span class="string">"index"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tokenizer</span> <span class="attr">class</span>=<span class="string">"com.chenlb.mmseg4j.solr.MMSegTokenizerFactory"</span> <span class="attr">mode</span>=<span class="string">"max-word"</span> <span class="attr">dicPath</span>=<span class="string">"../../dic"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"solr.StopFilterFactory"</span> <span class="attr">words</span>=<span class="string">"stopwords.txt"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">analyzer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">analyzer</span> <span class="attr">type</span>=<span class="string">"query"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tokenizer</span> <span class="attr">class</span>=<span class="string">"com.chenlb.mmseg4j.solr.MMSegTokenizerFactory"</span> <span class="attr">mode</span>=<span class="string">"max-word"</span> <span class="attr">dicPath</span>=<span class="string">"../../dic"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"solr.StopFilterFactory"</span> <span class="attr">words</span>=<span class="string">"stopwords.txt"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">analyzer</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">fieldType</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">schema</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">order/conf/schema.xml</span><br><span class="line"></span><br><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">schema</span> <span class="attr">name</span>=<span class="string">"order"</span> <span class="attr">version</span>=<span class="string">"1.5"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--类型设定中的参数，required/multiValued的默认值是false;indexed/stored的默认值是true--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"_version_"</span> <span class="attr">type</span>=<span class="string">"long"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">uniqueKey</span>&gt;</span>id<span class="tag">&lt;/<span class="name">uniqueKey</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 订单唯一编号 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">type</span>=<span class="string">"long"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 0=微信订单；1=唯品会订单 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"type"</span> <span class="attr">type</span>=<span class="string">"int"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 订单概览 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"title"</span> <span class="attr">type</span>=<span class="string">"simplChinese"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 订单备注 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"remark"</span> <span class="attr">type</span>=<span class="string">"simplChinese"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 下单用户Id --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"uid"</span> <span class="attr">type</span>=<span class="string">"int"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 0=创建；1=付款；2=付款超时 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"status"</span> <span class="attr">type</span>=<span class="string">"int"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 金额、以分为单位 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"amount"</span> <span class="attr">type</span>=<span class="string">"long"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 订单最后一次更新时间 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"updateTime"</span> <span class="attr">type</span>=<span class="string">"long"</span> <span class="attr">required</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldType</span> <span class="attr">name</span>=<span class="string">"string"</span> <span class="attr">class</span>=<span class="string">"solr.StrField"</span> <span class="attr">sortMissingLast</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldType</span> <span class="attr">name</span>=<span class="string">"int"</span> <span class="attr">class</span>=<span class="string">"solr.TrieIntField"</span> <span class="attr">precisionStep</span>=<span class="string">"0"</span> <span class="attr">positionIncrementGap</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldType</span> <span class="attr">name</span>=<span class="string">"long"</span> <span class="attr">class</span>=<span class="string">"solr.TrieLongField"</span> <span class="attr">precisionStep</span>=<span class="string">"0"</span> <span class="attr">positionIncrementGap</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">fieldType</span> <span class="attr">name</span>=<span class="string">"simplChinese"</span> <span class="attr">class</span>=<span class="string">"solr.TextField"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">analyzer</span> <span class="attr">type</span>=<span class="string">"index"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tokenizer</span> <span class="attr">class</span>=<span class="string">"com.chenlb.mmseg4j.solr.MMSegTokenizerFactory"</span> <span class="attr">mode</span>=<span class="string">"max-word"</span> <span class="attr">dicPath</span>=<span class="string">"../../dic"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"solr.StopFilterFactory"</span> <span class="attr">words</span>=<span class="string">"stopwords.txt"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">analyzer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">analyzer</span> <span class="attr">type</span>=<span class="string">"query"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tokenizer</span> <span class="attr">class</span>=<span class="string">"com.chenlb.mmseg4j.solr.MMSegTokenizerFactory"</span> <span class="attr">mode</span>=<span class="string">"max-word"</span> <span class="attr">dicPath</span>=<span class="string">"../../dic"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"solr.StopFilterFactory"</span> <span class="attr">words</span>=<span class="string">"stopwords.txt"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">analyzer</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">fieldType</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">schema</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Join query “查询有已付款订单的用户昵称和用户Id”，类似的SQL：SELECT u.id,u.nickname FROM user u INNER JOIN order o ON u.id=o.uid WHERE o.status=1;这样简单的查询需求是可以完成的，但对于复杂需求，例如”查询在今天活跃过的用户和这些用户在今天的最新一笔有效微信订单，要求订单金额不能低于5元，需要打印用户和订单基本信息”，这种就无能为力了！</p>
+<h1 id="字段设计原则"><a href="#字段设计原则" class="headerlink" title="字段设计原则"></a>字段设计原则</h1><h2 id="字段的分类"><a href="#字段的分类" class="headerlink" title="字段的分类"></a>字段的分类</h2><p>结构类：field、multiValued、dynamicField</p>
+<p>计算类：keyword、filter、sort、function</p>
+<h2 id="字段的命名规范"><a href="#字段的命名规范" class="headerlink" title="字段的命名规范"></a>字段的命名规范</h2><p>可读性<br>无二义性<br>统一   小驼峰<br>简洁性<br>常用词</p>
+<h2 id="字段的存储结构"><a href="#字段的存储结构" class="headerlink" title="字段的存储结构"></a>字段的存储结构</h2><h2 id="如何权衡缓存字段？（纵向）"><a href="#如何权衡缓存字段？（纵向）" class="headerlink" title="如何权衡缓存字段？（纵向）"></a>如何权衡缓存字段？（纵向）</h2><p>1.字段不参与任何计算，仅用作拼装响应结果</p>
+<p>solr VS cache</p>
+<p>2.缓存字段与参与计算字段的关联性</p>
+<p>latestPhotoId  VS photoNumber</p>
+<p>3.字段的数量如何影响Solr的效率？</p>
+<h2 id="如何权衡混合Core？"><a href="#如何权衡混合Core？" class="headerlink" title="如何权衡混合Core？"></a>如何权衡混合Core？</h2><p>一个Core为了兼容多个业务场景使用，将不同类别的业务数据塞入。</p>
+<p>字段级别，有字段只对特定业务才会用到（纵向）</p>
+<p>排除使用这些字段</p>
+<p>row级别，有些数据记录对特定业务才会用到（横向）</p>
+<p>排除使用这些row</p>
+<h1 id="数据维护原则"><a href="#数据维护原则" class="headerlink" title="数据维护原则"></a>数据维护原则</h1><h2 id="局部更新"><a href="#局部更新" class="headerlink" title="局部更新"></a>局部更新</h2><p>更新一部分的字段</p>
+<h2 id="Delete-and-add"><a href="#Delete-and-add" class="headerlink" title="Delete and add"></a>Delete and add</h2><h1 id="索引重建原则"><a href="#索引重建原则" class="headerlink" title="索引重建原则"></a>索引重建原则</h1><p>减少服务中断时间</p>
+<p>C端流量控制</p>
+<h2 id="单个Solr集群实例"><a href="#单个Solr集群实例" class="headerlink" title="单个Solr集群实例"></a>单个Solr集群实例</h2><p>Core要有版本号<br>opportunity_V1</p>
+<p>1.先创建新Core<br>opportunity_V2</p>
+<p>2.额外进程构建V2</p>
+<p>3.检查V2构建成功</p>
+<p>4.流量切换到V2  或删除(unload)V1后  v2-rename-v1</p>
+<p>V2 swap V1</p>
+<p>5.确认V1Core不再需要后再销毁<br>同时运行多版本时，谨慎</p>
+<h2 id="多个Solr集群"><a href="#多个Solr集群" class="headerlink" title="多个Solr集群"></a>多个Solr集群</h2><p>先构建好新集群</p>
+<p>流量切换到新集群</p>
+<p>旧集群停机</p>
+<h1 id="Auto-warm机制"><a href="#Auto-warm机制" class="headerlink" title="Auto-warm机制"></a>Auto-warm机制</h1><h1 id="准实时索引机制"><a href="#准实时索引机制" class="headerlink" title="准实时索引机制"></a>准实时索引机制</h1><p>VS ElasticSearch</p>
+<h1 id="SolrCould"><a href="#SolrCould" class="headerlink" title="SolrCould"></a>SolrCould</h1><h1 id="使用总结"><a href="#使用总结" class="headerlink" title="使用总结"></a>使用总结</h1><p>Solr使用控制台，可视化管理数据<br>1.xml</p>
+<delete><br><query><br><em>:</em><br></query><br></delete>
+
+<p>2.json？</p>
+<p>启动solr<br>F:\solr\bin&gt;solr start -m 1g -f</p>
+<p>别名<br>core.properties</p>
+<p>name=shops</p>
+<p>name=service<br>config=solrconfig.xml<br>schema=schema.xml<br>dataDir=data</p>
+<p>//只查询字段orderStatus值在1到3的数据，orderStatus也可以是string类型 l=abc u=ghi<br>q=<em>:</em>&amp;fq={!frange l=1 u=3}orderStatus</p>
+<p>fq=orderStatus:[1 TO 3]   orderStatus只能是整数</p>
+<h1 id="研究Join-query"><a href="#研究Join-query" class="headerlink" title="研究Join query"></a>研究Join query</h1><p>附上研究Join query的实战代码<br><figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">//测试用的Solr环境为：</span></span><br><span class="line">    <span class="comment">// solr 6.1</span></span><br><span class="line">    <span class="comment">// jetty容器</span></span><br><span class="line">    <span class="comment">//启动参数：solr start -m 1g -f</span></span><br><span class="line">    <span class="comment">//windows 7 X64</span></span><br><span class="line">    <span class="comment">//solrj maven: &lt;groupId&gt;org.apache.solr&lt;/groupId&gt; &lt;artifactId&gt;solr-solrj&lt;/artifactId&gt; &lt;version&gt;5.3.0&lt;/version&gt;</span></span><br><span class="line"></span><br><span class="line">    String solrHostName = <span class="string">"http://127.0.0.1:8983/solr/"</span><span class="comment">;</span></span><br><span class="line">    SolrClient userClient = new HttpSolrClient(solrHostName + <span class="string">"user"</span>)<span class="comment">;</span></span><br><span class="line">    SolrClient orderClient = new HttpSolrClient(solrHostName + <span class="string">"order"</span>)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">    List&lt;SolrInputDocument&gt; userDocuments = new ArrayList&lt;&gt;()<span class="comment">;</span></span><br><span class="line">    <span class="keyword">System</span>.out.println(<span class="string">"添加用户“张三”"</span>)<span class="comment">;</span></span><br><span class="line">    SolrInputDocument userDocument = new SolrInputDocument()<span class="comment">;</span></span><br><span class="line">    userDocument.addField(<span class="string">"id"</span>, <span class="number">1000</span>)<span class="comment">;//用户唯一编号</span></span><br><span class="line">    userDocument.addField(<span class="string">"type"</span>, <span class="number">0</span>)<span class="comment">;//0=普通用户；1=VIP用户</span></span><br><span class="line">    userDocument.addField(<span class="string">"nickname"</span>, <span class="string">"张三"</span>)<span class="comment">;//昵称</span></span><br><span class="line">    userDocument.addField(<span class="string">"status"</span>, <span class="number">0</span>)<span class="comment">;//0=失效；1=有效</span></span><br><span class="line">    userDocument.addField(<span class="string">"updateTime"</span>, <span class="keyword">System</span>.currentTimeMillis())<span class="comment">;//账户最后一次活动时间</span></span><br><span class="line">    userDocuments.add(userDocument)<span class="comment">;</span></span><br><span class="line">    <span class="keyword">System</span>.out.println(<span class="string">"添加用户“李四”"</span>)<span class="comment">;</span></span><br><span class="line">    SolrInputDocument userDocument2 = new SolrInputDocument()<span class="comment">;</span></span><br><span class="line">    userDocument2.addField(<span class="string">"id"</span>, <span class="number">2000</span>)<span class="comment">;//用户唯一编号</span></span><br><span class="line">    userDocument2.addField(<span class="string">"type"</span>, <span class="number">1</span>)<span class="comment">;//0=普通用户；1=VIP用户</span></span><br><span class="line">    userDocument2.addField(<span class="string">"nickname"</span>, <span class="string">"李四"</span>)<span class="comment">;//昵称</span></span><br><span class="line">    userDocument2.addField(<span class="string">"status"</span>, <span class="number">0</span>)<span class="comment">;//0=失效；1=有效</span></span><br><span class="line">    userDocument2.addField(<span class="string">"updateTime"</span>, <span class="keyword">System</span>.currentTimeMillis() + <span class="number">1</span>)<span class="comment">;//账户最后一次活动时间</span></span><br><span class="line">    userDocuments.add(userDocument2)<span class="comment">;</span></span><br><span class="line">    userClient.add(userDocuments)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//为"张三"加了2条订单信息</span></span><br><span class="line">    <span class="keyword">System</span>.out.println(<span class="string">"用户“李四”添加2条订单信息"</span>)<span class="comment">;</span></span><br><span class="line">    List&lt;SolrInputDocument&gt; orderDocuments = new ArrayList&lt;&gt;()<span class="comment">;</span></span><br><span class="line">    SolrInputDocument orderDocument = new SolrInputDocument()<span class="comment">;</span></span><br><span class="line">    orderDocument.addField(<span class="string">"id"</span>, <span class="number">3000</span>)<span class="comment">;//订单唯一编号</span></span><br><span class="line">    orderDocument.addField(<span class="string">"type"</span>, <span class="number">0</span>)<span class="comment">;//0=微信订单；1=唯品会订单</span></span><br><span class="line">    orderDocument.addField(<span class="string">"title"</span>, <span class="string">"张三的订单：商品001、商品002"</span>)<span class="comment">;//订单概览</span></span><br><span class="line">    orderDocument.addField(<span class="string">"remark"</span>, <span class="string">"我是备注..."</span>)<span class="comment">;//订单备注</span></span><br><span class="line">    orderDocument.addField(<span class="string">"uid"</span>, <span class="number">1000</span>)<span class="comment">;//下单用户Id</span></span><br><span class="line">    orderDocument.addField(<span class="string">"status"</span>, <span class="number">0</span>)<span class="comment">;//0=创建；1=付款；2=付款超时</span></span><br><span class="line">    orderDocument.addField(<span class="string">"amount"</span>, <span class="number">188</span>)<span class="comment">;//金额、以分为单位</span></span><br><span class="line">    orderDocument.addField(<span class="string">"updateTime"</span>, <span class="keyword">System</span>.currentTimeMillis() + <span class="number">2</span>)<span class="comment">;//订单最后一次更新时间</span></span><br><span class="line">    orderDocuments.add(orderDocument)<span class="comment">;</span></span><br><span class="line">    SolrInputDocument orderDocument2 = new SolrInputDocument()<span class="comment">;</span></span><br><span class="line">    orderDocument2.addField(<span class="string">"id"</span>, <span class="number">4000</span>)<span class="comment">;//订单唯一编号</span></span><br><span class="line">    orderDocument2.addField(<span class="string">"type"</span>, <span class="number">1</span>)<span class="comment">;//0=微信订单；1=唯品会订单</span></span><br><span class="line">    orderDocument2.addField(<span class="string">"title"</span>, <span class="string">"张三的订单：商品041、商品082"</span>)<span class="comment">;//订单概览</span></span><br><span class="line">    orderDocument2.addField(<span class="string">"remark"</span>, <span class="string">"我是备注..*******."</span>)<span class="comment">;//订单备注</span></span><br><span class="line">    orderDocument2.addField(<span class="string">"uid"</span>, <span class="number">1000</span>)<span class="comment">;//下单用户Id</span></span><br><span class="line">    orderDocument2.addField(<span class="string">"status"</span>, <span class="number">1</span>)<span class="comment">;//0=创建；1=付款；2=付款超时</span></span><br><span class="line">    orderDocument2.addField(<span class="string">"amount"</span>, <span class="number">9800</span>)<span class="comment">;//金额、以分为单位</span></span><br><span class="line">    orderDocument2.addField(<span class="string">"updateTime"</span>, <span class="keyword">System</span>.currentTimeMillis() + <span class="number">3</span>)<span class="comment">;//订单最后一次更新时间</span></span><br><span class="line">    orderDocuments.add(orderDocument2)<span class="comment">;</span></span><br><span class="line">    orderClient.add(orderDocuments)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//准实时索引大约需要1s time window</span></span><br><span class="line">    try &#123;</span><br><span class="line">        TimeUnit.SECONDS.sleep(<span class="number">2</span>)<span class="comment">;</span></span><br><span class="line">    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace()<span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">System</span>.out.println(<span class="string">"完成“张三”订单add"</span>)<span class="comment">;</span></span><br><span class="line">    <span class="comment">//查询有已付款订单的用户昵称和用户Id</span></span><br><span class="line">    <span class="comment">//类似的SQL：SELECT u.id,u.nickname FROM user u INNER JOIN order o ON u.id=o.uid WHERE o.status=1;</span></span><br><span class="line"></span><br><span class="line">    SolrQuery query = new SolrQuery()<span class="comment">;</span></span><br><span class="line">    query.addField(<span class="string">"id"</span>)<span class="comment">;</span></span><br><span class="line">    query.addField(<span class="string">"nickname"</span>)<span class="comment">;</span></span><br><span class="line">    query.setQuery(<span class="string">"*:*"</span>)<span class="comment">;</span></span><br><span class="line">    <span class="comment">//status:1作为filter是必需的，不填会报错</span></span><br><span class="line">    <span class="comment">//*Index与当前client相同时可省略</span></span><br><span class="line">    <span class="comment">//query.addFilterQuery("&#123;!join from=uid to=id fromIndex=order toIndex=user&#125;status:1");</span></span><br><span class="line">    query.addFilterQuery(<span class="string">"&#123;!join from=uid to=id fromIndex=order&#125;status:1"</span>)<span class="comment">;</span></span><br><span class="line">    <span class="keyword">System</span>.out.println(<span class="string">"query params:"</span> + query.toString())<span class="comment">;</span></span><br><span class="line">    SolrDocumentList result = userClient.query(query).getResults()<span class="comment">;</span></span><br><span class="line">    <span class="keyword">System</span>.out.println(<span class="string">"result size:"</span> + result.size())<span class="comment">;</span></span><br><span class="line">    <span class="keyword">System</span>.out.println(<span class="string">"查询有已付款订单的用户昵称和用户Id result:"</span> + Utils.objectToJsonWithoutException(result))<span class="comment">;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">----------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">    console：</span><br><span class="line">    添加用户“张三”</span><br><span class="line">    添加用户“李四”</span><br><span class="line">    用户“李四”添加<span class="number">2</span>条订单信息</span><br><span class="line">    完成“张三”订单add</span><br><span class="line">    query params:fl=id%<span class="number">2</span>Cnickname&amp;q=*%<span class="number">3</span>A*&amp;fq=%<span class="number">7</span>B%<span class="number">21</span>join+from%<span class="number">3</span>Duid+to%<span class="number">3</span>Did+fromIndex%<span class="number">3</span>Dorder%<span class="number">7</span>Dstatus%<span class="number">3</span>A1</span><br><span class="line">    result size:<span class="number">1</span></span><br><span class="line">    查询有已付款订单的用户昵称和用户Id result:[<span class="string">&#123;"id":1000,"nickname":"张三"&#125;</span>]</span><br></pre></td></tr></table></figure></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://cwiki.apache.org/confluence/display/solr/Other+Parsers#OtherParsers-JoinQueryParser" target="_blank" rel="external">Solr join query wiki</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>Talk is cheap,show me the code.</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/rewards/wechat-reward-image.png" alt="Steven Cheng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+
+      
+        <div class="copyright" style="clear:both;">
+           <p><span>本文标题：</span><a href="/post/2016/09/solr-design-principles/">Solr - 生产环境的设计原则</a></p>
+           <p><span>文章作者：</span><a href="/" title="访问 Steven Cheng 的个人博客">Steven Cheng</a></p>
+           <p><span>发布时间：</span>2016年9月20日 - 09时09分</p>
+           <p><span>本文字数：</span><span class="page-count">7,616字</span></p>
+           <p><span>原始链接：</span><a href="/post/2016/09/solr-design-principles/" title="Solr - 生产环境的设计原则">https://www.kisscat.pro/post/2016/09/solr-design-principles/</a></p>
+           <p><span>许可协议：</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" title="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">Attribution-NonCommercial 4.0</a></p>
+           <p><span>转载请保留以上信息。</span></p>
+        </div>
+      
+
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Solr/" rel="tag">#Solr</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/2016/07/mmseg4j-solr-compatible-solr-6-1/" rel="next" title="开源贡献 - 升级Solr中文分词器 mmseg4j-solr">
+                <i class="fa fa-chevron-left"></i> 开源贡献 - 升级Solr中文分词器 mmseg4j-solr
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="post/2016/09/solr-design-principles/"
+           data-title="Solr - 生产环境的设计原则" data-url="https://www.kisscat.pro/post/2016/09/solr-design-principles/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Steven Cheng" />
+          <p class="site-author-name" itemprop="name">Steven Cheng</p>
+          <p class="site-description motion-element" itemprop="description">https://www.kisscat.pro/about</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/amao12580" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://segmentfault.com/blogs" title="SegmentFault" target="_blank">SegmentFault</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.jobbole.com/" title="伯乐在线" target="_blank">伯乐在线</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnpolitics.org/" title="政见" target="_blank">政见</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dajia.qq.com/" title="大家" target="_blank">大家</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Core设计原则"><span class="nav-number">2.</span> <span class="nav-text">Core设计原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字段设计原则"><span class="nav-number">3.</span> <span class="nav-text">字段设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字段的分类"><span class="nav-number">3.1.</span> <span class="nav-text">字段的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字段的命名规范"><span class="nav-number">3.2.</span> <span class="nav-text">字段的命名规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字段的存储结构"><span class="nav-number">3.3.</span> <span class="nav-text">字段的存储结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何权衡缓存字段？（纵向）"><span class="nav-number">3.4.</span> <span class="nav-text">如何权衡缓存字段？（纵向）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何权衡混合Core？"><span class="nav-number">3.5.</span> <span class="nav-text">如何权衡混合Core？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据维护原则"><span class="nav-number">4.</span> <span class="nav-text">数据维护原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#局部更新"><span class="nav-number">4.1.</span> <span class="nav-text">局部更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Delete-and-add"><span class="nav-number">4.2.</span> <span class="nav-text">Delete and add</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引重建原则"><span class="nav-number">5.</span> <span class="nav-text">索引重建原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单个Solr集群实例"><span class="nav-number">5.1.</span> <span class="nav-text">单个Solr集群实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个Solr集群"><span class="nav-number">5.2.</span> <span class="nav-text">多个Solr集群</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Auto-warm机制"><span class="nav-number">6.</span> <span class="nav-text">Auto-warm机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准实时索引机制"><span class="nav-number">7.</span> <span class="nav-text">准实时索引机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SolrCould"><span class="nav-number">8.</span> <span class="nav-text">SolrCould</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用总结"><span class="nav-number">9.</span> <span class="nav-text">使用总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究Join-query"><span class="nav-number">10.</span> <span class="nav-text">研究Join query</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">11.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Steven Cheng</span>
+  <span class="post-count">&nbsp全站共133.0k字</span>
+</div>
+<script async="async" src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+访问量 <span id="busuanzi_value_site_pv"></span> &nbsp
+您是第<span id="busuanzi_value_site_uv"></span>个来到的小伙伴
+
+
+<script>
+var OriginTitile=document.title;
+var st;
+document.addEventListener('visibilitychange',function(){
+if(document.hidden){
+  document.title="(つェ⊂)我藏好了哦~";
+  clearTimeout(st);
+}else{
+  document.title='(*´∇｀*)被你发现啦~ '+OriginTitile;
+  console.log('show');
+  st=setTimeout(function(){
+      document.title=OriginTitile;
+  },4000);
+}
+});
+</script>
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+  <script type="text/javascript" src="/js/src/main.js?v=5.0.1"></script>
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/bootstrap/3.2.0/js/affix.js"></script>
+
+  
+  <script type="text/javascript" src="/js/src/post.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"amao12580"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementById('footer')
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>

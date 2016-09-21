@@ -54,12 +54,89 @@ grep "charset=utf-8" /tmp/a
 
 用这个将算法学习工程的混合文件编码转换好了，使用maven install再也不报字符集问题了。
 
+### tree
+
+windows和linux都有tree命令，主要功能是创建文件列表，将所有文件以树的形式列出来.
+
+windows下使用：tree /f
+
+/f参数是为了将文件名也打印出来
+
+### Nginx
+
+安全停止nginx的运行 graceful
+./nginx -s stop
+
+查看nginx并发进程数
+ps -ef | grep nginx | wc -l
+
+查看Web服务器（nginx  apache）的并发请求数及其TCP连接状态：
+netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+LAST_ACK 5 （正在等待处理的请求数）
+SYN_RECV 30
+ESTABLISHED 1597 （正常数据传输状态）
+FIN_WAIT1 51
+FIN_WAIT2 504
+TIME_WAIT 1057 （处理完毕，等待超时结束的请求数）
+
+服务器cpu数量
+grep ^processor /proc/cpuinfo | wc -l
+
+
+## 文件操作
+1.移动所有文件到上级目录
+mv * ../
+
+2.删除所有文件
+rm -r *
+
+3.解压
+
+1.tar zxvf XXX.tar.gz
+2.unzip XXX.zip
+
+4.压缩文件夹
+tar -zcvf /usr/local/openresty/nginx.tar.gz /usr/local/openresty/nginx/
+
+## 查看登陆日志
+
+查看ubuntu登陆日志
+cat /var/log/auth.log
+
+查看当前已登录的用户
+w
+
+查看（登录）用户名称及所启动的进程
+who
+
+随时查看系统的历史信息（曾经使用过系统的用户信息）
+last
+
+## DNS
+
+linux 设置DNS，等待1分钟即生效
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 ## 工具
 
 ### HTML2Markdown
 
-* [在线转换：支持table](http://html2markdown.eliyar.biz/)
+[在线转换：支持table](http://html2markdown.eliyar.biz/)
+
+### domain
+
+检查域名或IP在国内各地的访问速度
+
+http://ping.chinaz.com/
+
+### Google
+
+按照时间倒序
+
+&tbs=qdr:1,sbd:1
+
+例：https://www.google.com.hk/search?q=JOOQ+使用&tbs=qdr:1,sbd:1
+
 
 ## 软件
 

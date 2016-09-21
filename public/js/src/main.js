@@ -1,1 +1,550 @@
-NexT.utils=NexT.$u={wrapImageWithFancyBox:function(){$(".content img").not(".group-picture img").each(function(){var i=$(this),t=i.attr("title"),e=i.parent("a");e.size()<1&&(e=i.wrap('<a href="'+this.getAttribute("src")+'"></a>').parent("a")),e.addClass("fancybox"),e.attr("rel","group"),t&&(e.append('<p class="image-caption">'+t+"</p>"),e.attr("title",t))}),$(".fancybox").fancybox({helpers:{overlay:{locked:!1}}})},lazyLoadPostsImages:function(){$("#posts").find("img").lazyload({placeholder:"/images/loading.gif",effect:"fadeIn"})},registerBackToTop:function(){var i=50,t=$(".back-to-top");$(window).on("scroll",function(){t.toggleClass("back-to-top-on",window.pageYOffset>i)}),t.on("click",function(){$("body").velocity("scroll")})},embeddedVideoTransformer:function(){function i(i){return{width:i.width(),height:i.height()}}function t(i,t){return t/i*100}var e=$("iframe"),o=["www.youtube.com","player.vimeo.com","player.youku.com","music.163.com","www.tudou.com"],n=new RegExp(o.join("|"));e.each(function(){var e,o=this,s=$(this),r=i(s);if(this.src.search(n)>0){var a=t(r.width,r.height);s.width("100%").height("100%").css({position:"absolute",top:"0",left:"0"});var d=document.createElement("div");d.className="fluid-vids",d.style.position="relative",d.style.marginBottom="20px",d.style.width="100%",d.style.paddingTop=a+"%";var l=o.parentNode;if(l.insertBefore(d,o),d.appendChild(o),this.src.search("music.163.com")>0){e=i(s);var c=e.width>r.width||e.height<r.height;c&&(d.style.paddingTop=t(e.width,r.height)+"%")}}})},addActiveClassToMenuItem:function(){var i=window.location.pathname;i="/"===i?i:i.substring(0,i.length-1),$('.menu-item a[href="'+i+'"]').parent().addClass("menu-item-active")},hasMobileUA:function(){var i=window.navigator,t=i.userAgent,e=/iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;return e.test(t)},isTablet:function(){return window.screen.width<992&&window.screen.width>767&&this.hasMobileUA()},isMobile:function(){return window.screen.width<767&&this.hasMobileUA()},isDesktop:function(){return!this.isTablet()&&!this.isMobile()},escapeSelector:function(i){return i.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g,"\\$&")},displaySidebar:function(){this.isDesktop()&&!this.isPisces()&&$(".sidebar-toggle").trigger("click")},isMist:function(){return"Mist"===CONFIG.scheme},isPisces:function(){return"Pisces"===CONFIG.scheme},getScrollbarWidth:function(){var i=$("<div />").addClass("scrollbar-measure").prependTo("body"),t=i[0],e=t.offsetWidth-t.clientWidth;return i.remove(),e},needAffix:function(){return this.isPisces()}},$(document).ready(function(){function i(i){this.el=$(i.el),this.status=$.extend({},{init:{width:"100%",opacity:1,left:0,rotateZ:0,top:0}},i.status)}NexT.motion={};var t={lines:[],push:function(i){this.lines.push(i)},init:function(){this.lines.forEach(function(i){i.init()})},arrow:function(){this.lines.forEach(function(i){i.arrow()})},close:function(){this.lines.forEach(function(i){i.close()})}};i.prototype.init=function(){this.transform("init")},i.prototype.arrow=function(){this.transform("arrow")},i.prototype.close=function(){this.transform("close")},i.prototype.transform=function(i){this.el.velocity("stop").velocity(this.status[i])};var e=new i({el:".sidebar-toggle-line-first",status:{arrow:{width:"50%",rotateZ:"-45deg",top:"2px"},close:{width:"100%",rotateZ:"-45deg",top:"5px"}}}),o=new i({el:".sidebar-toggle-line-middle",status:{arrow:{width:"90%"},close:{opacity:0}}}),n=new i({el:".sidebar-toggle-line-last",status:{arrow:{width:"50%",rotateZ:"45deg",top:"-2px"},close:{width:"100%",rotateZ:"45deg",top:"-5px"}}});t.push(e),t.push(o),t.push(n);var s="320px",r=200,a={toggleEl:$(".sidebar-toggle"),sidebarEl:$(".sidebar"),isSidebarVisible:!1,init:function(){this.toggleEl.on("click",this.clickHandler.bind(this)),this.toggleEl.on("mouseenter",this.mouseEnterHandler.bind(this)),this.toggleEl.on("mouseleave",this.mouseLeaveHandler.bind(this)),$(document).on("sidebar.isShowing",function(){NexT.utils.isDesktop()&&$("body").velocity("stop").velocity({paddingRight:s},r)}).on("sidebar.isHiding",function(){})},clickHandler:function(){this.isSidebarVisible?this.hideSidebar():this.showSidebar(),this.isSidebarVisible=!this.isSidebarVisible},mouseEnterHandler:function(){this.isSidebarVisible||t.arrow()},mouseLeaveHandler:function(){this.isSidebarVisible||t.init()},showSidebar:function(){var i=this;t.close(),this.sidebarEl.velocity("stop").velocity({width:s},{display:"block",duration:r,begin:function(){$(".sidebar .motion-element").velocity("transition.slideRightIn",{stagger:50,drag:!0,complete:function(){i.sidebarEl.trigger("sidebar.motion.complete")}})},complete:function(){i.sidebarEl.addClass("sidebar-active"),i.sidebarEl.trigger("sidebar.didShow")}}),this.sidebarEl.trigger("sidebar.isShowing")},hideSidebar:function(){NexT.utils.isDesktop()&&$("body").velocity("stop").velocity({paddingRight:0}),this.sidebarEl.find(".motion-element").velocity("stop").css("display","none"),this.sidebarEl.velocity("stop").velocity({width:0},{display:"none"}),t.init(),this.sidebarEl.removeClass("sidebar-active"),this.sidebarEl.trigger("sidebar.isHiding"),$(".post-toc-wrap")&&"block"===$(".site-overview").css("display")&&$(".post-toc-wrap").removeClass("motion-element")}};a.init(),NexT.motion.integrator={queue:[],cursor:-1,add:function(i){return this.queue.push(i),this},next:function(){this.cursor++;var i=this.queue[this.cursor];$.isFunction(i)&&i(NexT.motion.integrator)},bootstrap:function(){this.next()}},NexT.motion.middleWares={logo:function(i){function t(i,t){return{e:$(i),p:{translateX:t},o:{duration:500,sequenceQueue:!1}}}function e(i){return i=Array.isArray(i)?i:[i],i.every(function(i){return $.isFunction(i.size)&&i.size()>0})}var o=[],n=$(".brand"),s=$(".site-title"),r=$(".site-subtitle"),a=$(".logo-line-before i"),d=$(".logo-line-after i");n.size()>0&&o.push({e:n,p:{opacity:1},o:{duration:200}}),NexT.utils.isMist()&&e([a,d])&&o.push(t(a,"100%"),t(d,"-100%")),e(s)&&o.push({e:s,p:{opacity:1,top:0},o:{duration:200}}),e(r)&&o.push({e:r,p:{opacity:1,top:0},o:{duration:200}}),o.length>0?(o[o.length-1].o.complete=function(){i.next()},$.Velocity.RunSequence(o)):i.next()},menu:function(i){$(".menu-item").velocity("transition.slideDownIn",{display:null,duration:200,complete:function(){i.next()}})},postList:function(i){function t(){var t=window.postMotionOptions||{stagger:100,drag:!0};t.complete=function(){i.next()},e.velocity("transition.slideDownIn",t)}var e=$(".post"),o=e.size()>0;o?t():i.next()},sidebar:function(i){"always"===CONFIG.sidebar.display&&NexT.utils.displaySidebar(),i.next()}}}),$(document).ready(function(){$(document).trigger("bootstrap:before"),NexT.utils.isMobile()&&window.FastClick.attach(document.body),NexT.utils.lazyLoadPostsImages(),NexT.utils.registerBackToTop(),$(".site-nav-toggle button").on("click",function(){var i=$(".site-nav"),t="site-nav-on",e=i.hasClass(t),o=e?"slideUp":"slideDown",n=e?"removeClass":"addClass";i.stop()[o]("fast",function(){i[n](t)})}),CONFIG.fancybox&&NexT.utils.wrapImageWithFancyBox(),NexT.utils.embeddedVideoTransformer(),NexT.utils.addActiveClassToMenuItem(),NexT.motion.integrator.add(NexT.motion.middleWares.logo).add(NexT.motion.middleWares.menu).add(NexT.motion.middleWares.postList).add(NexT.motion.middleWares.sidebar),$(document).trigger("motion:before"),CONFIG.motion&&NexT.motion.integrator.bootstrap(),$(document).trigger("bootstrap:after")}),$(document).ready(function(){var i=$(".header-inner").height()+10;$("#sidebar").css({"margin-top":i}).show()});
+/* global NexT: true */
+
+NexT.utils = NexT.$u = {
+  /**
+   * Wrap images with fancybox support.
+   */
+  wrapImageWithFancyBox: function () {
+    $('.content img').not('.group-picture img').each(function () {
+
+      var $image = $(this);
+      var imageTitle = $image.attr('title');
+      var $imageWrapLink = $image.parent('a');
+
+      if ($imageWrapLink.size() < 1) {
+        $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+      }
+
+      $imageWrapLink.addClass('fancybox');
+      $imageWrapLink.attr('rel', 'group');
+
+      if (imageTitle) {
+        $imageWrapLink.append('<p class="image-caption">' + imageTitle + '</p>');
+        $imageWrapLink.attr('title', imageTitle); //make sure img title tag will show correctly in fancybox
+      }
+    });
+
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  },
+
+  lazyLoadPostsImages: function () {
+    $('#posts').find('img').lazyload({
+      placeholder: '/images/loading.gif',
+      effect: 'fadeIn'
+    });
+  },
+
+  registerBackToTop: function () {
+    var THRESHOLD = 50;
+    var $top = $('.back-to-top');
+
+    $(window).on('scroll', function () {
+      $top.toggleClass('back-to-top-on', window.pageYOffset > THRESHOLD);
+    });
+
+    $top.on('click', function () {
+      $('body').velocity('scroll');
+    });
+  },
+
+  /**
+   * Transform embedded video to support responsive layout.
+   * @see http://toddmotto.com/fluid-and-responsive-youtube-and-vimeo-videos-with-fluidvids-js/
+   */
+  embeddedVideoTransformer: function () {
+    var $iframes = $('iframe');
+
+    // Supported Players. Extend this if you need more players.
+    var SUPPORTED_PLAYERS = [
+      'www.youtube.com',
+      'player.vimeo.com',
+      'player.youku.com',
+      'music.163.com',
+      'www.tudou.com'
+    ];
+    var pattern = new RegExp( SUPPORTED_PLAYERS.join('|') );
+
+    $iframes.each(function () {
+      var iframe = this;
+      var $iframe = $(this);
+      var oldDimension = getDimension($iframe);
+      var newDimension;
+
+      if (this.src.search(pattern) > 0) {
+
+        // Calculate the video ratio based on the iframe's w/h dimensions
+        var videoRatio = getAspectRadio(oldDimension.width, oldDimension.height);
+
+        // Replace the iframe's dimensions and position the iframe absolute
+        // This is the trick to emulate the video ratio
+        $iframe.width('100%').height('100%')
+          .css({
+            position: 'absolute',
+            top: '0',
+            left: '0'
+          });
+
+
+        // Wrap the iframe in a new <div> which uses a dynamically fetched padding-top property
+        // based on the video's w/h dimensions
+        var wrap = document.createElement('div');
+        wrap.className = 'fluid-vids';
+        wrap.style.position = 'relative';
+        wrap.style.marginBottom = '20px';
+        wrap.style.width = '100%';
+        wrap.style.paddingTop = videoRatio + '%';
+
+        // Add the iframe inside our newly created <div>
+        var iframeParent = iframe.parentNode;
+        iframeParent.insertBefore(wrap, iframe);
+        wrap.appendChild(iframe);
+
+        // Additional adjustments for 163 Music
+        if (this.src.search('music.163.com') > 0) {
+          newDimension = getDimension($iframe);
+          var shouldRecalculateAspect = newDimension.width > oldDimension.width ||
+                                        newDimension.height < oldDimension.height;
+
+          // 163 Music Player has a fixed height, so we need to reset the aspect radio
+          if (shouldRecalculateAspect) {
+            wrap.style.paddingTop = getAspectRadio(newDimension.width, oldDimension.height) + '%';
+          }
+        }
+      }
+    });
+
+    function getDimension($element) {
+      return {
+        width: $element.width(),
+        height: $element.height()
+      };
+    }
+
+    function getAspectRadio(width, height) {
+      return height / width * 100;
+    }
+  },
+
+  /**
+   * Add `menu-item-active` class name to menu item
+   * via comparing location.path with menu item's href.
+   */
+  addActiveClassToMenuItem: function () {
+    var path = window.location.pathname;
+    path = path === '/' ? path : path.substring(0, path.length - 1);
+    $('.menu-item a[href="' + path + '"]').parent().addClass('menu-item-active');
+  },
+
+  hasMobileUA: function () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  },
+
+  isTablet: function () {
+    return window.screen.width < 992 && window.screen.width > 767 && this.hasMobileUA();
+  },
+
+  isMobile: function () {
+    return window.screen.width < 767 && this.hasMobileUA();
+  },
+
+  isDesktop: function () {
+    return !this.isTablet() && !this.isMobile();
+  },
+
+  /**
+   * Escape meta symbols in jQuery selectors.
+   *
+   * @param selector
+   * @returns {string|void|XML|*}
+   */
+  escapeSelector: function (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, '\\$&');
+  },
+
+  displaySidebar: function () {
+    if (!this.isDesktop() || this.isPisces()) {
+      return;
+    }
+    $('.sidebar-toggle').trigger('click');
+  },
+
+  isMist: function () {
+    return CONFIG.scheme === 'Mist';
+  },
+
+  isPisces: function () {
+    return CONFIG.scheme === 'Pisces';
+  },
+
+  getScrollbarWidth: function () {
+    var $div = $('<div />').addClass('scrollbar-measure').prependTo('body');
+    var div = $div[0];
+    var scrollbarWidth = div.offsetWidth - div.clientWidth;
+
+    $div.remove();
+
+    return scrollbarWidth;
+  },
+
+  /**
+   * Affix behaviour for Sidebar.
+   *
+   * @returns {Boolean}
+   */
+  needAffix: function () {
+    return this.isPisces();
+  }
+};
+
+/* global NexT: true */
+
+$(document).ready(function () {
+  NexT.motion = {};
+
+  var sidebarToggleLines = {
+    lines: [],
+    push: function (line) {
+      this.lines.push(line);
+    },
+    init: function () {
+      this.lines.forEach(function (line) {
+        line.init();
+      });
+    },
+    arrow: function () {
+      this.lines.forEach(function (line) {
+        line.arrow();
+      });
+    },
+    close: function () {
+      this.lines.forEach(function (line) {
+        line.close();
+      });
+    }
+  };
+
+  function SidebarToggleLine(settings) {
+    this.el = $(settings.el);
+    this.status = $.extend({}, {
+      init: {
+        width: '100%',
+        opacity: 1,
+        left: 0,
+        rotateZ: 0,
+        top: 0
+      }
+    }, settings.status);
+  }
+
+  SidebarToggleLine.prototype.init = function () {
+    this.transform('init');
+  };
+  SidebarToggleLine.prototype.arrow = function () {
+    this.transform('arrow');
+  };
+  SidebarToggleLine.prototype.close = function () {
+    this.transform('close');
+  };
+  SidebarToggleLine.prototype.transform = function (status) {
+    this.el.velocity('stop').velocity(this.status[status]);
+  };
+
+  var sidebarToggleLine1st = new SidebarToggleLine({
+    el: '.sidebar-toggle-line-first',
+    status: {
+      arrow: {width: '50%', rotateZ: '-45deg', top: '2px'},
+      close: {width: '100%', rotateZ: '-45deg', top: '5px'}
+    }
+  });
+  var sidebarToggleLine2nd = new SidebarToggleLine({
+    el: '.sidebar-toggle-line-middle',
+    status: {
+      arrow: {width: '90%'},
+      close: {opacity: 0}
+    }
+  });
+  var sidebarToggleLine3rd = new SidebarToggleLine({
+    el: '.sidebar-toggle-line-last',
+    status: {
+      arrow: {width: '50%', rotateZ: '45deg', top: '-2px'},
+      close: {width: '100%', rotateZ: '45deg', top: '-5px'}
+    }
+  });
+
+  sidebarToggleLines.push(sidebarToggleLine1st);
+  sidebarToggleLines.push(sidebarToggleLine2nd);
+  sidebarToggleLines.push(sidebarToggleLine3rd);
+
+  var SIDEBAR_WIDTH = '320px';
+  var SIDEBAR_DISPLAY_DURATION = 200;
+
+  var sidebarToggleMotion = {
+    toggleEl: $('.sidebar-toggle'),
+    sidebarEl: $('.sidebar'),
+    isSidebarVisible: false,
+    init: function () {
+      this.toggleEl.on('click', this.clickHandler.bind(this));
+      this.toggleEl.on('mouseenter', this.mouseEnterHandler.bind(this));
+      this.toggleEl.on('mouseleave', this.mouseLeaveHandler.bind(this));
+
+      $(document)
+        .on('sidebar.isShowing', function () {
+          NexT.utils.isDesktop() && $('body').velocity('stop').velocity(
+            {paddingRight: SIDEBAR_WIDTH},
+            SIDEBAR_DISPLAY_DURATION
+          );
+        })
+        .on('sidebar.isHiding', function () {
+        });
+    },
+    clickHandler: function () {
+      this.isSidebarVisible ? this.hideSidebar() : this.showSidebar();
+      this.isSidebarVisible = !this.isSidebarVisible;
+    },
+    mouseEnterHandler: function () {
+      if (this.isSidebarVisible) {
+        return;
+      }
+      sidebarToggleLines.arrow();
+    },
+    mouseLeaveHandler: function () {
+      if (this.isSidebarVisible) {
+        return;
+      }
+      sidebarToggleLines.init();
+    },
+    showSidebar: function () {
+      var self = this;
+
+      sidebarToggleLines.close();
+
+      this.sidebarEl.velocity('stop').velocity({
+          width: SIDEBAR_WIDTH
+        }, {
+          display: 'block',
+          duration: SIDEBAR_DISPLAY_DURATION,
+          begin: function () {
+            $('.sidebar .motion-element').velocity(
+              'transition.slideRightIn',
+              {
+                stagger: 50,
+                drag: true,
+                complete: function () {
+                  self.sidebarEl.trigger('sidebar.motion.complete');
+                }
+              }
+            );
+          },
+          complete: function () {
+            self.sidebarEl.addClass('sidebar-active');
+            self.sidebarEl.trigger('sidebar.didShow');
+          }
+        }
+      );
+
+      this.sidebarEl.trigger('sidebar.isShowing');
+    },
+    hideSidebar: function () {
+      NexT.utils.isDesktop() && $('body').velocity('stop').velocity({paddingRight: 0});
+      this.sidebarEl.find('.motion-element').velocity('stop').css('display', 'none');
+      this.sidebarEl.velocity('stop').velocity({width: 0}, {display: 'none'});
+
+      sidebarToggleLines.init();
+
+      this.sidebarEl.removeClass('sidebar-active');
+      this.sidebarEl.trigger('sidebar.isHiding');
+
+      //�� post ҳ���°������� sidebar ʱ������ǰѡ�е��ǡ�վ������������ toc ȥ�� motion Ч��
+      //��ֹ�ٴδ���ʱ�������ڡ�վ���������µ� bug
+      if (!!$('.post-toc-wrap')) {
+        if ($('.site-overview').css('display') === 'block') {
+          $('.post-toc-wrap').removeClass('motion-element');
+        }
+      }
+    }
+  };
+  sidebarToggleMotion.init();
+
+  NexT.motion.integrator = {
+    queue: [],
+    cursor: -1,
+    add: function (fn) {
+      this.queue.push(fn);
+      return this;
+    },
+    next: function () {
+      this.cursor++;
+      var fn = this.queue[this.cursor];
+      $.isFunction(fn) && fn(NexT.motion.integrator);
+    },
+    bootstrap: function () {
+      this.next();
+    }
+  };
+
+  NexT.motion.middleWares =  {
+    logo: function (integrator) {
+      var sequence = [];
+      var $brand = $('.brand');
+      var $title = $('.site-title');
+      var $subtitle = $('.site-subtitle');
+      var $logoLineTop = $('.logo-line-before i');
+      var $logoLineBottom = $('.logo-line-after i');
+
+      $brand.size() > 0 && sequence.push({
+        e: $brand,
+        p: {opacity: 1},
+        o: {duration: 200}
+      });
+
+      NexT.utils.isMist() && hasElement([$logoLineTop, $logoLineBottom]) &&
+      sequence.push(
+        getMistLineSettings($logoLineTop, '100%'),
+        getMistLineSettings($logoLineBottom, '-100%')
+      );
+
+      hasElement($title) && sequence.push({
+        e: $title,
+        p: {opacity: 1, top: 0},
+        o: { duration: 200 }
+      });
+
+      hasElement($subtitle) && sequence.push({
+        e: $subtitle,
+        p: {opacity: 1, top: 0},
+        o: {duration: 200}
+      });
+
+      if (sequence.length > 0) {
+        sequence[sequence.length - 1].o.complete = function () {
+          integrator.next();
+        };
+        $.Velocity.RunSequence(sequence);
+      } else {
+        integrator.next();
+      }
+
+
+      function getMistLineSettings (element, translateX) {
+        return {
+          e: $(element),
+          p: {translateX: translateX},
+          o: {
+            duration: 500,
+            sequenceQueue: false
+          }
+        };
+      }
+
+      /**
+       * Check if $elements exist.
+       * @param {jQuery|Array} $elements
+       * @returns {boolean}
+       */
+      function hasElement ($elements) {
+        $elements = Array.isArray($elements) ? $elements : [$elements];
+        return $elements.every(function ($element) {
+          return $.isFunction($element.size) && $element.size() > 0;
+        });
+      }
+    },
+
+    menu: function (integrator) {
+      $('.menu-item').velocity('transition.slideDownIn', {
+        display: null,
+        duration: 200,
+        complete: function () {
+          integrator.next();
+        }
+      });
+    },
+
+    postList: function (integrator) {
+      var $post = $('.post');
+      var hasPost = $post.size() > 0;
+
+      hasPost ? postMotion() : integrator.next();
+
+      function postMotion () {
+        var postMotionOptions = window.postMotionOptions || {
+            stagger: 100,
+            drag: true
+          };
+        postMotionOptions.complete = function () {
+          integrator.next();
+        };
+
+        $post.velocity('transition.slideDownIn', postMotionOptions);
+      }
+    },
+
+    sidebar: function (integrator) {
+      if (CONFIG.sidebar.display === 'always') {
+        NexT.utils.displaySidebar();
+      }
+      integrator.next();
+    }
+  };
+
+});
+
+/* global NexT: true */
+
+$(document).ready(function () {
+
+  $(document).trigger('bootstrap:before');
+
+  NexT.utils.isMobile() && window.FastClick.attach(document.body);
+
+  NexT.utils.lazyLoadPostsImages();
+
+  NexT.utils.registerBackToTop();
+
+  $('.site-nav-toggle button').on('click', function () {
+    var $siteNav = $('.site-nav');
+    var ON_CLASS_NAME = 'site-nav-on';
+    var isSiteNavOn = $siteNav.hasClass(ON_CLASS_NAME);
+    var animateAction = isSiteNavOn ? 'slideUp' : 'slideDown';
+    var animateCallback = isSiteNavOn ? 'removeClass' : 'addClass';
+
+    $siteNav.stop()[animateAction]('fast', function () {
+      $siteNav[animateCallback](ON_CLASS_NAME);
+    });
+  });
+
+
+  CONFIG.fancybox && NexT.utils.wrapImageWithFancyBox();
+  NexT.utils.embeddedVideoTransformer();
+  NexT.utils.addActiveClassToMenuItem();
+
+
+  // Define Motion Sequence.
+  NexT.motion.integrator
+    .add(NexT.motion.middleWares.logo)
+    .add(NexT.motion.middleWares.menu)
+    .add(NexT.motion.middleWares.postList)
+    .add(NexT.motion.middleWares.sidebar);
+
+  $(document).trigger('motion:before');
+
+  // Bootstrap Motion.
+  CONFIG.motion && NexT.motion.integrator.bootstrap();
+
+  $(document).trigger('bootstrap:after');
+});
+
+$(document).ready(function () {
+  var sidebarTop = $('.header-inner').height() + 10;
+
+  $('#sidebar').css({ 'margin-top': sidebarTop }).show();
+});

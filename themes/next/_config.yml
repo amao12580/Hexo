@@ -142,7 +142,7 @@ social_icons:
   Weibo: weibo
 
 #打赏功能配置示例
-reward_comment: Talk is cheap，show me the code.
+reward_comment: Talk is cheap,show me the code.
 wechatpay: /rewards/wechat-reward-image.png
 #alipay: /path/to/alipay-reward-image
 
