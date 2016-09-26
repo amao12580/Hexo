@@ -1,3 +1,19 @@
+User-agent: Baiduspider
+Disallow: /
+User-agent: Baiduspider-image
+Disallow: /
+User-agent: Baiduspider-video
+Disallow: /
+User-agent: Baiduspider-news
+Disallow: /
+User-agent: Baiduspider-favo
+Disallow: /
+User-agent: Baiduspider-cpro
+Disallow: /
+User-agent: Baiduspider-ads
+Disallow: /
+User-agent: Baiduspider-ecom
+Disallow: /
 User-agent: *
 Allow: /
 Allow: /post/
@@ -7,7 +23,7 @@ Allow: /tags/
 Allow: /index/
 Allow: /img/
 Allow: /js/
-Allow: /about/ 
+Allow: /about/
 Disallow: /file/
 
 Sitemap: http://amao12580.github.io/sitemap.xml

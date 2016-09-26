@@ -31,6 +31,16 @@ append only log file
 
 顺序记录系统日志
 
+### UTC
+
+协调世界时，又称世界标准时间或世界协调时间，简称UTC（英文“Coordinated Universal Time”／法文“Temps Universel Coordonné”），是最主要的世界时间标准，其以原子时秒长为基础，在时刻上尽量接近于格林尼治标准时间。
+
+### LBS
+Location-Based Service，基于位置服务
+
+### GPS
+全球定位系统（Global Positioning System，GPS）
+
 ## Linux 技巧
 
 ### 1.批量转换文件字符集 GBK--> UTF8
