@@ -41,6 +41,12 @@ Location-Based Service，基于位置服务
 ### GPS
 全球定位系统（Global Positioning System，GPS）
 
+### CRUD
+CRUD是指在做计算处理时的增加(Create)、读取查询(Retrieve)、更新(Update)和删除(Delete)几个单词的首字母简写。主要被用在描述软件系统中数据库或者持久层的基本操作功能。
+
+### QA
+QA：Quality Assurance，直译为质量保证。质量保证是质量体系中非常重要而又特殊的组成部分，质量保证的工作涉及软件研发流程的各个环节，且涉及到每一位参与研发的人员，但质量保证工作又不涉及具体的软件研发细节。
+
 ## Linux 技巧
 
 ### 1.批量转换文件字符集 GBK--> UTF8
