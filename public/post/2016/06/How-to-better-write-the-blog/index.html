@@ -1,1 +1,877 @@
-<!doctype html><html class="theme-next pisces use-motion"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.css" rel="stylesheet"><link href="//cdn.bootcss.com/animate.css/3.5.0/animate.css" rel="stylesheet"><link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet"><link href="//fonts.proxy.ustclug.org/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet"><link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"><link href="/css/main.css?v=5.0.1" rel="stylesheet"><meta name="keywords" content="GitHub,Git,Windows,Powershell,Gulp,"><link rel="alternate" href="/atom.xml" title="Cat's Blog" type="application/atom+xml"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1"><meta name="description" content="不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！"><meta property="og:type" content="article"><meta property="og:title" content="如何更开心的写博客？"><meta property="og:url" content="https://www.kisscat.pro/post/2016/06/How-to-better-write-the-blog/index.html"><meta property="og:site_name" content="Cat's Blog"><meta property="og:description" content="不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！"><meta property="og:image" content="https://www.kisscat.pro/img/windowsPlanTask.png"><meta property="og:updated_time" content="2016-06-20T05:21:53.065Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="如何更开心的写博客？"><meta name="twitter:description" content="不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！"><meta name="twitter:image" content="https://www.kisscat.pro/img/windowsPlanTask.png"><script id="hexo.configuration">var NexT=window.NexT||{},CONFIG={scheme:"Pisces",sidebar:{position:"left",display:"post"},fancybox:!0,motion:!0,duoshuo:{userId:0x56ed168b0c000400,author:"这是作者大大"}}</script><title>如何更开心的写博客？ | Cat's Blog</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container one-collumn sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">Cat's Blog</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle">一饮一啄，莫非前定.</p></div><div class="site-nav-toggle"><button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-index"><a href="/index" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>索引</a></li><li class="menu-item menu-item-tags"><a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-about"><a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-search"><a href="#" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup"><span class="search-icon fa fa-search"></span> <input type="text" id="local-search-input"><div id="local-search-result"></div><span class="popup-btn-close">close</span></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><header class="post-header"><h1 class="post-title" itemprop="name headline">如何更开心的写博客？</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time itemprop="dateCreated" datetime="2016-06-17T15:50:56+08:00" content="2016-06-17">2016-06-17</time></span> <span class="post-category">&nbsp; | &nbsp;<span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Tutorial/" itemprop="url" rel="index"><span itemprop="name">Tutorial</span></a></span></span> <span id="busuanzi_container_page_pv">&nbsp; | &nbsp; 热度&nbsp;<span id="busuanzi_value_page_pv"></span> °C</span> <span class="post-comments-count">&nbsp; | &nbsp;<a href="/post/2016/06/How-to-better-write-the-blog/#comments" itemprop="discussionUrl"><span class="post-comments-count ds-thread-count" data-thread-key="post/2016/06/How-to-better-write-the-blog/" itemprop="commentsCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！</p><p>最开始主要依靠图形界面进行blog发布，来看看有哪些操作吧！</p><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">在windows DOS下的步骤是：</span><br><span class="line"></span><br><span class="line">1.按下“<span class="keyword">win</span>”+“R”键</span><br><span class="line"></span><br><span class="line">2.在打开的对话框中输入“cmd”</span><br><span class="line"></span><br><span class="line">3.在打开的黑窗口中输入：</span><br><span class="line">Microsoft Windows [版本 6.1.7601]</span><br><span class="line">版权所有 (c) 2009 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator&gt;<span class="keyword">D</span>:</span><br><span class="line"></span><br><span class="line"><span class="keyword">D</span>:\&gt;<span class="keyword">cd</span> GitHub</span><br><span class="line"></span><br><span class="line"><span class="keyword">D</span>:\GitHub&gt;<span class="keyword">cd</span> Hexo</span><br><span class="line"></span><br><span class="line"><span class="keyword">D</span>:\GitHub\Hexo&gt;hexo <span class="keyword">g</span></span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Files loaded <span class="keyword">in</span> 2.14 <span class="built_in">s</span></span><br><span class="line">INFO  Generated: atom.xml</span><br><span class="line">INFO  Generated: <span class="keyword">search</span>.xml</span><br><span class="line">INFO  Generated: sitemap.xml</span><br><span class="line">INFO  Generated: <span class="keyword">about</span>/index.html</span><br><span class="line">INFO  Generated: tags/index.html</span><br><span class="line">INFO  Generated: categories/index.html</span><br><span class="line">INFO  Generated: <span class="keyword">post</span>/2016/06/What-is-a-transaction/index.html</span><br><span class="line">.........<span class="comment">//都是一些HTML Generated信息，就不贴出了。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INFO  119 files generated <span class="keyword">in</span> 4.33 <span class="built_in">s</span></span><br><span class="line"></span><br><span class="line">3.清理不必要的文件：将文件夹<span class="keyword">D</span>:\GitHub\Hexo\public\vendors删除</span><br><span class="line"></span><br><span class="line">4.将<span class="keyword">D</span>:\GitHub\Hexo\public文件夹拷贝到发布文件夹<span class="keyword">D</span>:\GitHub\amao12580.github.io</span><br><span class="line"></span><br><span class="line">5.使用GitHub <span class="keyword">For</span> Windows可视化工具进行提交和同步。</span><br></pre></td></tr></table></figure><p>整个过程大约需要10分钟，因为很多都在图形化界面中操作，感觉效率很低。起初的想法是在DOS下做一个批处理，以下是我之前实际在用的命令。</p><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一整行实在不美观，折行让大家看得舒服点！</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">cd</span> <span class="keyword">D</span>:\GitHub\Hexo &amp; hexo clean &amp; hexo <span class="keyword">g</span></span><br><span class="line">&amp; rd <span class="keyword">D</span>:\GitHub\Hexo\public\vendors /S /<span class="built_in">Q</span></span><br><span class="line">&amp; gulp</span><br><span class="line">&amp; XCOPY <span class="keyword">D</span>:\GitHub\Hexo\public\*.* <span class="keyword">D</span>:\GitHub\amao12580.github.io /Q /<span class="keyword">D</span> /<span class="keyword">E</span> /C /<span class="built_in">Y</span></span><br><span class="line">&amp; hexo <span class="built_in">s</span></span><br></pre></td></tr></table></figure><p>如你所想，还差了最后向github提交呢？并且还不够自动化，需要手动在DOS触发，这明显不符合极客范啊！</p><h1 id="gulp"><a href="#gulp" class="headerlink" title="gulp"></a>gulp</h1><p>Gulp是一个构建系统，它能通过自动执行常见任务，比如编译预处理CSS，压缩JavaScript和刷新浏览器，来改进网站开发的过程。我主要使用gulp来压缩CSS、HTML、javascript、images。加速blog的访问速度，效果还是很好的！在这里贴一下我在用的gulpfile.js，放在D:\GitHub\Hexo目录下就可以了。还是很好使的，直接给压缩了20%体积。</p><p>目前访问速度还算可以了，想进一步优化，需要自建VPS，用Nginx合并一些请求（<a href="https://github.com/alibaba/nginx-http-concat" target="_blank" rel="external">nginx-http-concat</a> 模块），别忘了Nginx还可以缓存静态资源哦！</p><figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"><span class="comment">//html压缩</span></span><br><span class="line"><span class="built_in">var</span> htmlmin = <span class="built_in">require</span>(<span class="string">'gulp-htmlmin'</span>);</span><br><span class="line"><span class="built_in">var</span> htmlclean = <span class="built_in">require</span>(<span class="string">'gulp-htmlclean'</span>);</span><br><span class="line"><span class="comment">//js压缩</span></span><br><span class="line"><span class="built_in">var</span> jsmin = <span class="built_in">require</span>(<span class="string">'gulp-jsmin'</span>);</span><br><span class="line"><span class="built_in">var</span> uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>);</span><br><span class="line"><span class="comment">//文件重命名</span></span><br><span class="line"><span class="built_in">var</span> rename = <span class="built_in">require</span>(<span class="string">'gulp-rename'</span>);</span><br><span class="line"><span class="comment">//图片压缩png/jpg/gif</span></span><br><span class="line"><span class="built_in">var</span> imagemin = <span class="built_in">require</span>(<span class="string">'gulp-imagemin'</span>);</span><br><span class="line"><span class="comment">//png压缩</span></span><br><span class="line"><span class="built_in">var</span> pngquant = <span class="built_in">require</span>(<span class="string">'imagemin-pngquant'</span>);</span><br><span class="line"><span class="built_in">var</span> cache = <span class="built_in">require</span>(<span class="string">'gulp-cache'</span>);</span><br><span class="line"><span class="comment">//css压缩</span></span><br><span class="line"><span class="built_in">var</span> csso = <span class="built_in">require</span>(<span class="string">'gulp-csso'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">var</span> root = <span class="string">"./public"</span>;</span><br><span class="line"><span class="built_in">var</span> buildDir = root;</span><br><span class="line"><span class="built_in">var</span> datas=&#123;</span><br><span class="line">    <span class="attribute">html</span>:[root+<span class="string">"/**/*.html"</span>],</span><br><span class="line">    <span class="attribute">image</span>:[root+<span class="string">"/**/*.&#123;png,jpg,jpeg,gif,ico&#125;"</span>],</span><br><span class="line">    <span class="attribute">css</span>:[root+<span class="string">"/**/*.css"</span>],</span><br><span class="line">    <span class="attribute">js</span>:[root+<span class="string">"/**/*.js"</span>,<span class="string">'!*min.js'</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 压缩html</span></span><br><span class="line">gulp.task(<span class="string">'htmlmin'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">var</span> options = &#123;</span><br><span class="line">        <span class="attribute">removeComments</span>: <span class="literal">true</span>,<span class="comment">//清除HTML注释</span></span><br><span class="line">        <span class="attribute">collapseWhitespace</span>: <span class="literal">true</span>,<span class="comment">//压缩HTML</span></span><br><span class="line">        <span class="attribute">collapseBooleanAttributes</span>: <span class="literal">true</span>,<span class="comment">//省略布尔属性的值 &lt;input checked="true"/&gt; ==&gt; &lt;input /&gt;</span></span><br><span class="line">        <span class="attribute">removeEmptyAttributes</span>: <span class="literal">true</span>,<span class="comment">//删除所有空格作属性值 &lt;input id="" /&gt; ==&gt; &lt;input /&gt;</span></span><br><span class="line">        <span class="attribute">removeScriptTypeAttributes</span>: <span class="literal">true</span>,<span class="comment">//删除&lt;script&gt;的type="text/javascript"</span></span><br><span class="line">        <span class="attribute">removeStyleLinkTypeAttributes</span>: <span class="literal">true</span>,<span class="comment">//删除&lt;style&gt;和&lt;link&gt;的type="text/css"</span></span><br><span class="line">        <span class="attribute">minifyJS</span>: <span class="literal">true</span>,<span class="comment">//压缩页面JS</span></span><br><span class="line">        <span class="attribute">minifyCSS</span>: <span class="literal">true</span><span class="comment">//压缩页面CSS</span></span><br><span class="line">    &#125;;</span><br><span class="line">  gulp.src(datas.html)</span><br><span class="line">  .pipe(htmlclean())</span><br><span class="line">  .pipe(htmlmin(options).on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(e);</span><br><span class="line">         &#125;))</span><br><span class="line">  .pipe(gulp.dest(buildDir));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// png图片压缩</span></span><br><span class="line">gulp.task(<span class="string">"imagemin"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    gulp.src(datas.image)</span><br><span class="line">    .pipe(imagemin(&#123;</span><br><span class="line">        <span class="attribute">optimizationLevel</span>: <span class="number">7</span>, <span class="comment">//类型：Number  默认：3  取值范围：0-7（优化等级）</span></span><br><span class="line">        <span class="attribute">progressive</span>: <span class="literal">true</span>, <span class="comment">//类型：Boolean 默认：false 无损压缩jpg图片</span></span><br><span class="line">        <span class="attribute">interlaced</span>: <span class="literal">true</span>, <span class="comment">//类型：Boolean 默认：false 隔行扫描gif进行渲染</span></span><br><span class="line">        <span class="attribute">multipass</span>: <span class="literal">true</span>, <span class="comment">//类型：Boolean 默认：false 多次优化svg直到完全优化</span></span><br><span class="line">        <span class="attribute">svgoPlugins</span>:[&#123;<span class="attribute">removeViewBox</span>:<span class="attribute">false&#125;],</span><br><span class="line">        use</span>:[pngquant()] <span class="comment">//压缩率64%</span></span><br><span class="line">    &#125;).on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(e);</span><br><span class="line">         &#125;))</span><br><span class="line">    .pipe(gulp.dest(buildDir));</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// js压缩</span></span><br><span class="line">gulp.task(<span class="string">"jsmin"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    gulp.src(datas.js)</span><br><span class="line">    .pipe(uglify().on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">         <span class="built_in">console</span>.log(e);</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="comment">//.pipe(rename(&#123;suffix:'.min'&#125;))</span></span><br><span class="line">    .pipe(gulp.dest(buildDir));</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// css压缩</span></span><br><span class="line">gulp.task(<span class="string">"cssmin"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    gulp.src(datas.css)</span><br><span class="line">    .pipe(csso().on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">     &#125;))</span><br><span class="line">    .pipe(gulp.dest(buildDir));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(<span class="string">"default"</span>,[<span class="string">"htmlmin"</span>,<span class="string">"imagemin"</span>,<span class="string">"jsmin"</span>,<span class="string">"cssmin"</span>]);</span><br></pre></td></tr></table></figure><h1 id="Powershell"><a href="#Powershell" class="headerlink" title="Powershell"></a>Powershell</h1><p>想起了windows 7环境已经支持powershell（增强版DOS！），试想如果有一个ps1脚本可以完成发布blog，再配合windows计划任务，不就可以定时或按用户动作触发了吗？YES，这才是我想要的，不啰嗦，开始干吧！</p><p>PS：脚本运行之前，别忘了装一个：Git-2.9.0-64-bit.exe，然后配置好自己的github信息。<br></p><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">配置完成后的验证：ssh -T git<span class="meta">@github.com</span></span><br><span class="line">如果提示：Hi <span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span> You've successfully authenticated, but GitHub does not provide shell access. 说明你连接成功了</span><br></pre></td></tr></table></figure><p></p><p>设置PowerShell环境，使能“allow scripts to run”选项，步骤如下：<br>以管理员的身份运行PowerShell<br>执行Set-ExecutionPolicy RemoteSigned命令，在对话框中选择Y，如下<br></p><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PS <span class="string">C:</span>\Windows\system32&gt; Set-ExecutionPolicy RemoteSigned</span><br><span class="line">执行策略更改</span><br><span class="line">执行策略可帮助你防止执行不信任的脚本。更改执行策略可能会产生安全风险，如 <span class="string">http:</span><span class="comment">//go.microsoft.com/fwlink/?LinkID=135170</span></span><br><span class="line">中的 about_Execution_Policies 帮助主题所述。是否要更改执行策略?</span><br><span class="line">[Y] 是(Y)  [N] 否(N)  [S] 挂起(S)  [?] 帮助 (默认值为“Y”): Y</span><br><span class="line">PS <span class="string">C:</span>\Windows\system32&gt;</span><br></pre></td></tr></table></figure><p></p><p>Finally，一起来看看我的“syncArticle.ps1”，遇到无数坑（语句块是大坑！），不过还是被我搞定了！</p><p>‘D:\Program Files\Git\bin\git.exe’是我的Git安装目录。</p><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cd D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">Hexo</span></span></span><br><span class="line">hexo g --silent</span><br><span class="line">Remove-Item D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">Hexo</span></span><span class="tag">\<span class="name">public</span></span><span class="tag">\<span class="name">vendors</span></span><span class="tag">\<span class="name">*</span></span> -recurse</span><br><span class="line">Remove-Item D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">Hexo</span></span><span class="tag">\<span class="name">public</span></span><span class="tag">\<span class="name">vendors</span></span> -recurse</span><br><span class="line">gulp --silent</span><br><span class="line">XCOPY D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">Hexo</span></span><span class="tag">\<span class="name">public</span></span><span class="tag">\<span class="name">*</span></span>.* D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">amao</span></span>12580.github.io /Q /D /E /C /Y</span><br><span class="line">cd D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">amao</span></span>12580.github.io</span><br><span class="line">&amp; 'D:<span class="tag">\<span class="name">Program</span></span> Files<span class="tag">\<span class="name">Git</span></span><span class="tag">\<span class="name">bin</span></span><span class="tag">\<span class="name">git</span></span>.exe' add .</span><br><span class="line">&amp; 'D:<span class="tag">\<span class="name">Program</span></span> Files<span class="tag">\<span class="name">Git</span></span><span class="tag">\<span class="name">bin</span></span><span class="tag">\<span class="name">git</span></span>.exe' commit -m "Auto commit by powershell script."</span><br><span class="line">&amp; 'D:<span class="tag">\<span class="name">Program</span></span> Files<span class="tag">\<span class="name">Git</span></span><span class="tag">\<span class="name">bin</span></span><span class="tag">\<span class="name">git</span></span>.exe' push -f origin master</span><br><span class="line">exit</span><br></pre></td></tr></table></figure><p>在windows计划任务管理，我已经配置好，每晚10点，自动发布有更新的blog啦！来看看导出的windows计划任务XML文件吧！</p><p>PC-201402281156\Administrator，这是我的主机名和用户名。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-16"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">Task</span> <span class="attr">version</span>=<span class="string">"1.2"</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/windows/2004/02/mit/task"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">RegistrationInfo</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Date</span>&gt;</span>2016-06-15T17:08:16.1670287<span class="tag">&lt;/<span class="name">Date</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Author</span>&gt;</span>PC-201402281156\Administrator<span class="tag">&lt;/<span class="name">Author</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">RegistrationInfo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Triggers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">CalendarTrigger</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">StartBoundary</span>&gt;</span>2016-06-15T22:00:00<span class="tag">&lt;/<span class="name">StartBoundary</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">Enabled</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ScheduleByDay</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DaysInterval</span>&gt;</span>1<span class="tag">&lt;/<span class="name">DaysInterval</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ScheduleByDay</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">CalendarTrigger</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Triggers</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Principals</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Principal</span> <span class="attr">id</span>=<span class="string">"Author"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">UserId</span>&gt;</span>PC-201402281156\Administrator<span class="tag">&lt;/<span class="name">UserId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">LogonType</span>&gt;</span>InteractiveToken<span class="tag">&lt;/<span class="name">LogonType</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RunLevel</span>&gt;</span>LeastPrivilege<span class="tag">&lt;/<span class="name">RunLevel</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Principal</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Principals</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Settings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">MultipleInstancesPolicy</span>&gt;</span>IgnoreNew<span class="tag">&lt;/<span class="name">MultipleInstancesPolicy</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DisallowStartIfOnBatteries</span>&gt;</span>false<span class="tag">&lt;/<span class="name">DisallowStartIfOnBatteries</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">StopIfGoingOnBatteries</span>&gt;</span>true<span class="tag">&lt;/<span class="name">StopIfGoingOnBatteries</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">AllowHardTerminate</span>&gt;</span>true<span class="tag">&lt;/<span class="name">AllowHardTerminate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">StartWhenAvailable</span>&gt;</span>false<span class="tag">&lt;/<span class="name">StartWhenAvailable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RunOnlyIfNetworkAvailable</span>&gt;</span>false<span class="tag">&lt;/<span class="name">RunOnlyIfNetworkAvailable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">IdleSettings</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">StopOnIdleEnd</span>&gt;</span>true<span class="tag">&lt;/<span class="name">StopOnIdleEnd</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RestartOnIdle</span>&gt;</span>false<span class="tag">&lt;/<span class="name">RestartOnIdle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">IdleSettings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">AllowStartOnDemand</span>&gt;</span>true<span class="tag">&lt;/<span class="name">AllowStartOnDemand</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">Enabled</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Hidden</span>&gt;</span>false<span class="tag">&lt;/<span class="name">Hidden</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RunOnlyIfIdle</span>&gt;</span>false<span class="tag">&lt;/<span class="name">RunOnlyIfIdle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">WakeToRun</span>&gt;</span>false<span class="tag">&lt;/<span class="name">WakeToRun</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ExecutionTimeLimit</span>&gt;</span>PT10M<span class="tag">&lt;/<span class="name">ExecutionTimeLimit</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Priority</span>&gt;</span>7<span class="tag">&lt;/<span class="name">Priority</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Settings</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Actions</span> <span class="attr">Context</span>=<span class="string">"Author"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Exec</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Command</span>&gt;</span>powershell<span class="tag">&lt;/<span class="name">Command</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Arguments</span>&gt;</span>D:\GitHub\syncArticle.ps1<span class="tag">&lt;/<span class="name">Arguments</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">WorkingDirectory</span>&gt;</span>D:\GitHub<span class="tag">&lt;/<span class="name">WorkingDirectory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Exec</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Actions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Task</span>&gt;</span></span><br></pre></td></tr></table></figure><p>如下图所示，用户可以手动触发计划任务，来看看运行结果吧！点击历史记录还可以查看每次任务计划的运行情况呢！</p><p><img src="/img/windowsPlanTask.png" alt=""></p><p>现在我的blog就可以每晚10点自动发布到github了，终于可以专注于写文章了！</p></div><div></div><div><div style="padding:10px 0;margin:20px auto;width:90%;text-align:center"><div>Talk is cheap,show me the code.</div><button id="rewardButton" disable="enable" onclick='var e=document.getElementById("QR");"none"===e.style.display?e.style.display="block":e.style.display="none"'><span>赏</span></button><div id="QR" style="display:none"><div id="wechat" style="display:inline-block"><img id="wechat_qr" src="/rewards/wechat-reward-image.png" alt="Steven Cheng WeChat Pay"><p>微信打赏</p></div></div></div></div><footer class="post-footer"><div class="copyright" style="clear:both"><p><span>本文标题：</span><a href="/post/2016/06/How-to-better-write-the-blog/">如何更开心的写博客？</a></p><p><span>文章作者：</span><a href="/" title="访问 Steven Cheng 的个人博客">Steven Cheng</a></p><p><span>发布时间：</span>2016年6月17日 - 15时06分</p><p><span>本文字数：</span><span class="page-count">5,817字</span></p><p><span>原始链接：</span><a href="/post/2016/06/How-to-better-write-the-blog/" title="如何更开心的写博客？">https://www.kisscat.pro/post/2016/06/How-to-better-write-the-blog/</a></p><p><span>许可协议：</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" title="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">Attribution-NonCommercial 4.0</a></p><p><span>转载请保留以上信息。</span></p></div><div class="post-tags"><a href="/tags/GitHub/" rel="tag">#GitHub</a> <a href="/tags/Git/" rel="tag">#Git</a> <a href="/tags/Windows/" rel="tag">#Windows</a> <a href="/tags/Powershell/" rel="tag">#Powershell</a> <a href="/tags/Gulp/" rel="tag">#Gulp</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/post/2016/06/Message-system-architecture-evolution/" rel="next" title="消息系统的架构演进之路"><i class="fa fa-chevron-left"></i> 消息系统的架构演进之路</a></div><div class="post-nav-prev post-nav-item"><a href="/post/2016/06/LeetCode-training-3-elements-sum-zero/" rel="prev" title="LeetCode刷题 - 求三个和为零的整数组合">LeetCode刷题 - 求三个和为零的整数组合<i class="fa fa-chevron-right"></i></a></div></div></footer></article><div class="post-spread"></div></div></div><p>热评文章</p><div class="ds-top-threads" data-range="weekly" data-num-items="4"></div><div class="comments" id="comments"><div class="ds-thread" data-thread-key="post/2016/06/How-to-better-write-the-blog/" data-title="如何更开心的写博客？" data-url="https://www.kisscat.pro/post/2016/06/How-to-better-write-the-blog/"></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">文章目录</li><li class="sidebar-nav-overview" data-target="site-overview">站点概览</li></ul><section class="site-overview sidebar-panel"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Steven Cheng"><p class="site-author-name" itemprop="name">Steven Cheng</p><p class="site-description motion-element" itemprop="description">https://www.kisscat.pro/about</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/"><span class="site-state-item-count">17</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"><a href="/categories"><span class="site-state-item-count">6</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"><a href="/tags"><span class="site-state-item-count">53</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate"><i class="fa fa-rss"></i> RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/amao12580" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i> GitHub</a></span></div><div class="links-of-blogroll motion-element links-of-blogroll-inline"><div class="links-of-blogroll-title"><i class="fa fa-fw fa-globe"></i> Links</div><ul class="links-of-blogroll-list"><li class="links-of-blogroll-item"><a href="http://segmentfault.com/blogs" title="SegmentFault" target="_blank">SegmentFault</a></li><li class="links-of-blogroll-item"><a href="http://blog.jobbole.com/" title="伯乐在线" target="_blank">伯乐在线</a></li><li class="links-of-blogroll-item"><a href="http://cnpolitics.org/" title="政见" target="_blank">政见</a></li><li class="links-of-blogroll-item"><a href="http://dajia.qq.com/" title="大家" target="_blank">大家</a></li><li class="links-of-blogroll-item"><a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a></li></ul></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gulp"><span class="nav-number">2.</span> <span class="nav-text">gulp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Powershell"><span class="nav-number">3.</span> <span class="nav-text">Powershell</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2016</span><span class="with-love"><i class="fa fa-heart"></i></span> <span class="author" itemprop="copyrightHolder">Steven Cheng</span> <span class="post-count">&nbsp全站共140.8k字</span></div><script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>访问量<span id="busuanzi_value_site_pv"></span> &nbsp 您是第<span id="busuanzi_value_site_uv"></span>个来到的小伙伴<script>var OriginTitile=document.title,st;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="(つェ⊂)我藏好了哦~",clearTimeout(st)):(document.title="(*´∇｀*)被你发现啦~ "+OriginTitile,console.log("show"),st=setTimeout(function(){document.title=OriginTitile},4e3))})</script></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script>"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script><script src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script><script src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script><script src="//cdn.bootcss.com/velocity/1.2.3/velocity.min.js"></script><script src="//cdn.bootcss.com/velocity/1.2.3/velocity.ui.min.js"></script><script src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script><script src="/js/src/main.js?v=5.0.1"></script><script src="//cdn.bootcss.com/bootstrap/3.2.0/js/affix.js"></script><script src="/js/src/post.js?v=5.0.1"></script><script>var duoshuoQuery={short_name:"amao12580"};!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.id="duoshuo-script",t.src=("https:"==document.location.protocol?"https:":"http:")+"//static.duoshuo.com/embed.js",t.charset="UTF-8",(document.getElementById("footer")||document.getElementsByTagName("body")[0]).appendChild(t)}()</script><script>function proceedsearch(){$("body").append('<div class="popoverlay">').css("overflow","hidden"),$(".popup").toggle()}var isfetched=!1,search_path="search.xml";0==search_path.length&&(search_path="search.xml");var path="/"+search_path,searchFunc=function(e,t,a){"use strict";$.ajax({url:e,dataType:"xml",async:!0,success:function(e){isfetched=!0,$(".popup").detach().appendTo(".header-inner");var r=$("entry",e).map(function(){return{title:$("title",this).text(),content:$("content",this).text(),url:$("url",this).text()}}).get(),c=document.getElementById(t),s=document.getElementById(a);c.addEventListener("input",function(){var e=0,t='<ul class="search-result-list">',a=this.value.trim().toLowerCase().split(/[\s\-]+/);s.innerHTML="",this.value.trim().length>1&&r.forEach(function(r){var c=!0,s=r.title.trim().toLowerCase(),n=r.content.trim().replace(/<[^>]+>/g,"").toLowerCase(),o=r.url,i=-1,l=-1,p=-1;if(""!=s&&""!=n&&a.forEach(function(e,t){i=s.indexOf(e),l=n.indexOf(e),0>i&&0>l?c=!1:(0>l&&(l=0),0==t&&(p=l))}),c){e+=1,t+="<li><a href='"+o+"' class='search-result-title'>"+s+"</a>";var h=r.content.trim().replace(/<[^>]+>/g,"");if(p>=0){var u=p-20,d=p+80;0>u&&(u=0),0==u&&(d=50),d>h.length&&(d=h.length);var f=h.substring(u,d);a.forEach(function(e){var t=new RegExp(e,"gi");f=f.replace(t,'<b class="search-keyword">'+e+"</b>")}),t+='<p class="search-result">'+f+"...</p>"}t+="</li>"}}),t+="</ul>",0==e&&(t='<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'),""==a&&(t='<div id="no-result"><i class="fa fa-search fa-5x" /></div>'),s.innerHTML=t}),proceedsearch()}})};$(".popup-trigger").mousedown(function(e){e.stopPropagation(),0==isfetched?searchFunc(path,"local-search-input","local-search-result"):proceedsearch()}),$(".popup-btn-close").click(function(e){$(".popup").hide(),$(".popoverlay").remove(),$("body").css("overflow","")}),$(".popup").click(function(e){e.stopPropagation()})</script></body></html>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.css" rel="stylesheet"/>
+
+<link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet"/>
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.proxy.ustclug.org/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="GitHub,Git,Windows,Powershell,Gulp," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Cat's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何更开心的写博客？">
+<meta property="og:url" content="https://www.kisscat.pro/post/2016/06/How-to-better-write-the-blog/index.html">
+<meta property="og:site_name" content="Cat's Blog">
+<meta property="og:description" content="不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！">
+<meta property="og:image" content="https://www.kisscat.pro/img/windowsPlanTask.png">
+<meta property="og:updated_time" content="2016-06-20T05:21:53.065Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何更开心的写博客？">
+<meta name="twitter:description" content="不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！">
+<meta name="twitter:image" content="https://www.kisscat.pro/img/windowsPlanTask.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6263687443199821000,
+      author: '这是作者大大'
+    }
+  };
+</script>
+  <title> 如何更开心的写博客？ | Cat's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cat's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">一饮一啄，莫非前定.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-index">
+          <a href="/index" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            索引
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何更开心的写博客？
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-17T15:50:56+08:00" content="2016-06-17">
+              2016-06-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tutorial/" itemprop="url" rel="index">
+                    <span itemprop="name">Tutorial</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            <span id="busuanzi_container_page_pv">
+              &nbsp; | &nbsp; 热度&nbsp; <span id="busuanzi_value_page_pv"></span>°C
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/post/2016/06/How-to-better-write-the-blog/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="post/2016/06/How-to-better-write-the-blog/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>不知不觉中，在GitHub Pages写博客快有半年了，工作一直比较忙，但还是想在闲暇更新。既想锻炼自己的文字能力，也反向促使自己思考更多，博客愈发繁茂时，读者也多了，这更给了我继续下去的动力。Keep Moving！习惯了利用碎片化的时间来更新blog，但是回头想想，每次发布blog的过程是比较繁琐的。如何解放自己，专注于写文章呢？现在就让我们一起好好利用Powershell脚本吧！</p>
+<p>最开始主要依靠图形界面进行blog发布，来看看有哪些操作吧！</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">在windows DOS下的步骤是：</span><br><span class="line"></span><br><span class="line">1.按下“<span class="keyword">win</span>”+“R”键</span><br><span class="line"></span><br><span class="line">2.在打开的对话框中输入“cmd”</span><br><span class="line"></span><br><span class="line">3.在打开的黑窗口中输入：</span><br><span class="line">Microsoft Windows [版本 6.1.7601]</span><br><span class="line">版权所有 (c) 2009 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator&gt;<span class="keyword">D</span>:</span><br><span class="line"></span><br><span class="line"><span class="keyword">D</span>:\&gt;<span class="keyword">cd</span> GitHub</span><br><span class="line"></span><br><span class="line"><span class="keyword">D</span>:\GitHub&gt;<span class="keyword">cd</span> Hexo</span><br><span class="line"></span><br><span class="line"><span class="keyword">D</span>:\GitHub\Hexo&gt;hexo <span class="keyword">g</span></span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Files loaded <span class="keyword">in</span> 2.14 <span class="built_in">s</span></span><br><span class="line">INFO  Generated: atom.xml</span><br><span class="line">INFO  Generated: <span class="keyword">search</span>.xml</span><br><span class="line">INFO  Generated: sitemap.xml</span><br><span class="line">INFO  Generated: <span class="keyword">about</span>/index.html</span><br><span class="line">INFO  Generated: tags/index.html</span><br><span class="line">INFO  Generated: categories/index.html</span><br><span class="line">INFO  Generated: <span class="keyword">post</span>/2016/06/What-is-a-transaction/index.html</span><br><span class="line">.........<span class="comment">//都是一些HTML Generated信息，就不贴出了。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INFO  119 files generated <span class="keyword">in</span> 4.33 <span class="built_in">s</span></span><br><span class="line"></span><br><span class="line">3.清理不必要的文件：将文件夹<span class="keyword">D</span>:\GitHub\Hexo\public\vendors删除</span><br><span class="line"></span><br><span class="line">4.将<span class="keyword">D</span>:\GitHub\Hexo\public文件夹拷贝到发布文件夹<span class="keyword">D</span>:\GitHub\amao12580.github.io</span><br><span class="line"></span><br><span class="line">5.使用GitHub <span class="keyword">For</span> Windows可视化工具进行提交和同步。</span><br></pre></td></tr></table></figure>
+<p>整个过程大约需要10分钟，因为很多都在图形化界面中操作，感觉效率很低。起初的想法是在DOS下做一个批处理，以下是我之前实际在用的命令。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一整行实在不美观，折行让大家看得舒服点！</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">cd</span> <span class="keyword">D</span>:\GitHub\Hexo &amp; hexo clean &amp; hexo <span class="keyword">g</span></span><br><span class="line">&amp; rd <span class="keyword">D</span>:\GitHub\Hexo\public\vendors /S /<span class="built_in">Q</span></span><br><span class="line">&amp; gulp</span><br><span class="line">&amp; XCOPY <span class="keyword">D</span>:\GitHub\Hexo\public\*.* <span class="keyword">D</span>:\GitHub\amao12580.github.io /Q /<span class="keyword">D</span> /<span class="keyword">E</span> /C /<span class="built_in">Y</span></span><br><span class="line">&amp; hexo <span class="built_in">s</span></span><br></pre></td></tr></table></figure>
+<p>如你所想，还差了最后向github提交呢？并且还不够自动化，需要手动在DOS触发，这明显不符合极客范啊！</p>
+<h1 id="gulp"><a href="#gulp" class="headerlink" title="gulp"></a>gulp</h1><p>Gulp是一个构建系统，它能通过自动执行常见任务，比如编译预处理CSS，压缩JavaScript和刷新浏览器，来改进网站开发的过程。我主要使用gulp来压缩CSS、HTML、javascript、images。加速blog的访问速度，效果还是很好的！在这里贴一下我在用的gulpfile.js，放在D:\GitHub\Hexo目录下就可以了。还是很好使的，直接给压缩了20%体积。</p>
+<p>目前访问速度还算可以了，想进一步优化，需要自建VPS，用Nginx合并一些请求（<a href="https://github.com/alibaba/nginx-http-concat" target="_blank" rel="external">nginx-http-concat</a> 模块），别忘了Nginx还可以缓存静态资源哦！</p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"><span class="comment">//html压缩</span></span><br><span class="line"><span class="built_in">var</span> htmlmin = <span class="built_in">require</span>(<span class="string">'gulp-htmlmin'</span>);</span><br><span class="line"><span class="built_in">var</span> htmlclean = <span class="built_in">require</span>(<span class="string">'gulp-htmlclean'</span>);</span><br><span class="line"><span class="comment">//js压缩</span></span><br><span class="line"><span class="built_in">var</span> jsmin = <span class="built_in">require</span>(<span class="string">'gulp-jsmin'</span>);</span><br><span class="line"><span class="built_in">var</span> uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>);</span><br><span class="line"><span class="comment">//文件重命名</span></span><br><span class="line"><span class="built_in">var</span> rename = <span class="built_in">require</span>(<span class="string">'gulp-rename'</span>);</span><br><span class="line"><span class="comment">//图片压缩png/jpg/gif</span></span><br><span class="line"><span class="built_in">var</span> imagemin = <span class="built_in">require</span>(<span class="string">'gulp-imagemin'</span>);</span><br><span class="line"><span class="comment">//png压缩</span></span><br><span class="line"><span class="built_in">var</span> pngquant = <span class="built_in">require</span>(<span class="string">'imagemin-pngquant'</span>);</span><br><span class="line"><span class="built_in">var</span> cache = <span class="built_in">require</span>(<span class="string">'gulp-cache'</span>);</span><br><span class="line"><span class="comment">//css压缩</span></span><br><span class="line"><span class="built_in">var</span> csso = <span class="built_in">require</span>(<span class="string">'gulp-csso'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">var</span> root = <span class="string">"./public"</span>;</span><br><span class="line"><span class="built_in">var</span> buildDir = root;</span><br><span class="line"><span class="built_in">var</span> datas=&#123;</span><br><span class="line">    <span class="attribute">html</span>:[root+<span class="string">"/**/*.html"</span>],</span><br><span class="line">    <span class="attribute">image</span>:[root+<span class="string">"/**/*.&#123;png,jpg,jpeg,gif,ico&#125;"</span>],</span><br><span class="line">    <span class="attribute">css</span>:[root+<span class="string">"/**/*.css"</span>],</span><br><span class="line">    <span class="attribute">js</span>:[root+<span class="string">"/**/*.js"</span>,<span class="string">'!*min.js'</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 压缩html</span></span><br><span class="line">gulp.task(<span class="string">'htmlmin'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">var</span> options = &#123;</span><br><span class="line">        <span class="attribute">removeComments</span>: <span class="literal">true</span>,<span class="comment">//清除HTML注释</span></span><br><span class="line">        <span class="attribute">collapseWhitespace</span>: <span class="literal">true</span>,<span class="comment">//压缩HTML</span></span><br><span class="line">        <span class="attribute">collapseBooleanAttributes</span>: <span class="literal">true</span>,<span class="comment">//省略布尔属性的值 &lt;input checked="true"/&gt; ==&gt; &lt;input /&gt;</span></span><br><span class="line">        <span class="attribute">removeEmptyAttributes</span>: <span class="literal">true</span>,<span class="comment">//删除所有空格作属性值 &lt;input id="" /&gt; ==&gt; &lt;input /&gt;</span></span><br><span class="line">        <span class="attribute">removeScriptTypeAttributes</span>: <span class="literal">true</span>,<span class="comment">//删除&lt;script&gt;的type="text/javascript"</span></span><br><span class="line">        <span class="attribute">removeStyleLinkTypeAttributes</span>: <span class="literal">true</span>,<span class="comment">//删除&lt;style&gt;和&lt;link&gt;的type="text/css"</span></span><br><span class="line">        <span class="attribute">minifyJS</span>: <span class="literal">true</span>,<span class="comment">//压缩页面JS</span></span><br><span class="line">        <span class="attribute">minifyCSS</span>: <span class="literal">true</span><span class="comment">//压缩页面CSS</span></span><br><span class="line">    &#125;;</span><br><span class="line">  gulp.src(datas.html)</span><br><span class="line">  .pipe(htmlclean())</span><br><span class="line">  .pipe(htmlmin(options).on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(e);</span><br><span class="line">         &#125;))</span><br><span class="line">  .pipe(gulp.dest(buildDir));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// png图片压缩</span></span><br><span class="line">gulp.task(<span class="string">"imagemin"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    gulp.src(datas.image)</span><br><span class="line">    .pipe(imagemin(&#123;</span><br><span class="line">        <span class="attribute">optimizationLevel</span>: <span class="number">7</span>, <span class="comment">//类型：Number  默认：3  取值范围：0-7（优化等级）</span></span><br><span class="line">        <span class="attribute">progressive</span>: <span class="literal">true</span>, <span class="comment">//类型：Boolean 默认：false 无损压缩jpg图片</span></span><br><span class="line">        <span class="attribute">interlaced</span>: <span class="literal">true</span>, <span class="comment">//类型：Boolean 默认：false 隔行扫描gif进行渲染</span></span><br><span class="line">        <span class="attribute">multipass</span>: <span class="literal">true</span>, <span class="comment">//类型：Boolean 默认：false 多次优化svg直到完全优化</span></span><br><span class="line">        <span class="attribute">svgoPlugins</span>:[&#123;<span class="attribute">removeViewBox</span>:<span class="attribute">false&#125;],</span><br><span class="line">        use</span>:[pngquant()] <span class="comment">//压缩率64%</span></span><br><span class="line">    &#125;).on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(e);</span><br><span class="line">         &#125;))</span><br><span class="line">    .pipe(gulp.dest(buildDir));</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// js压缩</span></span><br><span class="line">gulp.task(<span class="string">"jsmin"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    gulp.src(datas.js)</span><br><span class="line">    .pipe(uglify().on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">         <span class="built_in">console</span>.log(e);</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="comment">//.pipe(rename(&#123;suffix:'.min'&#125;))</span></span><br><span class="line">    .pipe(gulp.dest(buildDir));</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// css压缩</span></span><br><span class="line">gulp.task(<span class="string">"cssmin"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    gulp.src(datas.css)</span><br><span class="line">    .pipe(csso().on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">     &#125;))</span><br><span class="line">    .pipe(gulp.dest(buildDir));</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(<span class="string">"default"</span>,[<span class="string">"htmlmin"</span>,<span class="string">"imagemin"</span>,<span class="string">"jsmin"</span>,<span class="string">"cssmin"</span>]);</span><br></pre></td></tr></table></figure>
+<h1 id="Powershell"><a href="#Powershell" class="headerlink" title="Powershell"></a>Powershell</h1><p>想起了windows 7环境已经支持powershell（增强版DOS！），试想如果有一个ps1脚本可以完成发布blog，再配合windows计划任务，不就可以定时或按用户动作触发了吗？YES，这才是我想要的，不啰嗦，开始干吧！</p>
+<p>PS：脚本运行之前，别忘了装一个：Git-2.9.0-64-bit.exe，然后配置好自己的github信息。<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">配置完成后的验证：ssh -T git<span class="meta">@github.com</span></span><br><span class="line">如果提示：Hi <span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span> You've successfully authenticated, but GitHub does not provide shell access. 说明你连接成功了</span><br></pre></td></tr></table></figure></p>
+<p>设置PowerShell环境，使能“allow scripts to run”选项，步骤如下：<br>以管理员的身份运行PowerShell<br>执行Set-ExecutionPolicy RemoteSigned命令，在对话框中选择Y，如下<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PS <span class="string">C:</span>\Windows\system32&gt; Set-ExecutionPolicy RemoteSigned</span><br><span class="line">执行策略更改</span><br><span class="line">执行策略可帮助你防止执行不信任的脚本。更改执行策略可能会产生安全风险，如 <span class="string">http:</span><span class="comment">//go.microsoft.com/fwlink/?LinkID=135170</span></span><br><span class="line">中的 about_Execution_Policies 帮助主题所述。是否要更改执行策略?</span><br><span class="line">[Y] 是(Y)  [N] 否(N)  [S] 挂起(S)  [?] 帮助 (默认值为“Y”): Y</span><br><span class="line">PS <span class="string">C:</span>\Windows\system32&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Finally，一起来看看我的“syncArticle.ps1”，遇到无数坑（语句块是大坑！），不过还是被我搞定了！</p>
+<p>‘D:\Program Files\Git\bin\git.exe’是我的Git安装目录。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cd D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">Hexo</span></span></span><br><span class="line">hexo g --silent</span><br><span class="line">Remove-Item D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">Hexo</span></span><span class="tag">\<span class="name">public</span></span><span class="tag">\<span class="name">vendors</span></span><span class="tag">\<span class="name">*</span></span> -recurse</span><br><span class="line">Remove-Item D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">Hexo</span></span><span class="tag">\<span class="name">public</span></span><span class="tag">\<span class="name">vendors</span></span> -recurse</span><br><span class="line">gulp --silent</span><br><span class="line">XCOPY D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">Hexo</span></span><span class="tag">\<span class="name">public</span></span><span class="tag">\<span class="name">*</span></span>.* D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">amao</span></span>12580.github.io /Q /D /E /C /Y</span><br><span class="line">cd D:<span class="tag">\<span class="name">GitHub</span></span><span class="tag">\<span class="name">amao</span></span>12580.github.io</span><br><span class="line">&amp; 'D:<span class="tag">\<span class="name">Program</span></span> Files<span class="tag">\<span class="name">Git</span></span><span class="tag">\<span class="name">bin</span></span><span class="tag">\<span class="name">git</span></span>.exe' add .</span><br><span class="line">&amp; 'D:<span class="tag">\<span class="name">Program</span></span> Files<span class="tag">\<span class="name">Git</span></span><span class="tag">\<span class="name">bin</span></span><span class="tag">\<span class="name">git</span></span>.exe' commit -m "Auto commit by powershell script."</span><br><span class="line">&amp; 'D:<span class="tag">\<span class="name">Program</span></span> Files<span class="tag">\<span class="name">Git</span></span><span class="tag">\<span class="name">bin</span></span><span class="tag">\<span class="name">git</span></span>.exe' push -f origin master</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+<p>在windows计划任务管理，我已经配置好，每晚10点，自动发布有更新的blog啦！来看看导出的windows计划任务XML文件吧！</p>
+<p>PC-201402281156\Administrator，这是我的主机名和用户名。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-16"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">Task</span> <span class="attr">version</span>=<span class="string">"1.2"</span> <span class="attr">xmlns</span>=<span class="string">"http://schemas.microsoft.com/windows/2004/02/mit/task"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">RegistrationInfo</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Date</span>&gt;</span>2016-06-15T17:08:16.1670287<span class="tag">&lt;/<span class="name">Date</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Author</span>&gt;</span>PC-201402281156\Administrator<span class="tag">&lt;/<span class="name">Author</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">RegistrationInfo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Triggers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">CalendarTrigger</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">StartBoundary</span>&gt;</span>2016-06-15T22:00:00<span class="tag">&lt;/<span class="name">StartBoundary</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">Enabled</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ScheduleByDay</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DaysInterval</span>&gt;</span>1<span class="tag">&lt;/<span class="name">DaysInterval</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ScheduleByDay</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">CalendarTrigger</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Triggers</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Principals</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Principal</span> <span class="attr">id</span>=<span class="string">"Author"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">UserId</span>&gt;</span>PC-201402281156\Administrator<span class="tag">&lt;/<span class="name">UserId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">LogonType</span>&gt;</span>InteractiveToken<span class="tag">&lt;/<span class="name">LogonType</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RunLevel</span>&gt;</span>LeastPrivilege<span class="tag">&lt;/<span class="name">RunLevel</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Principal</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Principals</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Settings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">MultipleInstancesPolicy</span>&gt;</span>IgnoreNew<span class="tag">&lt;/<span class="name">MultipleInstancesPolicy</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DisallowStartIfOnBatteries</span>&gt;</span>false<span class="tag">&lt;/<span class="name">DisallowStartIfOnBatteries</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">StopIfGoingOnBatteries</span>&gt;</span>true<span class="tag">&lt;/<span class="name">StopIfGoingOnBatteries</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">AllowHardTerminate</span>&gt;</span>true<span class="tag">&lt;/<span class="name">AllowHardTerminate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">StartWhenAvailable</span>&gt;</span>false<span class="tag">&lt;/<span class="name">StartWhenAvailable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RunOnlyIfNetworkAvailable</span>&gt;</span>false<span class="tag">&lt;/<span class="name">RunOnlyIfNetworkAvailable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">IdleSettings</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">StopOnIdleEnd</span>&gt;</span>true<span class="tag">&lt;/<span class="name">StopOnIdleEnd</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RestartOnIdle</span>&gt;</span>false<span class="tag">&lt;/<span class="name">RestartOnIdle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">IdleSettings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">AllowStartOnDemand</span>&gt;</span>true<span class="tag">&lt;/<span class="name">AllowStartOnDemand</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">Enabled</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Hidden</span>&gt;</span>false<span class="tag">&lt;/<span class="name">Hidden</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RunOnlyIfIdle</span>&gt;</span>false<span class="tag">&lt;/<span class="name">RunOnlyIfIdle</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">WakeToRun</span>&gt;</span>false<span class="tag">&lt;/<span class="name">WakeToRun</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ExecutionTimeLimit</span>&gt;</span>PT10M<span class="tag">&lt;/<span class="name">ExecutionTimeLimit</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Priority</span>&gt;</span>7<span class="tag">&lt;/<span class="name">Priority</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Settings</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Actions</span> <span class="attr">Context</span>=<span class="string">"Author"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Exec</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Command</span>&gt;</span>powershell<span class="tag">&lt;/<span class="name">Command</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">Arguments</span>&gt;</span>D:\GitHub\syncArticle.ps1<span class="tag">&lt;/<span class="name">Arguments</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">WorkingDirectory</span>&gt;</span>D:\GitHub<span class="tag">&lt;/<span class="name">WorkingDirectory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Exec</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Actions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Task</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如下图所示，用户可以手动触发计划任务，来看看运行结果吧！点击历史记录还可以查看每次任务计划的运行情况呢！</p>
+<p><img src="/img/windowsPlanTask.png" alt=""></p>
+<p>现在我的blog就可以每晚10点自动发布到github了，终于可以专注于写文章了！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>Talk is cheap,show me the code.</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/rewards/wechat-reward-image.png" alt="Steven Cheng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+
+      
+        <div class="copyright" style="clear:both;">
+           <p><span>本文标题：</span><a href="/post/2016/06/How-to-better-write-the-blog/">如何更开心的写博客？</a></p>
+           <p><span>文章作者：</span><a href="/" title="访问 Steven Cheng 的个人博客">Steven Cheng</a></p>
+           <p><span>发布时间：</span>2016年6月17日 - 15时06分</p>
+           <p><span>本文字数：</span><span class="page-count">5,817字</span></p>
+           <p><span>原始链接：</span><a href="/post/2016/06/How-to-better-write-the-blog/" title="如何更开心的写博客？">https://www.kisscat.pro/post/2016/06/How-to-better-write-the-blog/</a></p>
+           <p><span>许可协议：</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" title="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">Attribution-NonCommercial 4.0</a></p>
+           <p><span>转载请保留以上信息。</span></p>
+        </div>
+      
+
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GitHub/" rel="tag">#GitHub</a>
+          
+            <a href="/tags/Git/" rel="tag">#Git</a>
+          
+            <a href="/tags/Windows/" rel="tag">#Windows</a>
+          
+            <a href="/tags/Powershell/" rel="tag">#Powershell</a>
+          
+            <a href="/tags/Gulp/" rel="tag">#Gulp</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/2016/06/Message-system-architecture-evolution/" rel="next" title="消息系统的架构演进之路">
+                <i class="fa fa-chevron-left"></i> 消息系统的架构演进之路
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/2016/06/LeetCode-training-3-elements-sum-zero/" rel="prev" title="LeetCode刷题 - 求三个和为零的整数组合">
+                LeetCode刷题 - 求三个和为零的整数组合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="post/2016/06/How-to-better-write-the-blog/"
+           data-title="如何更开心的写博客？" data-url="https://www.kisscat.pro/post/2016/06/How-to-better-write-the-blog/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Steven Cheng" />
+          <p class="site-author-name" itemprop="name">Steven Cheng</p>
+          <p class="site-description motion-element" itemprop="description">https://www.kisscat.pro/about</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/amao12580" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://segmentfault.com/blogs" title="SegmentFault" target="_blank">SegmentFault</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.jobbole.com/" title="伯乐在线" target="_blank">伯乐在线</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://cnpolitics.org/" title="政见" target="_blank">政见</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dajia.qq.com/" title="大家" target="_blank">大家</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gulp"><span class="nav-number">2.</span> <span class="nav-text">gulp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Powershell"><span class="nav-number">3.</span> <span class="nav-text">Powershell</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Steven Cheng</span>
+  <span class="post-count">&nbsp全站共140.8k字</span>
+</div>
+<script async="async" src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+访问量 <span id="busuanzi_value_site_pv"></span> &nbsp
+您是第<span id="busuanzi_value_site_uv"></span>个来到的小伙伴
+
+
+<script>
+var OriginTitile=document.title;
+var st;
+document.addEventListener('visibilitychange',function(){
+if(document.hidden){
+  document.title="(つェ⊂)我藏好了哦~";
+  clearTimeout(st);
+}else{
+  document.title='(*´∇｀*)被你发现啦~ '+OriginTitile;
+  console.log('show');
+  st=setTimeout(function(){
+      document.title=OriginTitile;
+  },4000);
+}
+});
+</script>
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+  <script type="text/javascript" src="/js/src/main.js?v=5.0.1"></script>
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/bootstrap/3.2.0/js/affix.js"></script>
+
+  
+  <script type="text/javascript" src="/js/src/post.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"amao12580"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementById('footer')
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+
+  
+
+  
+
+</body>
+</html>
